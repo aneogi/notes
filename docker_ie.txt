@@ -1,0 +1,22 @@
+docker build -t hendryrobert/sinatra:v2 .
+
+---------------------------------- Working with Dockerfile ----------------------------------
+
+1. Building images using a dockerfile
+	(i) Create a Dockerfile:
+			FROM oraclelinux:6.6
+			MAINTAINER A N Other <aneogi13@gmail.com>
+			RUN sed -i -e '/^\[main\]/aproxy=http://proxy.mydom.com:80' /etc/yum.conf
+			RUN yum -y install httpd
+			RUN echo "HTTP server is running on port guest" > /var/www/html/index.html
+			EXPOSE 80
+			ENTRYPOINT /usr/sbin/httpd -D FOREGROUND
+	(ii) docker build -t my_server .
+			==> Since the oraclelinux images is not present therefore the image is getting downloaded. Then the next the steps are getting executed.
+	(iii) docker run -d --name myguest2 -P oraclelinux
+			==> If the image was not installed previously then this command will download the image and run it.
+
+2. Building an Apache image
+	(i) docker rmi <<httpd_image_id>>
+			==> Delete existing httpd image.
+	(ii) 
