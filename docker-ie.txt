@@ -1,8 +1,8 @@
 docker build -t hendryrobert/sinatra:v2 .
 
----------------------------------- Working with Dockerfile ----------------------------------
+---------------------------------- 3. Working with Dockerfile ----------------------------------
 
-1. Building images using a dockerfile
+3.1. Building images using a dockerfile
 	(i) Create a Dockerfile:
 			FROM oraclelinux:6.6
 			MAINTAINER A N Other <aneogi13@gmail.com>
@@ -16,7 +16,139 @@ docker build -t hendryrobert/sinatra:v2 .
 	(iii) docker run -d --name myguest2 -P oraclelinux
 			==> If the image was not installed previously then this command will download the image and run it.
 
-2. Building an Apache image
+3.2. Building an Apache image
 	(i) docker rmi <<httpd_image_id>>
-			==> Delete existing httpd image.
-	(ii) 
+	(ii) Create a Dockerfile:
+			FROM httpd:2.4
+	(iii) docker build -t my-apache2 .
+	(iv) docker run -t -i my_apache2
+
+3.3. Accessing Firefox from Container
+	(i) Create a Dockerfile:
+			FROM ubuntu:14.04
+			RUN apt-get update && apt-get install -y firefox
+			# Replace 1000 with user/groupid
+			RUN export uid=1000 gid=1000 && \
+				mkdir -p /home/developer && \
+				echo "developer:x:${uid}:${gid}:Developer,,,:/home/developer:/bin/bash" >> /etc/passwd && \
+				echo "developer:x:${uid}:" >> /etc/group && \
+				echo "developer ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/developer && \
+				chmod 0440 /etc/sudoers.d/developer &&
+				chown ${uid}:${gid} -R /home/developer
+			USER developer
+			ENV HOME /home/developer
+			CMD /usr/bin/firefox
+	(ii) docker build -t firefox .
+	(iii) docker run -ti --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix/tmp/.X11-unix firefox
+				
+3.4. Building a WordPress image
+	(i) rm wordpress, md wordpress, cd wordpress
+	(ii) docker ps -a, docker images
+	(iii) docker rmi debian:jessie, docker rmi <<wordpress_image_id>>
+	(iii) docker rm <<wordpress_container_id>>
+
+---------------------------------- 4. Advanced Docker Volumes ----------------------------------
+
+4.1. Building from Basic Volumes
+	(i) Containers interact with each other by Volumes. Volumes are file systems external to container that are used by container to read/write data.
+	(ii) docker run -v /www --name="bobexample1" ubuntu:14.04 echo yo
+			==> Run a container and create a volume.
+	(iii) docker ps -acls
+	(iv) docker inspect bobexample1
+			==> Details of the container. Volume info in "Mounts" section.
+	(v) docker run -v /host/logs:/container/logs --name="bobmamaexamle" ubuntu:14:04 echo mama
+			==> /host/logs (Source) will be hosted as /container/logs (Destination) inside the container. Info present in "Mounts" section.
+
+4.2. Gaining Access to Volumes
+	(i) Containers can persist data using Volumes.
+	(ii) docker-machine ls
+			==> List of Docker Machines e.g. VirtualBox, DigitalOcean etc.
+	(iii) Login to VirtualBox
+		(a) cd var/lib/docker/volumes
+		(b) ls -a 
+				==> All Volume information. 
+
+4.3. Configuring the Web Server (nginx)
+	(i) docker build -t hendry/xginx .
+			==> Fetch the image from dockerhub, download dependencies, install and run nginx.
+	(ii) Dockerfile:
+			FROM debian:jessie
+			MAINTAINER NGINX Docker Maintainers "docker-main@nginx.com"
+			RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BF........
+			RUN echo "deb http://nginx.org/packages/mainline/debian/ jessie nginx" >> /etc/apt/sources.list
+			ENV NGINX_VERSION 1.9.8-1~jessie
+			RUN apt-get update && \
+				apt-get install -y ca-certificates nginx=${NGINX_VERSION} && \
+				rm -rf /var/lib/apt/lists/*
+			#forward request and error logs to docker log collector
+			RUN ln -sf /dev/stdout /var/log/nginx/access.log
+			RUN ln -sf /dev/stderr /var/log/nginx/error.log
+			VOLUME ["/var/cache/nginx"]
+			EXPOSE 80 443
+			CMD ["nginx", "-g", "daemon off;"]
+	(ii) docker run -d -p 80:80 hendry/xginx
+			==> Map port 80 of the container to port 80 of the host
+	(iii) docker ps 
+			==> Shows that the container is running on port 80.
+	(iv) docker network inspect bridge
+			==> Container Network details
+	(v) docker-machine ls
+			==> Note down the host ip.
+	(vi) Go to browser and hit the host ip and port 80
+			==> Request redirected to nginx running on port 80 of container.
+			
+4.4. Using Map Generator
+	(i) cd "C:\program files\docker toolbox\installers"
+	(ii) cd virtual box and then maps
+	(iii) cd maps and then create two folder got and virtual box
+	(iv) Folder structure
+			docker toolbox
+				- installers
+					- git
+					- maps
+						- git
+						- virtualbox
+					- virtualbox
+	(v) If all the image files (i.e. maps) are placed within the maps directory then those will be automatically picked up by docker.
+					
+4.5. Running Container Server
+	(i) Containers are persisted as well.
+	(ii) docker rm <<ContainerId>>
+			==> Deletes the Container but the Volume is persisted as long as it is not manually deleted.
+	(iii) docker rm -v <<ContainerId>>
+			==> Deletes the Container and the associated Volumes.
+	(iv) docker run -v /bobfolder --name=bobcontainer ubuntu:14.04 echo hello world
+			==> Volume is created and it remains even when the container is not running.
+	(v) docker run -v --volumes-from bobcontainer --name=bobcontainer2 ubuntu:14.04 echo hello world
+			==> Don't create a volume. Share the volume created by bobcontainer
+	(vi) docker inspect bobcontainer2
+			==> Uses the same volume as bobcontainer
+	(vii) docker rm -v bobcontainer2
+			==> Deletes the container and the associated volume for bobcontainer.
+			
+4.6. Creating a Stack with Volumes
+	(i) Mount volumes and share volumes across containers
+	(ii) docker stop <<ContainerName>>
+	(iii) docker run -v /bobstuff/morestuff --name=bobservice -d busybox
+			==> Mounts /bobstuff/morestuff volume (as directory structure) on host m/c. The volume will be used by the service being started. Image is busybox.
+	(iv) docker run -d -p 80:80 --volumes-from bobservice hendry/xginx
+			==> Start the container and uses the volumes of bobservice i.e. /bobstuff/morestuff. Container name is reverent_spence
+	(v) docker inspect reverent_spence
+			==> Mounts info shows "Destination" as /bobstuff/morestuff
+
+---------------------------------- 5. Networking in Docker ----------------------------------
+
+5.1 Command line options in Docker
+	(i) docker network ls
+			==> Shows all the networks
+	(ii) docker network create simple-network-bob
+			==> Creates a bridge network.
+	(iii) docker network inspect simple-network-bob
+			==> Details of the network
+	(iv) docker network rm simple-network
+			==> Deletes a network
+	(v) docker network
+			==> List of all thedocker network commands
+			
+5.2 Configuring DNS
+	(i) 
