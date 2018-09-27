@@ -1,4 +1,53 @@
-docker build -t hendryrobert/sinatra:v2 .
+
+---------------------------------- 1. Managing images ----------------------------------
+
+1.3 Creating image from container
+	(i) docker images
+	(ii) docker rmi <ImageId>
+	(iii) docker images 
+	(iv) docker rmi -f <ImageId>
+			==> Delete image forcefully as it is used by container
+	(v) docker run ubuntu:14.04 /bin/echo 'Hello World'
+			==> Docker found that the local was not local, downloaded the image and echoed on the terminal
+
+1.4 Publishing an image to the registry
+	(i) docker pull training/sinatra
+	(ii) docker images
+			==> sinatra image has been downloaded
+	(iii) docker run -t -i training/sinatra /bin/bash  
+			==> Command line of the image comes up
+	(iv) Create a Dockerfile:
+			FROM ubuntu:14.04
+			MAINTAINER Avirup Neogi <aneogi13@gmail.com>
+			RUN apt-get update && apt-get install -y ruby ruby-dev
+			RUN gem install sinatra
+	(v) docker build -t hendryrobert/sinatra:v2 .
+			==> Build an image from an existing image
+	(vi) docker push hendryrobert/sinatra
+			==> Pushes the image into dockerhub
+			
+1.5 Examining Image History
+	(i) docker history <ImageId>
+			==> Layers of the image
+	(ii) docker images
+			==> training/sinatra has tag as latest
+	(iii) docker tag <ImageId> training/sinatra:prod
+	(iv) docker images
+			==> training/sinatra has tag as prod
+	
+1.5 Importing, Deleting and Exporting images
+	(i) docker pull busybox
+			==> Download image from dockerhub. If url is known then import can be used as well.
+	(ii) docker run busybox mkdir /home/test
+	(iii) docker commit <ContainerId> busybox-1
+			==> Saves all the changes on the container to local and this creates a new image
+	(iv) docker export --output="mylatest.tar" <ContainerId>
+			==> Creates a tar file from the file system within a container
+	(v) docker rmi <ContainerId> 
+			==> Deletes busybox-1 image
+
+---------------------------------- 2. Managing image layers ----------------------------------
+
 
 ---------------------------------- 3. Working with Dockerfile ----------------------------------
 
@@ -151,4 +200,83 @@ docker build -t hendryrobert/sinatra:v2 .
 			==> List of all thedocker network commands
 			
 5.2 Configuring DNS
-	(i) 
+	(i) docker run -itd --name=bobcontainer1 busybox
+			==> Run container bobcontainer1 based on image busybox
+	(ii) docker attach bobcontainer1
+			==> Allows to attach to the container and a blank prompt comes up
+			==> Hitting the enter button returns the command prompt within the container
+			(a) cat /etc/hosts
+					==> returns hosts files within the container
+			(b) ipconfig
+					==> DNS configuration within the container
+			(c) mount
+					==> Mount information
+			
+5.3 Communication between containers
+	(i) docker-machine ls
+			==> List of virtual machines
+	(ii) docker network ls
+			==> List of networks, default is bridge
+	(iii) docker network inspect bridge
+			==> Network details with subnet info
+	(iv) docker run -itd --name=bobcontainer1 busybox
+	(v) docker run -itd --name=bobcontainer2 busybox
+	(vi) docker network inspect bridge
+			==> Details of running containers bobcontainer1, bobcontainer2 are present in "Containers" section
+	(vii) docker ps
+			==> Returns containers bobcontainer1 and bobcontainer2
+	(viii) docker run -itd --name=bobcontainer10 --net=bob_network busybox
+			==> Creates bobcontainer10 in bob_network
+	(ix) docker ps
+			==> Returns containers bobcontainer1, bobcontainer2 and bobcontainer10
+			
+5.4 Communication between containers and outside world
+	(i) docker run -itd --name=bobcontainer1 busybox
+	(ii) docker run -itd --name=bobcontainer2 busybox
+	(iii) docker network inspect bridge
+			==> Details of running containers bobcontainer1, bobcontainer2 are present in "Containers" section
+	(iv) docker ps
+			==> Both the containers have ports as null which means that the ports are not accessible from outside the network.
+	(v) Login to VirtualBox
+			(a) iptables -t nat -L -n
+					==> Both the containers have MASQUERADE with destination as 0.0.0.0/0 which means when the container contacts with anything outside the machine, it will see the ip of the machine and not the container.
+			
+5.5 Binding Docker Container ports to the host
+	(i) docker run -itd --name=bobexample1 busybox
+	(ii) docker ps
+			==> Port is null therefore bobexample1 can talk to resources outside the machine but no one can talk to bobexample1
+	(iii) docker stop bobexample1
+	(iv) docker rm -v bobexample1
+	(v) docker run -d -P training/webapp python app.py
+			==> Map any incoming port on the machine to the corresponding port on the container
+	(vi) docker ps
+			==> Port now has a value e.g. 0.0.0.0:32769 which means it is open to communication on that port
+	(vii) docker stop thirsty_davinci
+	(viii) docker rm -v thirsty_davinci
+	(ix) docker run -d -p 80:5000 training/webapp python app.py
+			==> Any traffic on port 80 on the machine wil be routed to port 5000 on the python container. (0.0.0.0:80 -> 5000)
+	(x) docker port berseck_hopper
+			==> 5000/tcp -> 0.0.0.0:80 
+	(xi) docker-machine ip my-default-hendry
+			==> 192.168.99.100
+	(xii) Open 192.168.99.100:80
+			==> Response from the container
+			
+5.6 Using Pipework
+	(i) docker network ls
+	(ii) docker run -itd --name=bobexample1 busybox
+	(iii) docker network inspect bridge
+	(iv) docker run -itd --name=bobexample2 --net=bob_network busybox
+	(v) docker network inspect bob_network
+	(vi) docker run -d -p 80:5000 my/Thing python app.py
+	(vi) pipework eth0 mysql 10.1.1.1/24
+			==> Links the physical connection to the container
+	(vii) pipework br0 mysql 10.1.1.1/24
+			==> Links the network bridge to the container
+	(viii) pipework ovsbr0 mysql 10.1.1.1/24
+			==> Links the Open V Switch bridge to the container
+	(ix) pipework ovsbr0 mysql dhcp
+	(x) pipework ovsbr0 mysql dhcp @10
+
+
+					
