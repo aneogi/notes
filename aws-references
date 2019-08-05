@@ -1,4 +1,28 @@
  
+
+----------------------------- 5-Aug-2019 ----------------------------- 
+https://aws.amazon.com/elasticbeanstalk/faqs/
+http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.CoreComponents.html
+https://aws.amazon.com/swf/faqs/
+https://aws.amazon.com/sqs/faqs/ 
+http://docs.aws.amazon.com/sns/latest/dg/mobile-push-send-custommessage.html
+http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ComponentsAMIs.html
+http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html
+https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectOps.html
+http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectGET.html
+http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithItems.html
+http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ProvisionedThroughput.html
+https://aws.amazon.com/sns/faqs/
+http://docs.aws.amazon.com/sns/latest/dg/SendMessageToHttp.html
+http://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ListStacks.html
+http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html
+http://docs.aws.amazon.com/sns/latest/api/API_CreatePlatformEndpoint.html
+https://aws.amazon.com/s3/faqs/
+https://aws.amazon.com/dynamodb/faqs/
+http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html
+http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-select.html
+
+
 ----------------------------- 3-Aug-2019 ----------------------------- 
 https://aws.amazon.com/dynamodb/faqs/
 https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html#limits-secondary-indexes
