@@ -1,0 +1,147 @@
+
+Question 2: Incorrect
+What is maximum limit for the size of an item collection in DynamoDB? Choose an answer from the options below
+
+Explanation
+This is clearly provided in the AWS documentation For more information on DynamoDB please refer to the below link: https://aws.amazon.com/dynamodb/faqs/
+Question 5: Incorrect
+You can define up to 5 local secondary indexes and 5 global secondary indexes per table. How can you increase your DynamoDB secondary indexes limit in a region?
+
+Explanation
+You can define a maximum of 5 local secondary indexes and 5 global secondary indexes per table. For more information on DynamoDB secondary indexes limit refer URL: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html#limits-secondary-indexes
+Question 6: Incorrect
+You have just set up a push notification service to send a message to an app installed on a device with the Apple Push Notification Service. It seems to work fine. You now want to send a message to an app installed on devices for multiple platforms, those being the Apple Push Notification Service(APNS) and Google Cloud Messaging for Android (GCM). What do you need to do first for this to be successful? Choose the correct answer from the options below
+
+Explanation
+For Amazon SNS to send notification messages to mobile endpoints, whether it is direct or with subscriptions to a topic, you first need to register the app with AWS. To register your mobile app with AWS, enter a name to represent your app, select the platform that will be supported, and provide your credentials for the notification service platform. After the app is registered with AWS, the next step is to create an endpoint for the app and mobile device. The endpoint is then used by Amazon SNS for sending notification messages to the app and device. For more information on SNS, please refer to the link: http://docs.aws.amazon.com/sns/latest/dg/mobile-push-send-register.html
+Question 7: Incorrect
+How many requests in SQS are available in the free tier? Choose the correct answer from the options below
+
+Explanation
+As per the AWS documentation, 1 million requests are allowed in the free tier. For more information on AWS SQS, please refer to the link: https://aws.amazon.com/sqs/faqs/
+Question 9: Incorrect
+You are writing an AWS CloudFormation Template to create a static S3 website configuration. The resources section of this template will be used for access control of the bucket and is defined in the 5th line of the below code snippet. What should the value of "AccessControl" be so that the owner of the bucket gets full control and all users get READ access only."Resources" : {     "S3Bucket" : {            "Type" : "AWS::S3::Bucket",             "Properties" : {                     "AccessControl" : "ANSWER TO THE QUESTION",                      "BucketName": { "Ref" : "BucketName" },                      "WebsiteConfiguration" : {                                "IndexDocument" : "index.html",                                "ErrorDocument" : "error.html"                        }             }  }
+
+Explanation
+Since the question states that all users need read access, then by default we need to assign the public read permissionFor static website, it needs to be publicly readable only permissions for all users to access the site.For more information refer to AWS documentation @ URL:https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/quickref-s3.html#scenario-s3-bucket-websiteProperty AccessControl should be set to canned ACL PublicRead which grants FULL_CONTROL to the owner and READ access to AllUsers group.Please review the section on Canned ACLs from Access Control List (ACL) Overview of Amazon S3 Developer Guide:http://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+Question 20: Incorrect
+Company B has many users updating the same table. At times it is not uncommon for multiple users to update the same item and attribute of an item at the same time. If user A calls an item in a table to update an attribute at the same time as user B and user B updates the table first, what can we deploy in DynamoDB to ensure User A is not updating an item that was updated since User A's table read? Choose the correct answer from the options below.
+
+Explanation
+To help clients coordinate writes to data items, DynamoDB supports conditional writes for PutItem, DeleteItem, and UpdateItem operations. With a conditional write, an operation succeeds only if the item attributes meet one or more expected conditions; otherwise it returns an error For more information on working with items , please visit the link: http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithItems.html
+Question 32: Incorrect
+For best performance when retrieving data from a table, what "type" of API call should you perform? Choose the correct answer from the options below.
+
+Explanation
+A Query operation uses the primary key of a table or a secondary index to directly access items from that table or index. Use the KeyConditionExpression parameter to provide a specific value for the partition key. The Queryoperation will return all of the items from the table or index with that partition key value. You can optionally narrow the scope of the Query operation by specifying a sort key value and a comparison operator in KeyConditionExpression. You can use the ScanIndexForward parameter to get results in forward or reverse order, by sort key. For more information on DynamoDB Query, please visit the link: http://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html
+Question 33: Incorrect
+You receive a call from a potential client who explains that one of the many services they offer is a website running on a t2.micro EC2 instance where users can submit requests for customized e-cards to be sent to their friends and family. The e-card website administrator was on a cruise and was shocked when he returned to the office in mid-January to find hundreds of angry emails complaining that customers’ loved ones had not received their Christmas cards. He also had several emails from CloudWatch alerting him that the SQS queue for the e-card application had grown to over 500 messages on December 25th. You investigate and find that the problem was caused by a crashed EC2 instance which serves as an application server. What do you advise your client to do first? Choose the correct answer from the options below
+
+Explanation
+The maximum retention period for SQS messages is 14 days, hence all the messages would have been lost by the mid of Jan. For more information on SQS please visit the below link: https://aws.amazon.com/sqs/faqs/
+Question 35: Incorrect
+Which API call would best be used to describe an Amazon Machine Image? Choose the correct answer from the options below
+
+Explanation
+Describes one or more of the images (AMIs, AKIs, and ARIs) available to you. Images available to you include public images, private images that you own, and private images owned by other AWS accounts but for which you have explicit launch permissions. For more information on DescribeImages, please refer to the below link: http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeImages.html
+Question 53: Incorrect
+What is the Amazon SNS endpoint for The US East (Northern Virginia)? Choose one answer from the options below
+
+Explanation
+The various SNS endpoints for AWS are given below.The US East (Northern Virginia) end-point is: http://sns.us-east-1.amazonaws.comThe US West (Oregon) end-point is: http://sns.us-west-2.amazonaws.comThe US West (Northern California) end-point is: http://sns.us-west-1.amazonaws.comThe EU(Ireland) end-point is: http://sns.eu-west-1.amazonaws.comThe EU(Frankfurt) end-point is: http://sns.eu-central-1.amazonaws.comThe Asia Pacific (Singapore) end-point is: http://sns.ap-southeast-1.amazonaws.comThe Asia Pacific (Tokyo) end-point is: http://sns.ap-northeast-1.amazonaws.comThe Asia Pacific (Sydney) end-point is: http://sns.ap-southeast-2.amazonaws.comThe South America (Sao Paulo) end-point is: http://sns.sa-east-1.amazonaws.comFor more information on SNS please refer to the below link:https://aws.amazon.com/sns/faqs/
+Question 54: Incorrect
+What is the maximum size of an item in DynamoDB? Choose an answer from the options below
+
+Explanation
+This is clearly provided in the AWS documentation For more information on DynamoDB please refer to the below link: https://aws.amazon.com/dynamodb/faqs/
+Question 55: Incorrect
+In S3 what can be used to delete a large number of objects
+
+Explanation
+As per the AWS documentation it is clearly given that any amount of data can be stored in S3. For more information on S3, please visit the below link: https://aws.amazon.com/s3/faqs/
+Question 57: Incorrect
+Amazon Simple Notification Service (Amazon SNS) provides support for delivery of message attributes to Amazon SQS endpoints and each message attribute consists of the following items: Name, Type and Value. Which of the following is TRUE, regarding message attributes? Choose the correct answer from the options below
+
+Explanation
+Amazon Simple Notification Service (Amazon SNS) provides support for delivery of message attributes to Amazon SQS endpoints. Message attributes allow you to provide structured metadata items (such as timestamps, geospatial data, signatures, and identifiers) about the message Also the requirement for each attribute to be not NULL in addition to the message body is given in the AWS documentation. For more information on SNS message attributes, please refer to the link: http://docs.aws.amazon.com/sns/latest/dg/SNSMessageAttributes.html
+Question 67: Incorrect
+You have an EBS root device on /dev/sda1 on one of your EC2 instances. You are having trouble with this particular instance and you want to either Stop/Start, Reboot or Terminate the instance but you do NOT want to lose any data that you have stored on /dev/sda1. Hence you are unsure as to what would be best and if you will lose this data using any of these methods to change your instance state. Which of the below statements best describes the effect each change of instance state would have on the data you have stored on /dev/sda1? Choose the correct answer from the options below
+
+Explanation
+As per the AWS documentation , the data persistence is shown for Instance store backed AMI’s For more information on Instance type differences, please refer to the below link: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ComponentsAMIs.html
+Question 69: Incorrect
+Company B is using Amazon SQS to decouple their systems for scaleability. However, they need to send messages up to 456Kb in size. What might Company B do in order to send more than 256KB of data? Choose the correct answer from the options below
+
+Explanation
+This is clearly specified in the AWS documentation. For more information on AWS SQS, please refer to the link: https://aws.amazon.com/sqs/faqs/
+Question 80: Incorrect
+When a subscriber subscribes to a topic in SNS, what is the time period available for confirmation? Choose one answer from the options below
+
+Explanation
+This is clearly given in the AWS documentation  For more information on SNS please refer to the below link: https://aws.amazon.com/sns/faqs/
+Question 84: Incorrect
+The following code snippet is the resources section of a CloudFormation template that you have written."Resources" : {    "EC2Instance" : {        "Type" : "AWS::EC2::Instance",         "Properties" : {             "InstanceType" : { "Ref" : "InstanceType" },              "SecurityGroups" : [ { "Ref" : "InstanceSecurityGroup" } ],               "KeyName" : { "Ref" : "KeyName" },               "ImageId" : { "Fn::FindInMap" : [ "AWSRegionArch2AMI", { "Ref" : "AWS::Region" },                { "Fn::FindInMap" : [ "AWSInstanceType2Arch", { "Ref" : "InstanceType" }, "Arch" ] }               ]        }   }},You have used the reference function to define your instance type as follows."InstanceType" : { "Ref" : "InstanceType" },The referencing function is referencing the instance type. Where is this value most likely coming from?
+
+Explanation
+The Instance type is mostly coming from the parameters section. Within the same template, you can use the Ref intrinsic function to specify the parameter value in other parts of the template. The following snippet uses the InstanceTypeParameter parameter to specify the instance type for an EC2 instance resource For more information on the Instrinsic reference function URL: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html
+Question 85: Incorrect
+Company B has a DynamoDB table where the average item size is 10KB. Company B anticipates the application will read 100 items from the table per second using eventually consistent reads. How much read capacity throughput should they provision? Choose the correct answer from the options below.
+
+Explanation
+For read capacity, the rule is to divide the item size by 4KB. Hence we need to divide 10 by 4 which gives us 3 to the nearest 4KB. Since we are reading 100 items per second, we need to multiply 100*3 =300. Since it is eventual consistency , we need to divide by 2 which gives us 150. For more information on working with tables in dynamoDB , please visit the link: http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html
+Question 91: Incorrect
+What is the default timeout for visibility queue in SQS in seconds? Choose the correct answer from the options below
+
+Explanation
+Each queue starts with a default setting of 30 seconds for the visibility timeout. You can change that setting for the entire queue. Typically, you'll set the visibility timeout to the average time it takes to process and delete a message from the queue. When receiving messages, you can also set a special visibility timeout for the returned messages without changing the overall queue timeout. For more information on SQS please visit the below link: https://aws.amazon.com/sqs/faqs/
+Question 99: Incorrect
+Which of the following is not true about SWF? Choose the correct answer from the options below
+
+Explanation
+Humans can perform an activity task, but not a decision task. For more information on SWF please visit the below link: https://aws.amazon.com/swf/faqs/
+Question 100: Incorrect
+What is the default limit for CloudFormation templates per region? Choose the correct answer from the options below
+
+Explanation
+As per the AWS documentation , only Cloudformation stacks have a limit For more information on AWS service limits please visit the below link: http://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html
+Question 102: Incorrect
+You want to find out what AMIs are available for you to use in a given region. Which API call is most appropriate? Choose an answer from the options below
+
+Explanation
+Describes one or more of the images (AMIs, AKIs, and ARIs) available to you. Images available to you include public images, private images that you own, and private images owned by other AWS accounts but for which you have explicit launch permissions. For more information on the command please visit the below link: http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeImages.html
+Question 104: Incorrect
+You attempt to create a new S3 bucket "Demo-Bucket-1234-US-East-2-Production-Envrionment-12.25.14” in the US-EAST-2 region and the bucket creation fails. Why?Choose the correct answer from the options below.
+
+Explanation
+See AWS Doc for the naming conventions for S3 bucketsThe bucket name can be between 3 and 63 characters long, and can contain only lower-case characters, numbers, periods, and dashes.Each label in the bucket name must start with a lowercase letter or number.The bucket name cannot contain underscores, end with a dash, have consecutive periods, or use dashes adjacent to periods.The bucket name cannot be formatted as an IP address (198.51.100.24).For more information on the S3 naming conventions please visit the below link:http://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-s3-bucket-naming-requirements.html
+Question 105: Incorrect
+Describe the process of registering a mobile device with SNS push notification service using GCM. Choose the correct answer from the options below
+
+Explanation
+For Amazon SNS to send notification messages to mobile endpoints, whether it is direct or with subscriptions to a topic, you first need to register the app with AWS. To register your mobile app with AWS, enter a name to represent your app, select the platform that will be supported, and provide your credentials for the notification service platform. After the app is registered with AWS, the next step is to create an endpoint for the app and mobile device. The endpoint is then used by Amazon SNS for sending notification messages to the app and device. For more information on entire mobile process for SNS, please refer to the link: http://docs.aws.amazon.com/sns/latest/dg/mobile-push-send-register.html
+Question 127: Incorrect
+After having created a new Linux instance on Amazon EC2, and downloaded the .pem file (called LAfile.pem) you try and SSH into your IP address (52.2.222.22) using the following command.ssh -i LAfile.pem ec2-user@52.2.222.22However you receive the following error.WARNING: UNPROTECTED PRIVATE KEY FILE!What is the most probable reason for this and how can you fix it?
+
+Explanation
+This sort of error is clearly mentioned In the AWS documentation For more information on this error, please refer to the below link: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesConnecting.html#d0e132832
+Question 129: Incorrect
+When using the Ref function in CloudFormation, what do we get back if we pass in the logical ID of an AWS::EC2::Instance object? Choose the correct answer from the options below
+
+Explanation
+This is clearly given in the AWS documentation For more information on the Cloudformation AWS::EC2::Instance command please visit the below link: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-instance.html
+Question 134: Incorrect
+What is the limit to the number of characters for a topic name in sns? Choose one answer from the options below
+
+Explanation
+Topic names are limited to 256 characters. Alphanumeric characters plus hyphens (-) and underscores (_) are allowed. Topic names must be unique within an AWS account.  For more information on SNS please refer to the below link: https://aws.amazon.com/sns/faqs/
+Question 137: Incorrect
+You've enabled website hosting on a bucket named "demo.com" in the US-East-1 (US standard region). Select the URL you'll receive from AWS as the URL for the bucket. Choose a correct answer from the options below
+
+Explanation
+To host your static website, you configure an Amazon S3 bucket for website hosting and then upload your website content to the bucket. The website is then available at the region-specific website endpoint of the bucket:<bucket-name>.s3-website-<AWS-region>.amazonaws.comFor more information on S3 static web site hosting please visit the below link:http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html
+Question 139: Incorrect
+Which of the following would you not expect to see in an SNS message body?
+
+Explanation
+An example of the notification is shown below , here you can see the Subject but not SubjectId For more information on SNS notification format, please refer to the link: http://docs.aws.amazon.com/sns/latest/dg/json-formats.html
+

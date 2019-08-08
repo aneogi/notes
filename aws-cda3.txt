@@ -1,0 +1,107 @@
+
+Question 8: Incorrect
+A user named john has an AWS account. He has created an AMI in the us-east1 region. Is it possible for him to share the AMI with another user account in AWS? Choose the correct answer from the options below
+
+Explanation
+This is clearly mentioned in the AWS documentation. For more information on how to share AMI’s, please refer to the below link: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/sharingamis-explicit.html
+Question 17: Incorrect
+Can one configure anonymous access to a queue? Choose the correct answer from the options below
+
+Explanation
+As per the AWS documentation, anonymous access is allowed via IAM policies For more information on AWS SQS, please refer to the link: https://aws.amazon.com/sqs/faqs/
+Question 21: Incorrect
+Is there a limit on the number of subnets that can be created per VPC? Choose an answer from the options below.
+
+Explanation
+This is clearly given in the aws documentation For more information on VPC, please refer to the link https://aws.amazon.com/vpc/faqs/
+Question 30: Incorrect
+Which of the following are valid arguments for an SNS Publish request? Choose 3 answers from the options below
+
+Explanation
+An example of the notification is shown below , here you can see the different parts of a SNS message.For more information on SNS request notification format, please refer to the link:https://docs.aws.amazon.com/sns/latest/api/API_Publish.htmlFor more information on SNS notification format, please refer to the link:http://docs.aws.amazon.com/sns/latest/dg/json-formats.htm
+Question 34: Incorrect
+In Cloudformation what is the limit to the number of parameters in the template? Choose an answer from the options below
+
+Explanation
+This is clearly given in the AWS documentation  For more information on the cloudformation please visit the below link: https://aws.amazon.com/cloudformation/faqs/
+Question 55: Incorrect
+Which DynamoDB limits can be raised by contacting AWS support? Choose 2 answers from the options below
+
+Explanation
+Please find the supporting AWS documentationProvisioned throughputsTables per accountFor more information on the service limits for DynamoDB please refer to the link:http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html
+Question 57: Incorrect
+A security system monitors 3000 cameras saving image metadata every 30 seconds to an Amazon DynamoDB. Each sample involves writing 256 bytes of data and the writes are evenly distributed over time.How much write throughput is required for the target table. Choose an answer from the options below
+
+Explanation
+When we round off the item size to 1KB, we get 1 write per item. Since there are 3000 cameras saving data every 30 seconds , means that there are 3000 writes per 30 seconds and (3000/30) = 100 writes per second. For more information on provisioned throughtput, please refer to the below URL: http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ProvisionedThroughput.html
+Question 68: Incorrect
+What AWS products and features can be deployed by Elastic Beanstalk? Choose 3 answers from the options below
+
+Explanation
+This is clearly given in the AWS documentation For more information on elastic beanstalk, please refer to the below URL: http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html
+Question 71: Incorrect
+Can data be saved when a stack is deleted in Cloudformation? Choose the correct answer from the options below
+
+Explanation
+AWS CloudFormation allows you to define deletion policies for resources in the template. You can specify that snapshots be created for Amazon EBS volumes or Amazon RDS database instances before they are deleted. You can also specify that a resource should be preserved and not deleted when the stack is deleted. This is useful for preserving Amazon S3 buckets when the stack is deleted.
+Question 73: Incorrect
+How can you ensure maximum protection of preserved versions in S3? Choose one answer from the options below.
+
+Explanation
+This is clearly given in the AWS documentation For more information on S3 please visit the below link: https://aws.amazon.com/s3/faqs/
+Question 85: Incorrect
+While working with the S3 API you receive the error: 403 forbidden. What is the most likely cause of this? Choose a correct answer from the options below
+
+Explanation
+This is clearly mentioned in the AWS documentation For more information on S3 error responses please visit the below link: http://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html
+Question 92: Incorrect
+Which of the following are valid arguments for an SNS Publish request? Choose 3 answers from the options below
+
+Explanation
+For more information on SNS notification format, please refer to the link: http://docs.aws.amazon.com/sns/latest/dg/json-formats.html
+Question 100: Incorrect
+S3 does not generally handle error codes with HTTP responses. Choose the correct answer from the options below
+
+Explanation
+When there is an error, the header information contains: Content-Type: application/xml An appropriate 3xx, 4xx, or 5xx HTTP status code For more information on S3 error codes please visit the below link: http://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html
+Question 101: Incorrect
+A corporate web application is deployed within an Amazon VPC, and is connected to the corporate data center via IPSec VPN. The application must authenticate against the on-premise LDAP server. Once authenticated, logged-in users can only access an S3 keyspace specific to the user. Which two approaches can satisfy the objectives?Choose 2 answers from the options below
+
+Explanation
+If you already manage user identities outside of AWS, you can use IAM identity providers instead of creating IAM users in your AWS account. With an identity provider , you can manage your user identities outside of AWS and give these external user identities permissions to use AWS resources in your account. This is useful if your organization already has its own identity system, such as a corporate user directory. It is also useful if you are creating a mobile app or web application that requires access to AWS resources.Option B is incorrect as it Needs to authenticate against LDAP and not IAM.Option C is incorrect as Need to authenticate with LDAPOption D is incorrect as Can’t login to IAM using LDAP credentialsFor more information on identity providers please visit the below link:http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers.html
+Question 104: Incorrect
+Which statements about DynamoDB are true? Choose 2 answers from the options below
+
+Explanation
+Optimistic locking is a strategy to ensure that the client-side item that you are updating (or deleting) is the same as the item in DynamoDB. If you use this strategy, then your database writes are protected from being overwritten by the writes of others — and vice-versa To help clients coordinate writes to data items, DynamoDB supports conditional writes for PutItem, DeleteItem, and UpdateItem operations. With a conditional write, an operation succeeds only if the item attributes meet one or more expected conditions; otherwise it returns an error For more information on working with items , please visit the link: http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithItems.html
+Question 107: Incorrect
+How can you secure data at rest on an EBS volume? Choose an answer from the options below
+
+Explanation
+EBS encryption can be enabled during the creation of an EBS volume. For an existing EBS volume , you need to use the encryption available at the Operating system level URL: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
+Question 115: Incorrect
+The only SNS notification event supported by S3 is S3:ReducedRedundancyLostObject. Choose the correct answer from the options below
+
+Explanation
+Currently, Amazon S3 can publish the following events:A new object created event—Amazon S3 supports multiple APIs to create objects. You can request notification when only a specific API is used (e.g., s3:ObjectCreated:Put) or you can use a wildcard (e.g., s3:ObjectCreated:*) to request notification when an object is created regardless of the API used.An object removal event—Amazon S3 supports deletes of versioned and unversioned objects. You can request notification when an object is deleted or a versioned object is permanently deleted by using the s3:ObjectRemoved:Delete event type. Or you can request notification when a delete marker is created for a versioned object by usings3:ObjectRemoved:DeleteMarkerCreated. You can also use a wildcards3:ObjectRemoved:* to request notification anytime an object is deleted.A Reduced Redundancy Storage (RRS) object lost event—Amazon S3 sends a notification message when it detects that an object of the RRS storage class has been lost.For more information on S3 event notifications please visit the below link:http://docs.aws.amazon.com/AmazonS3/latest/dev/NotificationHowTo.html
+Question 116: Incorrect
+AWSTemplateFormatVersion declaration is required for the template to work inside CloudFormation. Choose an answer from the options below
+
+Explanation
+The AWSTemplateFormatVersion section (optional) identifies the capabilities of the template. The latest template format version is 2010-09-09 and is currently the only valid value. For more information on the AWSTemplateFormatVersion  please refer to the below link: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/format-version-structure.html
+Question 119: Incorrect
+You have been requested to ensure that for your application all data in EBS is secured at rest. How can you achieve this? Choose an answer from the options below
+
+Explanation
+EBS encryption can be enabled during the creation of an EBS volume. For an existing EBS volume , you need to use the encryption available at the Operating system level. URL: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
+Question 127: Incorrect
+Can you have 10 local secondary indexes on a table?  Choose a correct answer from the options below
+
+Explanation
+This is clearly mentioned in the AWS documentation For more information on DynamoDB please visit the below link: https://aws.amazon.com/dynamodb/faqs/
+Question 136: Incorrect
+True or False. Can a global secondary index created at the same time as the table creation.
+
+Explanation
+This is clearly given in the AWS documentation For more information on DynamoDB Indexes, please visit the link: http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SecondaryIndexes.html
+
