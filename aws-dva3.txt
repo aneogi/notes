@@ -1,0 +1,298 @@
+
+Question 2: Incorrect
+A company is deploying lambda code with has external third-party dependencies with lot of environment variables. When deploying the code, they are encountering a CodeStorageExceededException error. The compressed zip deployment package size is around 20MB while the uncompressed size with 200MB. What can be the issue?
+
+Explanation
+
+Correct answer is D as the total size of the environment variables might have exceeded 4KB.
+
+Refer AWS documentation - Lambda limits
+
+AWS Lambda Deployment Limits
+Item 	Default Limit
+Lambda function deployment package size (compressed .zip/.jar file) 	50 MB
+Total size of all the deployment packages that can be uploaded per region 	75 GB
+
+Size of code/dependencies that you can zip into a deployment package (uncompressed .zip/.jar size).
+
+Note
+
+Each Lambda function receives an additional 500MB of non-persistent disk space in its own /tmp directory. The /tmp directory can be used for loading additional resources like dependency libraries or data sets during function initialization.
+	250 MB
+Total size of environment variables set 	4 KB
+AWS Lambda Limit Errors
+
+Functions that exceed any of the limits listed in the previous limits tables will fail with an exceeded limitsexception. These limits are fixed and cannot be changed at this time. For example, if you receive the exception CodeStorageExceededException or an error message similar to "Code storage limit exceeded" from AWS Lambda, you need to reduce the size of your code storage.
+
+Option A is wrong as max limit is 50MB
+
+Option B & C are wrong as max compressed size is 250MB
+Question 4: Incorrect
+In relation to Amazon Simple Workflow Service (Amazon SWF), What is an "Activity Worker"?
+
+Explanation
+
+Correct answer is C, as with SWF an activity worker is a program that receives activity tasks, performs them, and provides results back. Which translates to a piece of software that implements tasks.
+
+Refer AWS documentation - SWF Activity Worker
+
+An activity worker provides the implementation of one or more activity types. An activity worker communicates with Amazon SWF to receive activity tasks and perform them. You can have a fleet of multiple activity workers performing activity tasks of the same activity type.
+Question 7: Incorrect
+In AWS Elastic Beanstalk Worker Environment, if the application returns any response other than 200 OK or there is no response within the configured InactivityTimeout period, ____.
+
+Explanation
+
+Correct answer is A as if the application does not return success the Elastic Beanstalk Daemon would put the message back to queue.
+
+Refer AWS documentation - Elastic Beanstalk - Worker Env
+
+Worker environments run a daemon process provided by Elastic Beanstalk
+
+When the application in the worker environment returns a 200 OK response to acknowledge that it has received and successfully processed the request, the daemon sends a DeleteMessage call to the SQS queue so that the message will be deleted from the queue. If the application returns any response other than 200 OK, then Elastic Beanstalk waits to put the message back in the queue after the configured ErrorVisibilityTimeout period. If there is no response, then Elastic Beanstalk waits to put the message back in the queue after the InactivityTimeout period so that the message is available for another attempt at processing.
+Question 9: Incorrect
+A company has deployed their lambda function. The lambda function is running successfully. However, there are no CloudWatch logs even after 10 minutes? What could be the reason?
+
+Explanation
+
+Correct answer is B as Lambda automatically integrates with CloudWatch Logs and pushes all logs from your code to a CloudWatch Logs group associated with a Lambda function, which is named /aws/lambda/<function name>. However, for Lambda to interact with services permissions need to be explicitly granted.
+
+Refer AWS documentation - Lambda Execution Role
+
+When the Lambda function in this tutorial executes, it needs permissions to write logs to Amazon CloudWatch. You grant these permissions by creating an IAM role (execution role). AWS Lambda assumes this role when executing your Lambda function on your behalf. In this section, you create an IAM role using the following predefined role type and access policy:
+
+    AWS service role of the "AWS Lambda" type. This role grants AWS Lambda permission to assume the role.
+    "AWSLambdaBasicExecutionRole" access policy that you attach to the role. This existing policy grants permissions that include permissions for Amazon CloudWatch actions that your Lambda function needs.
+
+Question 10: Incorrect
+Your CloudFormation template launches a two-tier web application in us-east-1. When you attempt to create a development stack in us-west-1, the process fails. What could be the problem?
+
+Explanation
+
+Correct answer is A as AMIs are stored in a region and cannot be accessed in other regions. To use the AMI in another region, you must copy it to that region. IAM roles are valid across the entire account.
+
+Refer AWS documentation - EC2 Resources
+
+AMIs
+	
+
+Regional
+	
+
+An AMI is tied to the region where its files are located within Amazon S3. You can copy an AMI from one region to another. For more information, see Copying an AMI.
+Question 12: Incorrect
+A user has created photo editing software and hosted it on EC2. The software accepts requests from the user about the photo format and resolution and sends a message to S3 to enhance the picture accordingly. Which of the below mentioned AWS services will help make a scalable software with the AWS infrastructure in this scenario?
+
+Explanation
+
+Correct answer is C as SQS can be used to architect a scalable software by decoupling the requests and scaling dynamically as per the load
+
+Refer AWS documentation - SQS
+
+Amazon Simple Queue Service (Amazon SQS) offers a reliable, highly-scalable hosted queue for storing messages as they travel between applications or microservices. It moves data between distributed application components and helps you decouple these components
+
+Option A is wrong as Elastic Transcoder helps transcode videos to different formats.
+
+Option B is wrong as SNS is a notification service
+
+Option C is wrong as Glacier is more of an archival solution
+Question 24: Incorrect
+You have a massive social networking application which is already deployed on North Virginia region with around 100 EC2 instances, you want to deploy your application to multiple regions for better availability. You don't want to handle multiple key pairs and want to reuse existing key pairs from North Virginia region. How will you accomplish this?
+
+Explanation
+
+Correct answer is C as you can have your own keys and import them using console of command line.
+
+Refer AWS EC2 Bring Your Own Keypair: & Import Key Pair CLI
+
+Option A is wrong as key pairs have region level scope
+
+Option B is wrong as there is no copy key command but import key pair exists
+
+Option D is wrong as Copying AMI does not copy the key, but the key should be available for the AMI to work
+Question 26: Incorrect
+You are building an online store on AWS that uses Standard SQS queues to process your customer orders. Your backend system needs those messages in the same sequence the customer orders have been put in. How can you achieve that?
+
+Explanation
+
+Correct answer is B as you can use sequencing within the message or use FIFO queues.
+
+Refer AWS documentation - SQS FAQs
+
+Q: Does Amazon SQS provide message ordering?
+
+Yes. FIFO (first-in-first-out) queues preserve the exact order in which messages are sent and received. If you use a FIFO queue, you don't have to place sequencing information in your messages. For more information, see FIFO Queue Logic in the Amazon SQS Developer Guide.
+
+Standard queues provide a loose-FIFO capability that attempts to preserve the order of messages. However, because standard queues are designed to be massively scalable using a highly distributed architecture, receiving messages in the exact order they are sent is not guaranteed.
+Question 32: Incorrect
+
+A company wants to use CodeDeploy to perform in place deployment of an application. What's the run order of the lifecycle event hooks available for each application deployment?
+
+Explanation
+
+Correct answer is C as the run order for in place deployments follows the following pattern ApplicationStop -> BeforeInstall -> AfterInstall -> ApplicationStart -> ValidateService
+
+Refer AWS documentation - CodeDeploy AppSpec hooks
+
+
+
+Question 42: Incorrect
+An organization is setting up their website on AWS. The organization is working on various security measures to be performed on the AWS EC2 instances. Which of the below mentioned security mechanisms will not help the organization to avoid future data leaks and identify security weaknesses?
+
+Explanation
+
+Correct answer is D as Code Check for memory will only help in targeting performance issues.
+
+Refer AWS Security Whitepaper
+
+Other options help avoid future data leaks and identify security weaknesses. Perform penetration testing as performed by attackers to find any vulnerability with prior approval from AWS. Hardening testing to find if there are any unnecessary ports open Perform SQL injection to find any DB security issues.
+Question 48: Incorrect
+Does Amazon DynamoDB support both increment and decrement atomic operations?
+
+Explanation
+
+Correct answer is D
+
+Refer AWS documentation - DynamoDB FAQs
+
+Q: Does DynamoDB support in-place atomic updates?
+
+Amazon DynamoDB supports fast in-place updates. You can increment or decrement a numeric attribute in a row using a single API call. Similarly, you can atomically add or remove to sets, lists, or maps
+Question 50: Incorrect
+
+A developer wants to automate the deployment of a serverless application. What are the steps to using the AWS CLI to launch a templatized serverless application?
+
+Explanation
+
+Correct answer is C as Serverless Application Model deployment uses CloudFormation underlying and the deployment can be performed using the package and the deploy command.
+
+Refer AWS documentation - Serverless Deployment
+
+AWS SAM uses AWS CloudFormation as the underlying deployment mechanism.
+
+You can deploy your application by using AWS SAM command line interface (CLI) commands. You can also use other AWS services that integrate with AWS SAM to automate your deployments.
+
+After you develop and test your serverless application locally, you can deploy your application by using the sam package and sam deploy commands.
+
+Note - Both the sam package and sam deploy commands described in this section are identical to their AWS CLI equivalent commands aws cloudformation package and aws cloudformation deploy, respectively.
+Question 51: Incorrect
+
+A large e-commerce site is being designed to deliver static objects from Amazon S3. The Amazon S3 bucket will server more than 300 GET requests per second. What should be done to optimize performance? (Select TWO)
+
+Explanation
+
+Correct answers are A & E as S3 recommends using random prefix for scalability of all requests and if the requests are GET-intensive use CloudFront to cache the requests to reduce load from S3
+
+NOTE - Circa July 2018, there has been a significant change in S3 performance numbers and the following is not valid. However, the exams are not updated for the same.
+
+Refer AWS documentation - S3 Performance
+
+The Amazon S3 best practice guidance given in this topic is based on two types of workloads:
+
+    Workloads that include a mix of request types – If your requests are typically a mix of GET, PUT, DELETE, or GET Bucket (list objects), choosing appropriate key names for your objects ensures better performance by providing low-latency access to the Amazon S3 index. It also ensures scalability regardless of the number of requests you send per second.
+    Workloads that are GET-intensive – If the bulk of your workload consists of GET requests, we recommend using the Amazon CloudFront content delivery service.
+
+Option B is wrong as S3 cross region replication is for disaster recovery or compliance and helps maintain copies of data across regions.
+
+Option C is wrong as deleting server logs file do not impact performance.
+
+Option D is wrong as S3 lifecycle rules are to help transition objects to a different storage class or to expire objects.
+Question 53: Incorrect
+
+A company is migrating its on-premises database to Amazon RDS for MySQL. The company has read-heavy workloads and wants to make sure they re-factor their code to achieve optimum read performance for its queries. How can this objective be met?
+
+Explanation
+
+Correct answer is C as a Read Replica can help serve the read queries, thereby reducing the load on the primary database. The application needs to be refactored to use the RDS read replica connection string.
+
+Refer AWS documentation - RDS Read Replica
+
+Amazon RDS Read Replicas provide enhanced performance and durability for database (DB) instances. This feature makes it easy to elastically scale out beyond the capacity constraints of a single DB instance for read-heavy database workloads. You can create one or more replicas of a given source DB Instance and serve high-volume application read traffic from multiple copies of your data, thereby increasing aggregate read throughput. Read replicas can also be promoted when needed to become standalone DB instances.
+
+Option A is wrong as retries would increase the load on RDS and it has a limited vertical scaling ability.
+
+Option B is wrong as Multi-AZ is for high availability and does not help improve read performance.
+
+Option D is wrong as the connection string needs to be used by the application and not EC2 instance.
+Question 56: Incorrect
+
+A Developer is developing an application that manages financial transactions. To improve security, multi-factor authentication (MFA) will be required as part of the login protocol. What services can the Developer use to meet these requirements?
+
+Explanation
+
+Correct answer is B as Cognito provides the ability to authenticate with a two factor authentication using MFA.
+
+Refer AWS documentation - Cognito MFA Managing Security
+
+You can add multi-factor authentication (MFA) to a user pool to protect the identity of your users. MFA adds a second authentication method that doesn't rely solely on user name and password. You can choose to use SMS text messages, or time-based one-time (TOTP) passwords as second factors in signing in your users. You can also use adaptive authentication with its risk-based model to predict when you might need another authentication factor. It's part of the user pool advanced security features, which also include protections against compromised credentials.
+
+Option A is wrong as DynamoDB and SNS cannot be used to implement dynamic two factor authentication.
+
+Option C is wrong as AWS Directory Service for Microsoft Active Directory, also known as AWS Managed Microsoft AD, enables your directory-aware workloads and AWS resources to use managed Active Directory in the AWS Cloud.
+
+Option D is wrong as IAM with MFA is available for users trying to access AWS services.
+Question 60: Incorrect
+
+A Company is developing a social media application which allows users to share pics within their follower’s circle. User and follower’s data are currently stored in DynamoDB. They want to automatically notify the mobile devices of all friends in a circle as soon as a user uploads a new selfie with a sub millisecond response. Currently the notifications are taking few milliseconds even with high provisioned throughput on DynamoDB. How can the read performance on DynamoDB be improved further?
+
+Explanation
+
+Correct answer is B as DynamoDB Accelerator helps provide caching for DynamoDB to give a 10x microseconds performance.
+
+Refer AWS documentation - DynamoDB DAX
+
+Amazon DynamoDB Accelerator (DAX) is a fully managed, highly available, in-memory cache for DynamoDB that delivers up to a 10x performance improvement – from milliseconds to microseconds – even at millions of requests per second. DAX does all the heavy lifting required to add in-memory acceleration to your DynamoDB tables, without requiring developers to manage cache invalidation, data population, or cluster management.
+
+While DynamoDB offers consistent single-digit millisecond latency, DynamoDB + DAX takes performance to the next level with response times in microseconds for millions of requests per second for read-heavy workloads. With DAX, your applications remain fast and responsive, even when a popular event or news story drives unprecedented request volumes your way. No tuning required.
+Question 62: Incorrect
+
+An employee keeps terminating EC2 instances on the production environment. You've determined the best way to ensure this doesn't happen is to add an extra layer of defense against terminating the instances. What is the best method to ensure the employee does not terminate the production instances? Choose 2 answers
+
+Explanation
+
+Correct answer are A & B as the restrictions can be added by tagging the instances and either explicitly allowing the user to start/stop but not terminate the instances or denying user to terminate the instance.
+
+Option C & D are wrong as MFA will not prevent the user from terminating the instance, but just adds and additional layer of security.
+Question 65: Incorrect
+
+You are planning on using AWS Code Deploy in your AWS environment. Which of the following deployment types are available with CodeDeploy?
+
+Explanation
+
+Correct answers are A & D as CodeDeploy supports In-place and Blue/Green deployment types.
+
+Refer AWS documentation - CodeDeploy Deployment Types
+
+CodeDeploy provides two deployment type options, in-place deployments and blue/green deployments.
+
+    In-place deployment: The application on each instance in the deployment group is stopped, the latest application revision is installed, and the new version of the application is started and validated. You can use a load balancer so that each instance is deregistered during its deployment and then restored to service after the deployment is complete. Only deployments that use the EC2/On-Premises compute platform can use in-place deployments.
+    Blue/green deployment: The behavior of your deployment depends on which compute platform you use:
+        Blue/green on an EC2/On-Premises compute platform: The instances in a deployment group (the original environment) are replaced by a different set of instances (the replacement environment) using these steps:
+            Instances are provisioned for the replacement environment.
+            The latest application revision is installed on the replacement instances.
+            An optional wait time occurs for activities such as application testing and system verification.
+            Instances in the replacement environment are registered with an Elastic Load Balancing load balancer, causing traffic to be rerouted to them. Instances in the original environment are deregistered and can be terminated or kept running for other uses.
+        NoteIf you use an EC2/On-Premises compute platform, be aware that blue/green deployments work with Amazon EC2 instances only.
+        Blue/green on an AWS Lambda compute platform: Traffic is shifted from your current serverless environment to one with your updated Lambda function versions. You can specify Lambda functions that perform validation tests and choose the way in which the traffic shift occurs. All AWS Lambda compute platform deployments are blue/green deployments. For this reason, you do not need to specify a deployment type.
+        Blue/green on an Amazon ECS compute platform: Traffic is shifted from the task set with the original version of a containerized application in an Amazon ECS service to a replacement task set in the same service. The protocol and port of a specified load balancer listener is used to reroute production traffic. During a deployment, a test listener can be used to serve traffic to the replacement task set while validation tests are run.
+
+Question 66: Incorrect
+
+A company is planning on using AWS CodePipeline for their underlying CI/CD process. The code will be picked up from an S3 bucket. The company policy mandates that all data should be encrypted at rest. Which of the following measures would you take to ensure that the CI/CD process conforms to this policy? Choose 2
+
+Explanation
+
+Correct answers are A & D as CodePipeline can be used with S3 buckets with Server Side Encryption enabled using KMS or Customer-managed KMS keys.
+
+Refer AWS documentation - CodePipeline S3 Encryption
+
+There are two ways to configure server-side encryption for Amazon S3 artifacts:
+
+    CodePipeline creates an Amazon S3 artifact bucket and default AWS-managed SSE-KMS encryption keys when you create a pipeline using the Create Pipeline wizard. The master key is encrypted along with object data and managed by AWS.
+    You can create and manage your own customer-managed SSE-KMS keys.
+
+If you are using the default Amazon S3 key, you cannot change or delete this AWS-managed key. If you are using a customer-managed key in AWS KMS to encrypt or decrypt artifacts in the Amazon S3 bucket, you can change or rotate this key as necessary.
+
+Option B is wrong as server-side encryption needs to be enabled on S3 and not on the CodePipeline stage
+
+Option C is wrong as CloudHSM cannot be integrated with CodePipeline.
+
