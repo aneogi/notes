@@ -1,0 +1,218 @@
+Question 12: Incorrect
+Your application triggers events that must be delivered to all your partners. The exact partner list is constantly changing: some partners run a highly available endpoint, and other partners'endpoints are online only a few hours each night. Your application is mission-critical, and communication with your partners must not introduce delay in its operation. A delay in delivering the event to one partner cannot delay delivery to other partners. What is an appropriate way to code this?
+
+Explanation
+
+Correct answer is D as there are two challenges here: the command must be “fanned out” to a variable pool of partners, and your app must be decoupled from the partners because they are not highly available. Sending the command as an SNS message achieves the fan-out via its publication/subscribe model, and using an SQS queue for each partner decouples your app from the partners.
+
+Option A is wrong as it would be difficult to write an Amazon SWF workflow for a rapidly changing set of partners.
+
+Option C is wrong as writing the message to each queue directly would cause more latency for your app and would require your app to monitor which partners were active.
+Question 14: Incorrect
+
+You have an asynchronous processing application using an Auto Scaling Group and an SQS Queue. The Auto Scaling Group scales according to the depth of the job queue. The completion velocity of the jobs have gone down, the Auto Scaling Group size has maxed out, but the inbound job velocity did not increase. What is a possible issue?
+
+Explanation
+
+Correct answer is A as other options would cause the job to stop processing completely, the only reasonable option seems that some of the recent messages must be malformed and unprocessable.
+
+Option B is wrong as If changed, none of the jobs would be processed
+
+Option C is wrong as If IAM role changed no jobs would be processed
+
+Option D is wrong as scaling metric did work fine as the autoscaling caused the instances to increase
+Question 16: Incorrect
+When using an Elastic Load Balancer to serve traffic to web servers, which one of the following is true?
+
+Explanation
+
+Correct answer is D as the ELB and EC2 instance must be in the same VPC
+
+Refer AWS documentation - ELB Classic Getting Started
+
+Option A & C is wrong as ELB can span public subnets and can be used to route traffic across webservers hosted on private subnets.
+
+Option B is wrong as the security groups should be different for ELB and EC2 instances with different rules.
+Question 19: Incorrect
+A user has created a blank EBS volume in the US-East-1 region. The user is unable to attach the volume to a running instance in the same region. What could be the possible reason for this?
+
+Explanation
+
+Correct answer is B as an EBS volume is AZ scope and cannot be attached to an instance outside the EBS volume AZ.
+
+Refer AWS documentation - EBS volumes
+
+Amazon Elastic Block Store (Amazon EBS) provides block level storage volumes for use with EC2 instances. EBS volumes are highly available and reliable storage volumes that can be attached to any running instance that is in the same Availability Zone. EBS volumes that are attached to an EC2 instance are exposed as storage volumes that persist independently from the life of the instance.
+Question 21: Incorrect
+A user is planning to use EBS for his DB requirement. The user already has an EC2 instance running in the VPC private subnet. How can the user attach the EBS volume to a running instance?
+
+Explanation
+
+Correct answer is B as the EBS volume should be in the same AZ as the EC2 instance.
+
+Refer AWS documentation - EBS features
+
+An EBS volume can be attached to only one instance at a time within the same Availability Zone. However, multiple volumes can be attached to a single instance. If you attach multiple volumes to a device that you have named, you can stripe data across the volumes for increased I/O and throughput performance.
+Question 24: Incorrect
+A Company wants to migrate their microservices application to AWS and completely switch to serverless architecture. Which services would help the company achieve it?
+
+Explanation
+
+Correct answer is A as API Gateway with Lambda provides a complete serverless architecture, where the user need not provision any server instances and handling is completely done by AWS dynamically.
+
+Option B is wrong as EC2 needs to be provisioned
+
+Option C is wrong as ECS needs EC2 instances to be provisioned
+
+Option D is wrong as S3 cannot be used to host dynamic services
+Question 32: Incorrect
+Which DynamoDB limits can be raised by contacting AWS support? Choose 2 answers
+
+Explanation
+
+Correct answers are C & E as Provisioned Throughput and Tables can be changed by raising a request.
+
+Refer AWS documentation - DynamoDB limits
+Provisioned Throughput Minimums and Maximums
+
+For any table or global secondary index, the minimum settings for provisioned throughput are 1 read capacity unit and 1 write capacity unit.
+
+An AWS account places some initial maximum limits on the throughput you can provision:
+
+    US East (N. Virginia) Region:
+        Per table – 40,000 read capacity units and 40,000 write capacity units
+        Per account – 80,000 read capacity units and 80,000 write capacity units
+    All Other Regions:
+        Per table – 10,000 read capacity units and 10,000 write capacity units
+        Per account – 20,000 read capacity units and 20,000 write capacity units
+
+The provisioned throughput limit includes the sum of the capacity of the table together with the capacity of all of its global secondary indexes.
+
+To request a service limit increase see https://aws.amazon.com/support.
+Table Size
+
+There is no practical limit on a table's size. Tables are unconstrained in terms of the number of items or the number of bytes.
+Tables Per Account
+
+For any AWS account, there is an initial limit of 256 tables per region.
+
+To request a service limit increase see https://aws.amazon.com/support.
+Question 37: Incorrect
+
+A company is planning to migrate their application to AWS. The Application currently uses an in-memory cookie to manage the session. The company wants to refactor the application to make the application elastic and also reduce the load on backend servers. What combination best suits the needs?
+
+Explanation
+
+Correct answer is B as ElastiCache can be used to externalize the application state information and hence making the application stateless. Disabling the ELB stickiness, helps applications scale and the users request can be redirected to any servers and it not tied down to a single server, making the application more elastic.
+
+Option A & D are wrong enabling ELB stickiness would restrict the application elasticity
+
+Option C & D are wrong as RDS is not ideal for state management as compared to ElastiCache
+Question 41: Incorrect
+
+Given the source code for an AWS Lambda function in the local store.py containing a handler function called get_store and the following AWS CloudFormation template:
+
+    Transform: AWS:Serverless-2016-10-31
+    Resources:
+        StoreFunc: 
+            Type: AWS::Serverless:Function
+            Properties:
+            Handler: store.get_store
+            Runtime: python3.6
+
+What should be done to prepare the template so that it can be deployed using the AWS CLI command aws cloudformation deploy?
+
+Explanation
+
+Correct answer is B as aws cloudformation package helps upload the artifact to S3 and return the template with the updated artifact path.
+
+Refer AWS documentation - CloudFormation Upload Artifacts to S3
+
+For some resource properties that require an Amazon S3 location (a bucket name and filename), you can specify local references instead. For example, you might specify the S3 location of your AWS Lambda function's source code or an Amazon API Gateway REST API's OpenAPI (formerly Swagger) file. Instead of manually uploading the files to an S3 bucket and then adding the location to your template, you can specify local references, called local artifacts, in your template and then use the package command to quickly upload them. A local artifact is a path to a file or folder that the package command uploads to Amazon S3. For example, an artifact can be a local path to your AWS Lambda function's source code or an Amazon API Gateway REST API's OpenAPI file.
+
+If you specify a file, the command directly uploads it to the S3 bucket. After uploading the artifacts, the command returns a copy of your template, replacing references to local artifacts with the S3 location where the command uploaded the artifacts. Then, you can use the returned template to create or update a stack.
+Question 46: Incorrect
+
+A company is using AWS CodeBuild to compile a website from source code stored in AWS CodeCommit. A recent change to the source code has resulted in the CodeBuild project being unable to successfully compile the website. How should the Developer identify the cause of the failures?
+
+Explanation
+
+Correct answer is C as the build failure can be debugged using the build history and detailed logs.
+
+Refer AWS documentation - CodeBuild FAQs
+
+Q: How can I view past build results?
+
+You can access your past build results through the console, CloudWatch, or the API. The results include outcome (success or failure), build duration, output artifact location, and log location. With the CodeBuild dashboard, you can view metrics to understand build behavior over time. The dashboard displays number of builds attempted, succeeded, and failed, as well as build duration. You can also visit the CloudWatch console to view more detailed build metrics. To learn more about monitoring CodeBuild with CloudWatch, visit our documentation.
+
+Q: How can I debug a past build failure?
+
+You can debug a build by inspecting the detailed logs generated during the build run or you can use CodeBuild Local to locally test and debug your builds.
+
+Option A is wrong as CodeBuild, by default, redirects the logs to CloudWatch.
+
+Option B is wrong as AWS X-Ray helps developers analyze and debug production, distributed applications, such as those built using a microservices architecture and would not help debug build failures.
+
+Option D is wrong as manually rebuild needs to be done using CodeBuild local option for debugging.
+Question 52: Incorrect
+
+An organization has created a Queue named “modularqueue” with SQS. The organization is not performing any operations such as SendMessage, ReceiveMessage, DeleteMessage, GetQueueAttributes, SetQueueAttributes, AddPermission, and RemovePermission on the queue. What can happen in this scenario?
+
+Explanation
+
+Correct answer is B
+
+Refer AWS documentation - SQS Developer Guide
+
+We reserve the right to delete a queue without notification if one of the following actions hasn't been performed on it for 30 consecutive days
+Question 53: Incorrect
+
+When thinking of AWS Elastic Beanstalk's model, which is true?
+
+Explanation
+
+Correct answer is C as Applications group logical services. Environments belong to Applications, and typically represent different deployment levels (dev, stage, prod, forth). Deployments belong to environments, and are pushes of bundles of code for the environments to run.
+Question 56: Incorrect
+A company has deployed their application using X-Ray with Lambda. They want to enable X-ray trace. What steps are required to be provided to Lambda to enable tracing?
+
+Explanation
+
+Correct answer is C as AWSXrayWriteOnlyAccess is required to enable Lambda function to upload segments to X-Ray which include the PutTelemetryRecords & PutTraceSegments permissions.
+
+Refer AWS documentation - Enabling X-Ray
+
+AWSXrayWriteOnlyAccess – Write permissions for using the X-Ray daemon, AWS CLI, or AWS SDK to upload segment documents and telemetry to the X-Ray API.
+
+<code>{     "Version": "2012-10-17",     "Statement": [         {             "Effect": "Allow",             "Action": [                 "xray:PutTraceSegments",                 "xray:PutTelemetryRecords"             ],             "Resource": [                 "*"             ]         }     ] }</code> 
+
+Question 60: Incorrect
+If you're unable to connect via SSH to your EC2 instance, which of the following should you check and possibly correct to restore connectivity?
+
+Explanation
+
+Correct answer is D as the instance security group needs to permit TCP on port 22 from the specific IP.
+
+Option A is wrong as egress is for outbound and 443 is usually for HTTPS.
+
+Option B is wrong as the IAM user should have the permission to modify the security group and not an IAM role for EC2 instance.
+
+Option C is wrong as ICMP is required only for pings
+Question 65: Incorrect
+
+You have an OpsWorks stack defined with Linux instances. You have executed a recipe, but the execution has failed. What is one of the ways that you can use to diagnose what was the reason why the recipe did not execute correctly?
+
+Explanation
+
+Correct answer is C as the OpsWorks recipe failure can be debugged by logging into the failed instance and checking Chef logs.
+
+Refer AWS documentation - OpsWorks Debugging Recipes
+
+If a recipe fails, the instance will end up in the setup_failed state instead of online. Even though the instance is not online as far as AWS OpsWorks Stacks is concerned, the EC2 instance is running and it's often useful to log in to troubleshoot the issue. For example, you can check whether an application or custom cookbook is correctly installed.
+
+Option A is wrong as CloudTrail is a service that enables governance, compliance, operational auditing, and risk auditing of your AWS account. It does not track OpsWorks logs.
+
+Option B is wrong as AWS Config is a service that enables you to assess, audit, and evaluate the configurations of your AWS resources.
+
+Option D is wrong as EC2 logs would not indicate recipe failure logs.
+
+ 
