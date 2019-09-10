@@ -1,0 +1,271 @@
+
+-------------------------------------
+Question 10: Incorrect
+
+Your team is using the AWS CodeBuild service for an application build. As part of Integration testing during the build phase, the application needs to access an RDS instance in a private subnet.
+
+How can you ensure this is possible?
+
+Explanation
+
+Correct Answer - B
+
+This is given in the AWS Documentation
+
+Typically, resources in an VPC are not accessible by AWS CodeBuild. To enable access, you must provide additional VPC-specific configuration information as part of your AWS CodeBuild project configuration. This includes the VPC ID, the VPC subnet IDs, and the VPC security group IDs. VPC-enabled builds are then able to access resources inside your VPC. 
+
+VPC connectivity from AWS CodeBuild builds makes it possible to:
+
+    Run integration tests from your build against data in an Amazon RDS database that's isolated on a private subnet.
+    Query data in an Amazon ElastiCache cluster directly from tests.
+    Interact with internal web services hosted on Amazon EC2, Amazon ECS, or services that use internal Elastic Load Balancing.
+
+Since the requirements are clearly mentioned in the documentation , all other options are incorrect
+
+For more information on VPC support for AWS CodeBuild, please refer to the below URL
+
+    https://docs.aws.amazon.com/codebuild/latest/userguide/vpc-support.html
+
+
+-------------------------------------
+Question 14: Incorrect
+
+You're planning on using the DataPipeline service to transfer data from Amazon S3 to Redshift. You need to define the source and destination locations.
+
+Which of the following part of the DataPipeline service allows you to define these locations?
+
+Explanation
+
+Correct Answer – A
+
+This is given in the AWS Documentation
+
+Option B is incorrect since the Task Runner is an application that polls AWS Data Pipeline for tasks and then performs those tasks.
+
+Option C is incorrect since an activity is a pipeline component that defines the work to perform
+
+Option D is incorrect since a resource is the computational resource that performs the work that a pipeline activity specifies
+
+For more information on Data Nodes, please refer to the below URL
+
+    https://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-concepts-datanodes.html
+
+
+-------------------------------------
+Question 20: Incorrect
+
+Your team is working on an application that will connect to a MySQL RDS Instance. The security mandate is that the connection to the application needs to be encrypted.
+
+How can you accomplish this?
+
+Explanation
+
+Correct Answer – C
+
+The AWS Documentation mentions the following
+
+Option A is incorrect since this is used for programmatic access for a user
+
+Option B is incorrect since this is used for connection to an EC2 Instance
+
+Option D is incorrect since is normally used for encrypting data at rest or before data is sent in transit
+
+For more information on using RDS with SSL, please refer to the below URL
+
+    https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html
+
+
+-------------------------------------
+Question 23: Incorrect
+
+You are using a custom tool known as POSTMAN to make API requests to resources in AWS. Part of the job of sending requests is to sign the request.
+
+Which of the following would you use to sign the API requests made to AWS?
+
+Explanation
+
+Correct Answer – D
+
+The AWS Documentation mentions the following
+
+When you send HTTP requests to AWS, you sign the requests so that AWS can identify who sent them. You sign requests with your AWS access key, which consists of an access key ID and secret access key. Some requests do not need to be signed, such as anonymous requests to Amazon Simple Storage Service (Amazon S3) and some API operations in AWS Security Token Service (AWS STS) such as AssumeRoleWithWebIdentity.
+
+Option A is incorrect since this is used for console-based access
+
+Option B is incorrect since this is used for logging onto EC2 Instances
+
+Option C is incorrect since this is use for encrypting data
+
+For more information on signing API requests, please refer to the below URL
+
+    https://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html
+
+
+-------------------------------------
+Question 24: Incorrect
+
+A company is making use of the Simple Notification service to send notifications to various subscribers for their service. There is a user requirement for the subscriber to only receive certain types of messages and not all messages published to the topic.
+
+How can you achieve this?
+
+Explanation
+
+Correct Answer - A
+
+The AWS Documentation mentions the following
+
+By default, a subscriber of an Amazon SNS topic receives every message published to the topic. To receive only a subset of the messages, a subscriber assigns a filter policy to the topic subscription.
+
+A filter policy is a simple JSON object. The policy contains attributes that define which messages the subscriber receives. When you publish a message to a topic, Amazon SNS compares the message attributes to the attributes in the filter policy for each of the topic's subscriptions. If there is a match between the attributes, Amazon SNS sends the message to the subscriber. Otherwise, Amazon SNS skips the subscriber without sending the message to it. If a subscription lacks a filter policy, the subscription receives every message published to its topic.
+
+Since the documentation clearly mentions this , all other options are incorrect
+
+For more information on message filtering, please refer to the below URL
+
+    https://docs.aws.amazon.com/sns/latest/dg/message-filtering.html
+
+
+-------------------------------------
+Question 26: Incorrect
+
+Your team is looking into the Serverless deployment of an AWS lambda function. The function will be deployed using the Serverless application model. To test this out , you first create a sample function created below.
+
+    var AWS = require('aws-sdk');
+     
+      exports.handler = function(event, context, callback) { 
+     
+      var bucketName = "Demobucket";      
+     
+      callback(null, bucketName);    
+     
+    }
+
+What should be the next steps in the serverless deployment? Choose 2 answers from the options given below
+
+Explanation
+
+Correct Answer – A and D
+
+This is given in the AWS Documentation
+
+Option B is incorrect since you need to package both the application function and the YAML file
+
+Option C is incorrect since you have the requirement to deploy this in an automated fashion
+
+For more information on serverless deployment, please refer to the below URL
+
+    https://docs.aws.amazon.com/lambda/latest/dg/serverless-deploy-wt.html
+
+
+-------------------------------------
+Question 35: Incorrect
+
+Your team is developing a set of Lambda functions. You need to ensure the team uses the best practices for working with AWS Lambda.
+
+What is the advantage of initializing any external dependencies of your Lambda function code? Choose one of the options given below.
+
+Explanation
+
+Correct Answer - C
+
+This is given as one of the best practises for AWS Lambda in the documentation
+
+Take advantage of Execution Context reuse to improve the performance of your function. Make sure any externalized configuration or dependencies that your code retrieves are stored and referenced locally after initial execution. Limit the re-initialization of variables/objects on every invocation. Instead use static initialization/constructor, global/static variables and singletons. Keep alive and reuse connections (HTTP, database, etc.) that were established during a previous invocation.
+
+Since this is clearly given in the AWS Documentation, all other options are invalid
+
+For more information on Best practices, please refer to the below URL
+
+    https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html
+
+
+-------------------------------------
+Question 46: Incorrect
+
+Your working on a system that will make use of AWS Kinesis. Here you will various log sources that will send data onto AWS Kinesis. You are looking at creating an initial number of shards for the Kinesis stream.
+
+Which of the following can be used in the calculation for the an initial number of shards for the Kinesis stream. Choose 2 answers from the options given below.
+
+Explanation
+
+Correct Answers – A and D
+
+This is given in the AWS Documentation
+
+For more information on Amazon Kinesis streams, please refer to the below URL
+
+    https://docs.aws.amazon.com/streams/latest/dev/amazon-kinesis-streams.html
+
+
+-------------------------------------
+Question 50: Incorrect
+
+Your team is planning on deploying an application using the worker environment on AWS Elastic beanstalk.
+
+Which of the following is an additional requirement for a worker environment in AWS Elastic Beanstalk?
+
+Explanation
+
+Correct Answer - D
+
+The AWS Documentation mentions the following
+
+When you use the AWS Elastic Beanstalk console to deploy a new application or an application version, you'll need to upload a source bundle. Your source bundle must meet the following requirements:
+
+    Consist of a single ZIP file or WAR file (you can include multiple WAR files inside your ZIP file)
+    Not exceed 512 MB
+    Not include a parent folder or top-level directory (subdirectories are fine)
+
+If you want to deploy a worker application that processes periodic background tasks, your application source bundle must also include a cron.yaml file
+
+Since this is clearly mentioned in the documentation all other options are incorrect.
+
+For more information on application source bundles in Elastic beanstalk, please refer to the below URL
+
+    https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/applications-sourcebundle.html
+
+
+-------------------------------------
+Question 53: Incorrect
+
+Your team is working on an application that it going to work with a DynamoDB table. At the design stage, you are trying to find out the optimum way to define partition keys and secondary indexes.
+
+Which of the following are recommendations for defining secondary indexes? Choose 2 answers from the options given below.
+
+Explanation
+
+Correct Answers – A and C
+
+The AWS Documentation mentions the following
+
+    Keep the number of indexes to a minimum. Don't create secondary indexes on attributes that you don't query often. Indexes that are seldom used contribute to increased storage and I/O costs without improving application performance.
+    Avoid indexing tables that experience heavy write activity. In a data capture application, for example, the cost of I/O operations required to maintain an index on a table with a very high write load can be significant. If you need to index data in such a table, it may be more effective to copy the data to another table that has the necessary indexes and query it there.
+
+Since the documentation mentions this clearly, all other options are invalid
+
+For more information on working with indexes, please refer to the below URL
+
+    https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-indexes-general.html
+
+
+-------------------------------------
+Question 54: Incorrect
+
+Your team has just started using the API gateway service. Several AWS Lambda functions are used as the backend for the gateway service. You have deployed the API and made is available for test users. You have now made a change to the method response for the API gateway.
+
+What should you do next?
+
+Explanation
+
+Correct Answer - B
+
+The AWS Documentation mentions the following
+
+To deploy an API, you create an API deployment and associate it with a stage. Each stage is a snapshot of the API and is made available for the client to call. Every time you update an API, which includes modification of methods, integrations, authorizers, and anything else other than stage settings, you must redeploy the API to an existing stage or to a new stage.
+
+All other options are incorrect since the right way is to Redeploy the API
+
+For more information on how to deploy an API, please refer to the below URL
+
+    https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-deploy-api.html
+

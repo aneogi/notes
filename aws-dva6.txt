@@ -1,0 +1,300 @@
+
+-------------------------------------
+Question 3: Incorrect
+Which of the following is part of the failover process for a Multi-Availability Zone Amazon Relational Database Service (RDS) instance?
+
+Explanation
+
+Correct answer is C as during a failover RDS switches the CNAME for the DNS endpoint from primary to standby.
+
+Refer AWS documentation - RDS Multi AZ Failover
+
+In the event of a planned or unplanned outage of your DB instance, Amazon RDS automatically switches to a standby replica in another Availability Zone if you have enabled Multi-AZ.
+
+-------------------------------------
+Question 4: Incorrect
+You have just developed a new mobile application that handles analytics workloads on large scale datasets that are stored on Amazon Redshift. Consequently, the application needs to access Amazon Redshift tables. Which of the below methods would be the best, both practically and security-wise, to access the tables? Choose the correct answer from the options below
+
+Explanation
+
+Correct answer is D as the best approach is to use IAM role using web identity federation to generate temporary credentials and access redshift tables which can be access using jdbc/odbc via sdks.
+
+Option A & C are wrong as embedding credentials is not recommended.
+
+Option A & B are wrong as they target the data encryption rather than the access issue.
+
+-------------------------------------
+Question 6: Incorrect
+In IAM, is there a limit to the number of groups you can have?
+
+Explanation
+
+Correct answer is D as currently maximum of 100 groups can be created per AWS account. It is a soft limit and can be increased.
+
+Refer AWS documentation - IAM limits
+Description 	Limit
+Groups in an AWS account 	100
+
+You can request to increase some of these quotas for your AWS account on the IAM Limit Increase Contact Us Form. Currently you can request to increase the limit on users per AWS account, groups per AWS account, roles per AWS account, instance profiles per AWS account, and server certificates per AWS account.
+
+-------------------------------------
+Question 13: Incorrect
+Which method can be used to prevent an IP address block from accessing public objects in an S3 bucket?
+
+Explanation
+
+Correct answer is A as a bucket policy can be used to restrict access to all objects within a bucket to specific IP addresses
+
+{   "Version": "2012-10-17",   "Id": "S3PolicyId1",   "Statement": [     {       "Sid": "IPAllow",       "Effect": "Allow",       "Principal": "*",       "Action": "s3:*",       "Resource": "arn:aws:s3:::examplebucket/*",       "Condition": {          "IpAddress": {"aws:SourceIp": "54.240.143.0/24"},          "NotIpAddress": {"aws:SourceIp": "54.240.143.188/32"}        }      }    ] } 
+
+Refer to AWS documentation for S3 Bucket Policy
+
+Option B is wrong as NACL will help only control access to resources within the VPC and S3 is public
+
+Option C and D are wrong as ACL would not help control access from specific IP and nor does IAM user policy.
+
+-------------------------------------
+Question 14: Incorrect
+How do you configure SQS to support longer message retention?
+
+Explanation
+
+Correct answer is A as retention period can be changed by setting the MessageRetentionPeriod attribute using the SetQueueAttributes method
+
+Refer AWS documentation - SQS Message Lifecycle
+
+Amazon SQS automatically deletes messages that have been in a queue for more than maximum message retention period. The default message retention period is 4 days. However, you can set the message retention period to a value from 60 seconds to 1,209,600 seconds (14 days) using the SetQueueAttributes action.
+
+SetQueueAttributes - Sets the value of one or more queue attributes. When you change a queue's attributes, the change can take up to 60 seconds for most of the attributes to propagate throughout the Amazon SQS system. Changes made to the MessageRetentionPeriod attribute can take up to 15 minutes.
+
+-------------------------------------
+Question 20: Incorrect
+A company is storing data on Amazon Simple Storage Service (S3). The company’s security policy mandates that data be encrypted at rest. Which of the following methods can achieve this? Choose 3 answers
+
+Explanation
+
+Correct answers are A, B & E
+
+Refer to the AWS S3 Protecting Data using Encryption
+
+Data at rest encryption using S3 can be implemented using either Server Side or Client Side encryption. SSE can be implemented using either KMS provided keys (SSE-KMS) or Customer provided keys (SSE-C). CSE can be implemented by encrypting the data before uploading it to S3 and then decrypting the data after downloading it from S3 at client side.
+
+Option C is wrong as server side encryption doesn't work with EC2 key pair
+
+Option D is wrong as bucket policies are just to restrict access to S3
+
+Option F is wrong as it targets the data in transit only.
+
+-------------------------------------
+Question 21: Incorrect
+You are developing a highly available web application using stateless web servers. Which services are suitable for storing session state data? Choose 3 answers.
+
+Explanation
+
+Correct answers are B, D & E as RDS, ElastiCache and DynamoDB can be used for storing state data.
+
+Option A is wrong as ELB is mainly for load balancing.
+
+Option C is wrong as CloudWatch is for monitoring and metrics
+
+Option F is wrong as Storage gateway is mostly for backups and archival
+
+Refer to Storage Options Whitepaper
+
+-------------------------------------
+Question 26: Incorrect
+Your company has developed a web application and is hosting it in an Amazon S3 bucket configured for static website hosting. The application is using the AWS SDK for JavaScript in the browser to access data stored in an Amazon DynamoDB table. How can you ensure that API keys for access to your data in DynamoDB are kept secure?
+
+Explanation
+
+Correct answer is C as the application is using AWS JavaScript SDK it can use Web Identity Federation to authentication the user and have temporary credentials to access the correct DynamoDB credentials
+
+Refer AWS documentation - Web Identity Federation & Web Identity Federation using JavaScript SDK
+
+When you write such an app, you'll make requests to AWS services that must be signed with an AWS access key. However, we strongly recommend that you do not embed or distribute long-term AWS credentials with apps that a user downloads to a device, even in an encrypted store. Instead, build your app so that it requests temporary AWS security credentials dynamically when needed using web identity federation. The supplied temporary credentials map to an AWS role that has only the permissions needed to perform the tasks required by the mobile app.
+
+-------------------------------------
+Question 27: Incorrect
+Which of the following groups is AWS Elastic Beanstalk best suited for?
+
+Explanation
+
+Correct answer is A as Elastic Beanstalk provides container for different platforms and helps deploy applications within a short time with no internal AWS knowledge.
+
+Refer AWS documentation - Elastic Beanstalk
+
+AWS Elastic Beanstalk makes it even easier for developers to quickly deploy and manage applications in the AWS Cloud. Developers simply upload their application, and Elastic Beanstalk automatically handles the deployment details of capacity provisioning, load balancing, auto-scaling, and application health monitoring.
+
+-------------------------------------
+Question 28: Incorrect
+Which of the following are true regarding encrypted Amazon Elastic Block Store (EBS) volumes? Choose 2 answers
+
+Explanation
+
+Key point here is to check true for Encrypted EBS volume
+
+Correct answers are A & B
+
+Refer AWS documentation - EBS Encryption
+
+This feature is supported with all EBS volume types (General Purpose SSD [gp2], Provisioned IOPS SSD [io1], Throughput Optimized HDD [st1], Cold HDD [sc1], and Magnetic [standard]).
+
+Snapshots that are taken from encrypted volumes are automatically encrypted
+
+Option C is wrong as Amazon EBS encryption is only available on certain instance types. Check Supported Instance Types
+
+Option D is wrong as Existing volumes cannot be encrypted and you need to create an encrypted snapshot to recreate the encrypted volume
+
+Option E is wrong as Volumes are not shared but Snapshots are. Also, AWS recently allowed sharing of Encrypted Snapshot but it can't be made public.
+
+You can share an encrypted snapshot with specific AWS accounts, though you cannot make it public
+
+-------------------------------------
+Question 36: Incorrect
+A company has setup an application in AWS that interacts with DynamoDB. DynamoDB is currently responding in milliseconds, but the application response guidelines requires it to respond within microseconds. How can the performance of DynamoDB be further improved?
+
+Explanation
+
+Correct answer is C as DynamoDB Accelerator helps provide caching for DynamoDB to give a 10x performance.
+
+Refer AWS documentation - DynamoDB DAX
+
+Amazon DynamoDB Accelerator (DAX) is a fully managed, highly available, in-memory cache for DynamoDB that delivers up to a 10x performance improvement – from milliseconds to microseconds – even at millions of requests per second. DAX does all the heavy lifting required to add in-memory acceleration to your DynamoDB tables, without requiring developers to manage cache invalidation, data population, or cluster management.
+
+While DynamoDB offers consistent single-digit millisecond latency, DynamoDB + DAX takes performance to the next level with response times in microseconds for millions of requests per second for read-heavy workloads. With DAX, your applications remain fast and responsive, even when a popular event or news story drives unprecedented request volumes your way. No tuning required.
+
+-------------------------------------
+Question 38: Incorrect
+A company processes a large number of text documents. As a security measure, they need to encrypt the files before they are uploaded to S3. How can they implement the same?
+
+Explanation
+
+Correct answer is D as KMS GenerateDataKey allows application to encrypt data locally.
+
+Refer AWS documentation - KMS GenerateDataKey
+
+Returns a data encryption key that you can use in your application to encrypt data locally.
+
+You must specify the customer master key (CMK) under which to generate the data key. You must also specify the length of the data key using either the KeySpec or NumberOfBytes field. You must specify one field or the other, but not both. For common key lengths (128-bit and 256-bit symmetric keys), we recommend that you use KeySpec. To perform this operation on a CMK in a different AWS account, specify the key ARN or alias ARN in the value of the KeyId parameter.
+
+This operation returns a plaintext copy of the data key in the Plaintext field of the response, and an encrypted copy of the data key in the CiphertextBlob field. The data key is encrypted under the CMK specified in the KeyId field of the request.
+
+Option A & B are wrong as KMS Encrypt and ReEncrypt would encrypt the data in KMS
+
+Option C is wrong as GenerateEncrypteddatakey call does not exist.
+
+-------------------------------------
+Question 42: Incorrect
+A Developer is building an application that needs access to an S3 bucket. An IAM role is created with the required permissions to access the S3 bucket. Which API call should the Developer use in the application so that the code can access to the S3 bucket?
+
+Explanation
+
+Correct answer is D as STS:AssumeRole would help the application to assume the role and access S3 bucket.
+
+Refer AWS documentation - IAM Role Switch
+
+To assume a role, an application calls the AWS STS AssumeRole API operation and passes the ARN of the role to use. When you call AssumeRole, you can optionally pass a JSON policy. This allows you to restrict permissions for that for the role's temporary credentials.
+
+-------------------------------------
+Question 49: Incorrect
+You have been instructed to manage the deployments of an application onto Elastic Beanstalk. Since this is just a development environment, you have been told to ensure that the least amount of time is taken for each deployment. Which of the following deployment mechanism would you consider based on this requirement.
+
+Explanation
+
+Correct answer is A as All at Once deployment deploys the application on all the servers at once with minimal deploy time.
+
+Refer AWS documentation - Elastic Beanstalk Deployment Strategies
+
+
+Option B, C & D have higher deploy times as compared to All at Once.
+
+-------------------------------------
+Question 51: Incorrect
+
+A user has created a photo editing software and hosted it on EC2. The software accepts requests from the user about the photo format and resolution and sends a message to S3 to enhance the picture accordingly. Which of the below mentioned AWS services will help make a scalable software with the AWS infrastructure in this scenario?
+
+Explanation
+
+Correct answer is D as SQS can be used to build scalable & decoupled software. SQS can be used to store messages, with files in S3 and process and scale accordingly.
+
+-------------------------------------
+Question 52: Incorrect
+
+A user has configured ELB with two instances running in separate AZs of the same region? Which of the below mentioned statements is true?
+
+Explanation
+
+Correct answer is A as ELB with multiple AZs provide High Availability solution, It does not provide scalability which needs to be implemented with Auto Scaling in combination with ELB.
+
+-------------------------------------
+Question 59: Incorrect
+
+A Developer is creating a Lambda function and will be using external libraries that are not included in the standard Lambda libraries. What action would minimize the Lambda compute time consumed?
+
+Explanation
+
+Correct answer is B as the deployment time can be reduced by packaging all the dependencies together.
+
+Refer AWS documentation - Lambda Best Practices
+
+Control the dependencies in your function's deployment package. The AWS Lambda execution environment contains a number of libraries such as the AWS SDK for the Node.js and Python runtimes (a full list can be found here: Lambda Execution Environment and Available Libraries). To enable the latest set of features and security updates, Lambda will periodically update these libraries. These updates may introduce subtle changes to the behavior of your Lambda function. To have full control of the dependencies your function uses, we recommend packaging all your dependencies with your deployment package.
+
+-------------------------------------
+Question 63: Incorrect
+
+A Developer has implemented a Lambda function that needs to add new customers to an RDS database that is expected to run hundreds of times per hour. The Lambda function is configured to use 512MB of RAM and is based on the following pseudo code:
+
+    def lambda_handler(event, context):
+        db = database.connect()
+        db.statement('INSERT INTO CUSTOMERS(CUSTOMER_NAME) VALUES(context.name)')
+        db.close()
+
+After testing the Lambda function, the Developer notices that the Lambda execution time is much longer than expected. What should the Developer do to improve performance?
+
+Explanation
+
+Correct answer is C as the Lambda best practice is to move the database initialization outside the handler code to enable resuability, which can improve the Lambda performance.
+
+Refer AWS documentation - Lambda Best Practices
+
+Take advantage of Execution Context reuse to improve the performance of your function. Make sure any externalized configuration or dependencies that your code retrieves are stored and referenced locally after initial execution. Limit the re-initialization of variables/objects on every invocation. Instead use static initialization/constructor, global/static variables and singletons. Keep alive and reuse connections (HTTP, database, etc.) that were established during a previous invocation.
+
+-------------------------------------
+Question 64: Incorrect
+
+A Developer has created an S3 bucket s3://mycoolapp and has enabled server across logging that points to the folder s3://mycoolapp/logs. The Developer moved 100 KB of Cascading Style Sheets (CSS) documents to the folder s3://mycoolapp/css, and then stopped work. When the developer came back a few days later, the bucket was 50 GB. What is the MOST likely cause of this situation?
+
+Explanation
+
+Correct answer is C as logging to the same bucket would cause additional logs, which would result in significant increase in logs.
+
+Refer AWS documentation - S3 Server logs
+
+To turn on log delivery, you provide the following logging configuration information:
+
+    The name of the target bucket where you want Amazon S3 to save the access logs as objects. You can have logs delivered to any bucket that you own that is in the same Region as the source bucket, including the source bucket itself.We recommend that you save access logs in a different bucket so that you can easily manage the logs. If you choose to save access logs in the source bucket, we recommend that you specify a prefix for all log object keys so that the object names begin with a common string and the log objects are easier to identify.When your source bucket and target bucket are the same bucket, additional logs are created for the logs that are written to the bucket. This behavior might not be ideal for your use case because it could result in a small increase in your storage billing. In addition, the extra logs about logs might make it harder to find the log that you're looking for.
+
+Option A is wrong as S3 versioning would increase the size of the bucket only if there are frequent updates, where all the previous versions are stored as well.
+
+Option B is wrong as S3 replication enables to replicate to a different bucket, however does not increase the size of the existing bucket.
+
+Option D is wrong as moving to SA-IA does not increase the size.
+
+-------------------------------------
+Question 65: Incorrect
+
+You are an API developer that has been hired to work in a company. You have been asked to use the AWS services for development and deployment via the API gateway. You need to control the behavior of the API’s backend interaction. Which of the following could be done to achieve this? Choose 2
+
+Explanation
+
+Correct answers are B & D as Integration Request and Integration response helps control behaviour of the backend interaction.
+
+Refer AWS documentation - API Gateway Example
+
+
+
+The resulting Method Execution pane presents a logical view of the chosen (POST /pets) method's structure and behaviors: Method Request and Method Response are the API's interface with the API's frontend (a client), whereas Integration Request and Integration Response are the API's interface with the backend (http://petstore-demo-endpoint.execute-api.com/pets...). A client uses the API to access a backend feature through the Method Request. API Gateway translates the client request, if necessary, into the form acceptable to the backend in Integration Request before forwarding the incoming request to the backend. The transformed request is known as the integration request. Similarly, the backend returns the response to API Gateway in Integration Response. API Gateway then routes it to Method Response before sending it to the client. Again, if necessary, API Gateway can map the backend response data to a form expected by the client.
+
+Options A & C are wrong as Method Request and Method Response helps control behaviour of the frontend interaction. 
+
+-------------------------------------
