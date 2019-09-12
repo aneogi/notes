@@ -1,0 +1,212 @@
+
+
+-------------------------------------
+Question 14: Incorrect
+
+Your development team has a requirement for sending of message between components of an application. They need to ensure that metadata can be sent along with the messages.
+
+Which of the following would you implement for this purpose?
+
+Explanation
+
+Correct Answer – C
+
+The AWS Documentation mentions the following
+
+Amazon SQS lets you include structured metadata (such as timestamps, geospatial data, signatures, and identifiers) with messages using message attributes. Each message can have up to 10 attributes. Message attributes are optional and separate from the message body (however, they are sent alongside it). Your consumer can use message attributes to handle a message in a particular way without having to process the message body first.
+
+Options A and D are invalid since you need to make use of SQS queues
+
+Option B is invalid since you need to use message attributes
+
+For more information on sqs message attributes, please refer to the below URL
+
+    https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html
+
+
+-------------------------------------
+Question 21: Incorrect
+
+Your development team is testing out an application that is being deployed onto AWS Elastic Beanstalk. The application needs to have an RDS Instance provisioned as part of the Elastic Beanstalk setup, but they want to ensure that the database is preserved for analysis even after the environment is torn down.
+
+How can you achieve this? Choose 2 answers from the options given below
+
+Explanation
+
+Correct Answers – A and C
+
+The AWS Documentation mentions that you should ensure the Retention field is marked as “Create snapshot” for ensuring the database lives even after environment is deleted.
+
+ 
+
+Alternatively, you can also ensure that the database is created outside of the Elastic beanstalk environment
+
+ 
+
+Option B is incorrect since it is not necessary that the engine type only has to be MySQL
+
+Option D is incorrect since the option should be “Create Snapshot”
+
+For more information on managing a database in Elastic Beanstalk, please refer to the below URL
+
+    https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.managing.db.html
+
+Note:
+For a production environment,AWS recommends to launch a database instance outside of your environment and configure your application to connect to it outside of the functionality provided by Elastic Beanstalk. Using a database instance that is external to your environment requires additional security group and connection string configuration. However, it also lets you connect to the database from multiple environments, use database types not supported with integrated databases, perform blue/green deployments, and tear down your environment without affecting the database instance.
+
+
+-------------------------------------
+Question 23: Incorrect
+
+Your team is planning on creating a DynamoDB table and use it with their application. They are planning to place the initial Read Capacity to 10 with the default read consistency. Each item is of size 2 KB. You want to read 10 items from the table per second where each item is of size 2 KB.
+
+What is the total size of data that can be read using the above read throughput capacity?
+
+Explanation
+
+Correct Answer - D
+
+One read capacity unit represents one strongly consistent read per second, or two eventually consistent reads per second, for an item up to 4 KB in size. 
+The default is eventually consistent read. 
+As per the 
+-------------------------------------
+Question for each 2 KB we need 1 RCU.  (2/4=1 RCU - rounded to the larger whole number)
+So for 10 RCU we can have up to 20KB per sec.
+
+For more information on Throughputs, please refer to the below URL
+
+    https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ProvisionedThroughput.html
+
+ 
+
+
+-------------------------------------
+Question 42: Incorrect
+
+You have developed an application that is putting custom metrics into Cloudwatch. You need to generate alarms on a 10 second interval based on the published metrics.
+
+Which of the following needs to be done to fulfil this requirement?
+
+Explanation
+
+Correct Answer – D
+
+This is mentioned in the AWS Documentation
+
+Using the existing PutMetricData API, you can now publish Custom Metrics down to 1-second resolution. This gives you more immediate visibility and greater granularity into the state and performance of your custom applications, such as observing short-lived spikes and functions. In addition, you can also alert sooner with High-Resolution Alarms, as frequently as 10-second periods. High-Resolution Alarms allow you to react and take actions faster and support the same actions available today with standard 1-minute alarms. You can add these high-resolution metrics and alarms widgets to your Dashboards giving you easy observability of critical components. Additionally, if you use collectd to gather your metrics, you can publish these metrics to CloudWatch using our updated collectd plugin supporting high-resolution periods down to 1-second.
+
+Options A and B are incorrect since these are more pertinent to existing services which are available in AWS
+
+Option C is incorrect since for such a high degree of resolution, you need to use high resolution metrics
+
+For more information on high resolution metrics, please visit the following URL
+https://aws.amazon.com/about-aws/whats-new/2017/07/amazon-cloudwatch-introduces-high-resolution-custom-metrics-and-alarms/
+
+
+-------------------------------------
+Question 44: Incorrect
+
+Your team needs to develop an application that needs to make use of SQS queues. There is a requirement that when a message is added to the queue, the message is not visible for 5 minutes to consumers.
+
+How can you achieve this? Choose 2 answers from the options given below
+
+Explanation
+
+Correct Answers – C and D
+
+The AWS Documentation mentions the following
+
+Delay queues let you postpone the delivery of new messages to a queue for a number of seconds. If you create a delay queue, any messages that you send to the queue remain invisible to consumers for the duration of the delay period. The default (minimum) delay for a queue is 0 seconds. The maximum is 15 minutes. 
+
+To set delay seconds on individual messages, rather than on an entire queue, use message timers to allow Amazon SQS to use the message timer's DelaySeconds value instead of the delay queue's DelaySeconds value.
+
+Option A is invalid since this can only make the message invisible after the message has been read and not in the beginning
+
+Option B is invalid since this is used to reduce the cost of using Amazon SQS by eliminating the number of empty responses from SQS queues
+
+For more information on SQS delay queues, please refer to the below URL
+
+    https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-delay-queues.html
+
+
+-------------------------------------
+Question 45: Incorrect
+
+You’re currently working with a table in DynamoDB. Your program has inserted a number of rows in the table. You now need to read the data from the table and only retrieve a certain number of attributes in the query.
+
+Which of the following would you use for this purpose?
+
+Explanation
+
+Correct Answer – C
+
+The AWS Documentation mentions the following
+
+To read data from a table, you use operations such as GetItem, Query, or Scan. DynamoDB returns all of the item attributes by default. To get just some, rather than all of the attributes, use a projection expression.
+
+A projection expression is a string that identifies the attributes you want. To retrieve a single attribute, specify its name. For multiple attributes, the names must be comma-separated.
+
+Options A and B are incorrect since Projection Expression are available in both the scan and query operation
+
+Option D is invalid since you need to use the Projection Expression
+
+For more information on projection expressions, please refer to the below URL
+
+    https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.ProjectionExpressions.html
+
+
+-------------------------------------
+Question 53: Incorrect
+
+Your development team is planning on deploying an application using the Elastic Beanstalk service. As part of the deployment, you need to ensure that a high-end instance type is used for the deployment of the underlying instances.
+
+Which of the following would you use to enable this? Choose 2 answers from the options given below.
+
+Explanation
+
+Correct Answers – A and B
+
+The AWS Documentation mentions the following
+
+Your Elastic Beanstalk includes an Auto Scaling group that manages the Amazon EC2 instances in your environment. In a single-instance environment, the Auto Scaling group ensures that there is always one instance running. In a load-balanced environment, you configure the group with a range of instances to run, and Amazon EC2 Auto Scaling adds or removes instances as needed, based on load.
+
+The Auto Scaling group also manages the launch configuration for the instances in your environment. You can modify the launch configuration to change the instance type, key pair, Amazon Elastic Block Store (Amazon EBS) storage, and other settings that can only be configured when you launch an instance.
+
+You can include a YAML formatted environment manifest in the root of your application source bundle to configure the environment name, solution stack and environment links to use when creating your environment. An environment manifest uses the same format as Saved Configurations.
+
+Option C is invalid since this is used to ensure that the environment can interact with other AWS resources
+
+Option D is invalid since this is used to monitor the configuration changes of resources.
+
+For more information on the using the features of Elastic Beanstalk, please refer to the below URL
+
+    https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.managing.as.html
+
+
+-------------------------------------
+Question 56: Incorrect
+
+Your company has a bucket which has versioning and Encryption enabled.  The bucket receives thousands of PUT operations per day. After a period of 6 months, there are a significant number of HTTP 503 error codes which are being received.
+
+Which of the following can be used to diagnose the error?
+
+Explanation
+
+Correct Answer – C
+
+The AWS Documentation mentions the following
+
+If you notice a significant increase in the number of HTTP 503-slow down responses received for Amazon S3 PUT or DELETE object requests to a bucket that has versioning enabled, you might have one or more objects in the bucket for which there are millions of versions. When you have objects with millions of versions, Amazon S3 automatically throttles requests to the bucket to protect the customer from an excessive amount of request traffic, which could potentially impede other requests made to the same bucket.
+
+To determine which S3 objects have millions of versions, use the Amazon S3 inventory tool. The inventory tool generates a report that provides a flat file list of the objects in a bucket.
+
+Option A is incorrect since this tool is used to monitor configuration changes
+
+Option B is incorrect since this tool is used to monitor API activity
+
+Option D is incorrect since this tool is used to give recommendations
+
+For more information on troubleshooting, please refer to the below URL
+
+    https://docs.aws.amazon.com/AmazonS3/latest/dev/troubleshooting.html
+
