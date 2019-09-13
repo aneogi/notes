@@ -1,0 +1,413 @@
+
+
+-------------------------------------
+Question 9: Incorrect
+
+You’ve just configured a Lambda function that sits behind the API gateway service. When you try to invoke the Lambda function via the API gateway service from Javascript in your HTML page, you receive the following error.
+
+No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'null' is therefore not allowed access
+
+
+What can be done to resolve this error?
+
+Explanation
+
+Correct Answer – B
+
+The AWS Documentation mentions the following
+
+When your API's resources receive requests from a domain other than the API's own domain, you must enable cross-origin resource sharing (CORS) for selected methods on the resource. This amounts to having your API respond to the OPTIONS preflight request with at least the following CORS-required response headers:
+
+    Access-Control-Allow-Methods
+    Access-Control-Allow-Headers
+    Access-Control-Allow-Origin
+
+Option A is incorrect because CORS is set on the API gateway level and not the Lambda function
+
+Options C and D are incorrect since IAM Policy is not the reason as to why the error is occurring
+
+For more information on CORS for the API gateway  , please refer to the below URL
+
+    https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html
+
+
+-------------------------------------
+Question 12: Incorrect
+
+You are developing an application which will make use of Kinesis Firehose for streaming the records onto the Simple Storage Service. You company policy mandates that all data needs to be encrypted at rest.
+
+How can you achieve this with Kinesis Firehose? Choose 2 answers for the options given below.
+
+Explanation
+
+Correct Answers – A and D
+
+This is given in the AWS Documentation
+
+If you have sensitive data, you can enable server-side data encryption when you use Amazon Kinesis Data Firehose. However, this is only possible if you use a Kinesis stream as your data source. When you configure a Kinesis stream as the data source of a Kinesis Data Firehose delivery stream, Kinesis Data Firehose no longer stores the data at rest. Instead, the data is stored in the Kinesis stream.
+
+Options B and C are invalid because this is used for encrypting data in transit
+
+For more information on Data encryption with Kinesis Firehose  , please refer to the below URL
+
+    https://docs.aws.amazon.com/firehose/latest/dev/encryption.html
+
+
+-------------------------------------
+Question 13: Incorrect
+
+You’re the team lead for an application. You have been instructed to make use of Jenkins for your CI/CD pipeline and other AWS Services for deployment purposes.
+
+Which of the following would you consider fulfilling this requirement? Select 2 Options.
+
+Explanation
+
+Correct Answers – A and C
+
+This is given in the AWS Documentation
+
+As a best practice, when you use a Jenkins build provider for your pipeline’s build or test action, install Jenkins on an Amazon EC2 instance and configure a separate EC2 instance profile. Make sure the instance profile grants Jenkins only the AWS permissions required to perform tasks for your project, such as retrieving files from Amazon S3.
+
+The instance profile provides applications running on an Amazon EC2 instance with the credentials to access other AWS services. As a result, you do not need to configure AWS credentials (AWS access key and secret key).
+
+Option B is incorrect since this is not the secure way to access AWS resources
+
+Option D is incorrect since you have been told as per the 
+-------------------------------------
+Question to make use of the Jenkins software
+
+For more information on Best practises for CodePipeline  , please refer to the below URL
+
+    https://docs.aws.amazon.com/codepipeline/latest/userguide/best-practices.html
+
+
+-------------------------------------
+Question 16: Incorrect
+
+Your application is making requests to a DynamoDB table. Due to the certain surge of requests , you are now getting throttling errors in your application.
+
+Which of the following can be used to resolve such errors? Choose 2 answers from the options given below.
+
+Explanation
+
+Correct Answers – A and C
+
+Using exponential backoff in your requests can put some retires for your application to help with your surge of requests.
+
+Alternatively, you can increase the throughput capacity defined for your table.
+
+Option B is invalid because better use of partition keys could help
+
+Option D is invalid because this is used for having multiple copies of your table in additional regions
+
+For more information on API retries  , please refer to the below URL
+
+    https://docs.aws.amazon.com/general/latest/gr/api-retries.html
+
+For more information on DynamoDB Throughput capacity  , please refer to the below URL
+
+    https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ProvisionedThroughput.html
+
+
+-------------------------------------
+Question 19: Incorrect
+
+You’ve developed an AWS Lambda function but are running into a lot of performance issues. You decide to use the AWS X-Ray service to diagnose the issues.
+
+Which of the following must be done to ensure that you can use the X-Ray service with your Lambda function?
+
+Explanation
+
+Correct Answer – C
+
+The AWS Documentation mentions the following
+
+Setting Up AWS X-Ray with Lambda
+
+Following, you can find detailed information on how to set up X-Ray with Lambda.
+
+Before You Begin
+
+To enable tracing on your Lambda function using the Lambda CLI, you must first add tracing permissions to your function's execution role. To do so, take the following steps:
+
+    Sign in to the AWS Management Console and open the IAM console at https://console.aws.amazon.com/iam/.
+    Find the execution role for your Lambda function.
+    Attach the following managed policy: AWSXrayWriteOnlyAccess
+
+Option A is incorrect since this is used if you need to use X-Ray with an application which is hosted on an EC2 Instance
+
+Option B is incorrect since this is not required to begin using the X-Ray service with AWS Lambda
+
+Option D is incorrect since the permissions need to be assigned the other way around.
+
+For more information on enabling X-Ray with AWS Lambda  , please refer to the below URL
+
+    https://docs.aws.amazon.com/lambda/latest/dg/enabling-x-ray.html
+
+
+-------------------------------------
+Question 20: Incorrect
+
+Your application is currently hosted in an Elastic beanstalk environment. Configuration changes need to be made to the environment. You have been told that the changes should not affect the current environment since downtime needs to be minimized.
+
+Which of the following Elastic Deployment mechanisms would you consider using?
+
+Explanation
+
+Answer - D
+
+The AWS Documentation mentions the following
+
+Immutable updates are an alternative to rolling updates where a temporary Auto Scaling group is launched outside of your environment with a separate set of instances running on the new configuration, which are placed behind your environment's load balancer. Old and new instances both serve traffic until the new instances pass health checks, at which time the new instances are moved into your environment's Auto Scaling group and the temporary group and old instances are terminated.
+
+All other options are invalid since it clearly mentions that the current environment should not be changed.
+
+For more information on updating environments  , please refer to the below URL
+
+    https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/environments-updating.html
+
+
+-------------------------------------
+Question 24: Incorrect
+
+You are working for a gaming company that is going to building a gaming application. You have been told to come up with a caching solution for the leader part of the application.
+
+Which of the following would you consider for this purpose?
+
+Explanation
+
+Correct Answer - C
+
+The AWS Documentation mentions this as a specific use case for Redis Cache
+
+All other options are invalid , since ElastiCache Redis is specially built for this sort of use case scenarios
+
+For more information on Elastic Cache Redis Use case  , please refer to the below URL
+
+    https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/elasticache-use-cases.html
+
+
+-------------------------------------
+Question 25: Incorrect
+
+You’ve created a local Java based Lambda function. You then package and upload the function to AWS. You try to run the function with the default settings , but the function does not run as expected.
+
+Which of the following could be the reasons for the issue? Choose 2 answers from the options given below.
+
+Explanation
+
+Correct Answers – C and D
+
+Since the function is created with the default settings , the timeout for the function would be 3 seconds and the memory would default to 128 MB. For a Java based function, this would be too less. Hence you need to ensure the right settings are put in place for the function.
+
+Q: How are compute resources assigned to an AWS Lambda function?
+In the AWS Lambda resource model, you choose the amount of memory you want for your function, and are allocated proportional CPU power and other resources. For example, choosing 256MB of memory allocates approximately twice as much CPU power to your Lambda function as requesting 128MB of memory and half as much CPU power as choosing 512MB of memory. You can set your memory in 64MB increments from 128MB to 1.5GB.
+
+Option A is invalid since the name is not a reason for the function not working
+
+Option B is invalid since the CPU is allocated by AWS automatically.
+
+For more information on creating a function  , please refer to the below URL
+
+    https://docs.aws.amazon.com/lambda/latest/dg/get-started-create-function.html
+
+
+-------------------------------------
+Question 33: Incorrect
+
+You are a team lead for the development of an application that will be hosted in AWS. The application will consist of a front end which will allow users to upload files. Part of the application will consist of sending and processing of messages by a backend service. You have been told to reduce the cost for the backend service , but also ensure efficiency.
+
+Which of the following would you consider in the implementation of the backend service? Choose 2 answers from the options given below
+
+Explanation
+
+Correct Answers – A and C
+
+The SQS queue can be used to handle the sending and receiving of messages. To reduce costs you can use Lambda functions to process the messages. The below is also given in the AWS Documentation
+
+Using AWS Lambda with Amazon SQS
+
+Attaching an Amazon SQS queue as an AWS Lambda event source is an easy way to process the queue’s content using a Lambda function. Lambda takes care of:
+
+    Automatically retrieving messages and directing them to the target Lambda function.
+    Deleting them once your Lambda function successfully completes.
+
+Option B is incorrect since you should use SQS for handling of messages. SNS has no persistence. Whichever consumer is present at the time of message arrival, get the message and the message is deleted. If no consumers available then the message is lost.
+
+Option D is incorrect since this would not be a cost-effective option
+
+For more information on working with SQS  , please refer to the below URL
+
+    https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html
+    Good Dicussion on StackOverFlow : https://stackoverflow.com/questions/13681213/what-is-the-difference-between-amazon-sns-and-amazon-sqs
+
+
+-------------------------------------
+Question 34: Incorrect
+
+You’re developing an application that is going to be deployed in the Elastic beanstalk environment. You need to ensure that the data that gets generated by the application persists even If the environment is torn down.
+
+How can you accomplish this? Choose 3 answers from the options given below.
+
+Explanation
+
+Correct Answers – A ,C and D
+
+The AWS Documentation mentions the following
+
+Option B is invalid because the documentation clearly states that the data is not persisted in Elastic beanstalk
+
+For more information on persistent storage with Elastic beanstalk  , please refer to the below URL
+
+    https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/concepts.concepts.design.html
+
+
+-------------------------------------
+Question 36: Incorrect
+
+A DynamoDB table is set to have a Read capacity of 10. Which of the following will give the maximum read throughput for the table?
+
+Explanation
+
+Correct Answer – B
+
+The calculation of throughput capacity for option B would be
+
+Read capacity(10) * Amount of data(4) = 40.
+
+Since its required at eventual consistency , we can double the read throughput to 40*2=80
+
+For Option A
+
+Read capacity(10) * Amount of data(4) = 40. Since we need strong consistency we have would get a read throughput of 40
+
+For Option C
+
+Read capacity(15) * Amount of data(1) = 15. Since we need strong consistency we have would get a read throughput of 15
+
+Option D is incorrect. Because it's talking about the write capacity.
+
+
+-------------------------------------
+Question 37: Incorrect
+
+You are developing an application that is working with a DynamoDB table. You need to create a query which has a search criterion.
+
+Which of the following must be done in order to work with search queries? Choose 2 answers from the options given below
+
+Explanation
+
+Correct Answers – A and B
+
+The AWS Documentation mentions the following
+
+Key Condition Expression
+
+To specify the search criteria, you use a key condition expression—a string that determines the items to be read from the table or index.
+
+You must specify the partition key name and value as an equality condition.
+
+ Option C is incorrect since you need to mention the partition key and not the sort key
+
+Option D is incorrect since this is used to further filter results
+
+For more information on working with queries  , please refer to the below URL
+
+    https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html
+
+
+-------------------------------------
+Question 47: Incorrect
+
+As an API developer , you have just configured an API with the AWS API gateway service. You are testing out the API and get the below response whenever an action is made to an undefined API resource.
+
+{ “message”: “Missing Authentication Token” }
+
+
+You want to customize the error response and make it more user readable. How can you achieve this?
+
+Explanation
+
+Correct Answer - C
+
+This is mentioned in the AWS Documentation
+
+Set up Gateway Responses to Customize Error Responses
+
+If API Gateway fails to process an incoming request, it returns to the client an error response without forwarding the request to the integration backend. By default, the error response contains a short descriptive error message. For example, if you attempt to call an operation on an undefined API resource, you receive an error response with the { "message": "Missing Authentication Token" } message. If you are new to API Gateway, you may find it difficult to understand what actually went wrong.
+
+For some of the error responses, API Gateway allows customization by API developers to return the responses in different formats. For the Missing Authentication Token example, you can add a hint to the original response payload with the possible cause, as in this example: {"message":"Missing Authentication Token", "hint":"The HTTP method or resources may not be supported."}.
+
+The documentation clearly mentions how this should be configured , hence the other options are all invalid.
+
+For more information on the gateway response , please refer to the below URL
+
+    https://docs.aws.amazon.com/apigateway/latest/developerguide/customize-gateway-responses.html
+
+
+-------------------------------------
+Question 51: Incorrect
+
+You’ve been asked to move an existing development environment on the AWS Cloud. This environment consists mainly of Docker based containers. You need to ensure that minimum effort is taken during the migration process.
+
+Which of the following step would you consider for this requirement?
+
+Explanation
+
+Correct Answer – B
+
+The Elastic Beanstalk service is the ideal service to quickly provision development environments. You can also create environments which can be used to host Docker based containers.
+
+Option A is incorrect since using Opswork is best suited when you have multiple stacks and want to use configuration tools for the environment.
+
+Options C and D are incorrect since this would involve a lot of effort in deployment.
+
+For more information on using Docker containers in Elastic Beanstalk, please refer to the below link
+
+    https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker.html
+
+
+-------------------------------------
+Question 56: Incorrect
+
+You have a set of developers that need to work with applications hosted on the Elastic Beanstalk environment. You need to ensure they can work with the beanstalk environments but not give them access to the AWS Console.
+
+How can you achieve this in the BEST way possible?
+
+Explanation
+
+Correct Answer - B
+
+The AWS Documentation mentions the following
+
+The EB CLI is a command line interface for Elastic Beanstalk that provides interactive commands that simplify creating, updating and monitoring environments from a local repository. Use the EB CLI as part of your everyday development and testing cycle as an alternative to the AWS Management Console.
+
+Because of what the AWS Documentation mentions , all other options are invalid
+
+For more information on using the Elastic Beanstalk CLI, please refer to the below link
+
+    https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html
+
+
+-------------------------------------
+Question 64: Incorrect
+
+You are currently deploying an application that needs to have a sign-up and sign-in functionality added. As much as possible , you would want to reduce the coding effort required for these modules. You also need to ensure that code is executed automatically after the sign-in process is complete.
+
+How can you achieve this? Choose 2 answers from the options below.
+
+Explanation
+
+Correct Answers – A and D
+
+This is mentioned in the AWS Documentation
+
+You can create an AWS Lambda function and then trigger that function during user pool operations such as user sign-up, confirmation, and sign-in (authentication) with a Lambda trigger. You can add authentication challenges, migrate users, and customize verification messages.
+
+Option B is incorrect since IAM cannot simulate the sign-in and sign-up process that would be required by the application.
+
+Option C is incorrect since Cloudwatch events will not be able to carry out this requirement.
+
+For more information on using Lambda triggers with AWS Cognito , please refer to the below URL
+
+    https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html
