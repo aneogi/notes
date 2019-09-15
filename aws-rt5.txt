@@ -1,0 +1,353 @@
+
+-------------------------------------
+Question 1: Incorrect
+
+A developer is writing an application that will run on –premises, but must access AWS services through an AWS SDK.
+
+How can the Developer allow the SDK to access the AWS services?
+
+Explanation
+
+Correct Answer – B
+
+When working on development, you need to use the AWS Access keys to work with the AWS Resources
+
+The AWS Documentation additionally mentions the following
+
+You use different types of security credentials depending on how you interact with AWS. For example, you use a user name and password to sign in to the AWS Management Console. You use access keys to make programmatic calls to AWS API operations.
+
+Option A is incorrect since we need to do this from an on-premise server you cannot use an EC2 role to work with an on-premise server.
+
+Option C is incorrect. If you want to test your application on your local machine, you're going to need to generate temporary security credentials (access key id, secret access key, and session token). You can do this by using the access keys from an IAM user to call assumeRole. The result of that call will include credentials that you can use to set the AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_SESSION_TOKEN (note without the token, they keys will be invalid). The SDK/CLI should then use these credentials. This will give your app a similar experience to running in an Amazon EC2 instance that was launched using an IAM role.
+
+https://forums.aws.amazon.com/thread.jspa?messageID=604424
+
+Option D is incorrect since the access keys should be on the local machine
+
+For more information on usage of credentials in AWS , please refer to the below link:
+
+    https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html
+
+
+-------------------------------------
+Question 7: Incorrect
+
+A Developer is writing an application that will run on EC2 instances and read messages from an SQS queue. The messages will arrive every 15-60 seconds.
+
+How should the Developer efficiently query the queue for new messages?
+
+Explanation
+
+Correct Answer – A
+
+Option B is invalid because this is valid only for the processing time for the Messages.
+
+Option C is invalid because this would not be a cost effective option
+
+Option D is invalid because this is not a practice for SQS queues
+
+Long polling will help in ensuring that the applications makes less requests for messages in a shorter period of time. This is more cost effective. Since the messages are only going to be available after 15 seconds and we don’t know exactly when they would be available, its better to use Long Polling
+
+For more information on Long polling, please refer to the below Link:
+
+    https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-long-polling.html
+
+
+-------------------------------------
+Question 17: Incorrect
+
+A Developer has been asked to create an AWS Elastic Beanstalk environment for a production web application which needs to handle thousands of requests. Currently the dev environment is running on a t1 micro instance.
+
+How can the Developer change the EC2 instance type to m4.large?
+
+Explanation
+
+Correct Answer – B
+
+The Elastic Beanstalk console and EB CLI set configuration options when you create an environment. You can also set configuration options in saved configurations and configuration files. If the same option is set in multiple locations, the value used is determined by the order of precedence.
+Configuration option settings can be composed in text format and saved prior to environment creation, applied during environment creation using any supported client, and added, modified or removed after environment creation.
+
+
+During environment creation, configuration options are applied from multiple sources with the following precedence, from highest to lowest:
+
+    Settings applied directly to the environment – Settings specified during a create environment or update environment operation on the Elastic Beanstalk API by any client, including the AWS Management Console, EB CLI, AWS CLI, and SDKs. The AWS Management Console and EB CLI also apply recommended values for some options that apply at this level unless overridden.
+    Saved Configurations – Settings for any options that are not applied directly to the environment are loaded from a saved configuration, if specified.
+    Configuration Files (.ebextensions) – Settings for any options that are not applied directly to the environment, and also not specified in a saved configuration, are loaded from configuration files in the .ebextensions folder at the root of the application source bundle.
+
+Configuration files are executed in alphabetical order. For example, .ebextensions/01run.config is executed before .ebextensions/02do.config.
+
+    Default Values – If a configuration option has a default value, it only applies when the option is not set at any of the above levels.
+
+
+If the same configuration option is defined in more than one location, the setting with the highest precedence is applied. When a setting is applied from a saved configuration or settings applied directly to the environment, the setting is stored as part of the environment's configuration. These settings can be removed with the AWS CLI or with the EB CLI
+.
+Settings in configuration files are not applied directly to the environment and cannot be removed without modifying the configuration files and deploying a new application version. If a setting applied with one of the other methods is removed, the same setting will be loaded from configuration files in the source bundle.
+
+Option A is incorrect since the environment is already managed by the Elastic Beanstalk service and we don’t need Cloudformation for this.
+
+Option C is incorrect since the changes need to be done for the current configuration.
+
+For more information on making this change, please refer to the below Link:
+
+    https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.managing.ec2.html
+
+
+-------------------------------------
+Question 19: Incorrect
+
+An organization is using AWS Elastic Beanstalk for a web application. The Developer needs to configure the Elastic Beanstalk environment with deployment methods that will create new instances and deploy code to those instances.
+
+Which methods will deploy code ONLY to new instances? Choose 2 answers from the options given below.
+
+Explanation
+
+Correct Answers – B and E
+
+The AWS Documentation mentions the following
+
+Immutable deployments perform an immutable update to launch a full set of new instances running the new version of the application in a separate Auto Scaling group, alongside the instances running the old version. Immutable deployments can prevent issues caused by partially completed rolling deployments. If the new instances don't pass health checks, Elastic Beanstalk terminates them, leaving the original instances untouched.
+
+And with Blue Green deployments, you can have a separate deployment environment as well.
+
+All other options are invalid since these would not allow deployment onto separate environments.
+
+For more information on Deployment options, please refer to the below Link:
+
+    https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.rolling-version-deploy.html
+    https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.CNAMESwap.html
+     
+
+
+-------------------------------------
+Question 24: Incorrect
+
+A company is planning on using AWS CodePipeline for their underlying CI/CD process. The code will be picked up from an S3 bucket. The company policy mandates that all data should be encrypted at rest.
+
+Which of the following measures would you take to ensure that the CI/CD process conforms to this policy? Choose 2 possible actions from the options given below.
+
+Explanation
+
+Correct Answers – A and D
+
+This is also mentioned in the AWS Documentation
+
+There are two ways to configure server-side encryption for Amazon S3 artifacts:
+
+    AWS CodePipeline creates an Amazon S3 artifact bucket and default AWS-managed SSE-KMS encryption keys when you create a pipeline using the Create Pipeline wizard. The master key is encrypted along with object data and managed by AWS.
+    You can create and manage your own customer-managed SSE-KMS keys.
+
+Options B and C are incorrect since this needs to be configured at the S3 bucket level.
+
+For more information on Encryption in S3 with CodePipeline, please refer to the below Link:
+
+    https://docs.aws.amazon.com/codepipeline/latest/userguide/S3-artifact-encryption.html
+
+
+-------------------------------------
+Question 26: Incorrect
+
+You need to migrate an existing on-premise application on AWS. It is a legacy-based application with little development support.
+
+Which of the following would be the best way to host this service in AWS?
+
+Explanation
+
+Correct Answer - A
+
+Since the application is a legacy-based application with little development support, porting the application onto AWS Lambda would be difficult. Hence Option C and D would be incorrect in this case.
+
+Using EBS Backed Volumes is better for durability, than Instance store in which you could lose the data if the instance is stopped.
+
+For more information on Amazon EC2, please refer to the below Link:
+
+    https://aws.amazon.com/ec2/
+
+
+-------------------------------------
+Question 30: Incorrect
+
+A developer is making use of AWS services to develop an application. He has been asked to develop the application in a manner to compensate any network delays.
+
+Which of the following two mechanisms should he implement in the application?
+
+Explanation
+
+Correct Answers – B and C
+
+Options A and D are incorrect since these practices would not help in the requirement for the application
+
+The AWS Documentation mentions the following
+
+In addition to simple retries, each AWS SDK implements exponential backoff algorithm for better flow control. The idea behind exponential backoff is to use progressively longer waits between retries for consecutive error responses. You should implement a maximum delay interval, as well as a maximum number of retries. The maximum delay interval and maximum number of retries are not necessarily fixed values, and should be set based on the operation being performed, as well as other local factors, such as network latency.
+
+For more information on API retries, please refer to the below Link:
+
+    https://docs.aws.amazon.com/general/latest/gr/api-retries.html
+
+
+-------------------------------------
+Question 31: Incorrect
+
+You have currently defined the following set of stages in CodePipeline?
+Larger image
+
+What happens if there is a failure which is detected at the Build Stage?
+
+Explanation
+
+Correct Answer – D
+
+The AWS Documentation mentions the following
+
+In AWS CodePipeline, an action is a task performed on an artifact in a stage. If an action or a set of parallel actions is not completed successfully, the pipeline stops running.
+
+Options A,B and C are incorrect since the default action will be that the entire pipeline will be stopped if the build does not succeed.
+
+For more information on Actions retry, please refer to the below Link:
+
+    https://docs.aws.amazon.com/codepipeline/latest/userguide/actions-retry.html
+
+
+-------------------------------------
+Question 37: Incorrect
+
+You are developing an application that will be used to inject data from multiple devices. You need to ensure that some preprocessing happens on the data before it can be analyzed by your Analytics based tool.
+
+Which of the following can be used to carry out this intermediate activity?
+
+Explanation
+
+Correct Answer – B
+
+The AWS Documentation mentions the following
+
+Many customers use Amazon Kinesis to ingest, analyze, and persist their streaming data.  One of the easiest ways to gain real-time insights into your streaming data is to use Kinesis Analytics.  It enables you to query the data in your stream or build entire streaming applications using SQL.  Customers use Kinesis Analytics for things like filtering, aggregation, and anomaly detection.
+
+Kinesis Analytics now gives you the option to preprocess your data with AWS Lambda.  This gives you a great deal of flexibility in defining what data gets analyzed by your Kinesis Analytics application. You can also define how that data is structured before it is queried by your SQL.
+
+Option A is incorrect since this service is used to coordinate different parts of a distributed application
+
+Option C is incorrect since this service is used to give a pathway to your API services
+
+Option D is incorrect since this service is used for streaming data
+
+For more information on preprocessing data in Kinesis, please refer to the below Link:
+
+    https://aws.amazon.com/blogs/big-data/preprocessing-data-in-amazon-kinesis-analytics-with-aws-lambda/
+
+
+-------------------------------------
+Question 42: Incorrect
+
+Your development team has created a set of AWS lambda helper functions that would be deployed in various AWS accounts. You need to automate the deployment of these Lambda functions.
+
+Which of the following can be used to automate the deployment?
+
+Explanation
+
+Correct Answer – B
+
+AWS Cloudformation is a service that can be used to deploy Infrastructure as code. Here you can deploy Lambda functions to various accounts by just building the necessary templates.
+
+The other services cannot be used out of the box as they are to automate the deployment of AWS Lambda functions.
+
+For more information on Cloudformation, please refer to the below Link:
+
+    https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html
+
+
+-------------------------------------
+Question 43: Incorrect
+
+You have a number of Lambda functions that need to be deployed using AWS CodeDeploy. The lambda functions have gone through multiple code revisions and versioning in Lambda is being used to maintain the revisions.
+
+Which of the following must be done to ensure that the right version of the function is deployed in AWS CodeDeploy?
+
+Explanation
+
+Correct Answer - A
+
+The AWS Documentation mentions the following
+
+If your application uses the AWS Lambda compute platform, the AppSpec file can be formatted with either YAML or JSON. It can also be typed directly into an editor in the console. The AppSpec file is used to specify:
+
+    The AWS Lambda function version to deploy.
+    The functions to be used as validation tests.
+
+All other options are incorrect since the right approach is to use the AppSpec file.
+
+For more information on the application specification files, please refer to the below Link:
+
+    https://docs.aws.amazon.com/codedeploy/latest/userguide/application-specification-files.html
+
+
+-------------------------------------
+Question 53: Incorrect
+
+Your mobile application includes a photo-sharing service that is expecting tens of thousands of users at launch. You will leverage Amazon Simple Storage Service (S3) for storage of the user Images, and you must decide how to authenticate and authorize your users for access to these images. You also need to manage the storage of these images.
+
+Which two of the following approaches should you use? Choose two answers from the options below
+
+Explanation
+
+Correct Answers – C and E
+
+The AWS Security Token Service (STS) is a web service that enables you to request temporary, limited-privilege credentials for AWS Identity and Access Management (IAM) users or for users that you authenticate (federated users).
+
+The token can then be used to grant access to the objects in S3.
+
+You can then provides access to the objects based on the key values generated via the user id.
+
+Option A is possible but then becomes a maintenance overhead because of the number of buckets.
+
+Option B is invalid because IAM users is not a good security practice.
+
+Option D is invalid because SMS tokens are not efficient for this requirement.
+
+For more information on the Security Token Service please refer to the below link
+
+    https://docs.aws.amazon.com/STS/latest/APIReference/Welcome.html
+
+
+-------------------------------------
+Question 60: Incorrect
+
+Your company has developed a web application and is hosting it in an Amazon S3 bucket configured for static website hosting. The application is using the AWS SDK for JavaScript in the browser to access data stored in an Amazon DynamoDB table.
+
+How can you ensure that API keys for access to your data in DynamoDB are kept secure?
+
+Explanation
+
+Correct Answer – C
+
+With web identity federation, you don't need to create custom sign-in code or manage your own user identities. Instead, users of your app can sign in using a well-known identity provider (IdP) —such as Login with Amazon, Facebook, Google, or any other OpenID Connect (OIDC)-compatible IdP, receive an authentication token, and then exchange that token for temporary security credentials in AWS that map to an IAM role with permissions to use the resources in your AWS account. Using an IdP helps you keep your AWS account secure, because you don't have to embed and distribute long-term security credentials with your application.
+
+Option A is invalid since Roles cannot be assigned to S3 buckets
+
+Options B and D are invalid since the AWS Access keys should not be used
+
+For more information on Web Identity Federation, please refer to the below link AWS
+
+    https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html
+
+
+-------------------------------------
+Question 62: Incorrect
+
+Your application currently makes use of AWS Cognito for managing user identities. You want to analyze the information that is stored in AWS Cognito for your application.
+
+Which of the following features of AWS Cognito should you use for this purpose?
+
+Explanation
+
+Correct Answer – C
+
+The AWS Documentation mentions the following
+
+Amazon Cognito Streams gives developers control and insight into their data stored in Amazon Cognito. Developers can now configure a Kinesis stream to receive events as data is updated and synchronized. Amazon Cognito can push each dataset change to a Kinesis stream you own in real time.
+
+All other options are invalid since you should use Cognito Streams
+
+For more information on Cognito Streams, please refer to the below link
+
+    https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-streams.html

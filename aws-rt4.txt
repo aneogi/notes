@@ -1,0 +1,384 @@
+
+-------------------------------------
+Question 6: Incorrect
+
+Which of the following is the right sequence of hooks that get called in AWS CodeDeploy?
+
+Explanation
+
+Correct Answer - A
+
+This is also mentioned in the AWS Documentation
+
+Because of the order of events given in the AWS Documentation , all other options are invalid.
+
+For more information on the hooks order  , please refer to the below URL
+
+    https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-hooks.html#reference-appspec-file-structure-hooks-run-order
+
+
+-------------------------------------
+Question 7: Incorrect
+
+As a developer you have created a Lambda function that is used to work with a bucket in Amazon S3. The Lambda function is not working as expected. You need to debug the issue and understand what’s the underlying issue.
+
+How can you accomplish this?
+
+Explanation
+
+Correct Answer – B
+
+This is also mentioned in the AWS Documentation
+
+You can insert logging statements into your code to help you validate that your code is working as expected. Lambda automatically integrates with Amazon CloudWatch Logs and pushes all logs from your code to a CloudWatch Logs group associated with a Lambda function (/aws/lambda/). 
+
+Option A is incorrect since the metrics will only give the rate at which the function is executing , but not help debug the actual error
+
+Option C is incorrect since there is no such option
+
+Option D is incorrect since this is only used for API monitoring
+
+For more information on monitoring functions  , please refer to the below URL
+
+    https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions.html
+
+
+-------------------------------------
+Question 13: Incorrect
+
+A company is planning on developing an application that is going to make use of a DynamoDB table. The structure of the table is given below
+Larger image
+
+Which of the following should be chosen as the partition key to ensure the MOST effective distribution of keys?
+
+Explanation
+
+Correct Answer – B
+
+The most effective one will be the Review ID since you have a uniquely generated GUID for each record.
+
+Option A is partially correct. It can be used as the partition key , but the 
+-------------------------------------
+Question asks for the MOST effective distribution of keys and that would be the Review ID
+
+Options C and D are incorrect since it would not be a best practise to keep these as the partition keys
+
+For more information on DynamoDB  , please refer to the below URL
+
+    https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html
+    https://aws.amazon.com/blogs/database/choosing-the-right-dynamodb-partition-key/
+
+
+-------------------------------------
+Question 33: Incorrect
+
+You have the following YAML file given to you which is required to deploy a Lambda function using serverless deployment.
+
+    AWSTemplateFormatVersion: '2010-09-09'
+     
+    Transform: AWS::Serverless-2016-10-31
+     
+    Resources:
+     
+      TestFunction:
+     
+        Type: AWS::Serverless::Function
+     
+        Properties:
+     
+          Handler: index.handler
+     
+          Runtime: nodejs6.10
+     
+          Environment:
+     
+            Variables:
+     
+              S3_BUCKET: demobucket
+
+
+ Which of the following is required to ensure the deployment can take place?
+
+Explanation
+
+Correct Answer – C
+
+The above snippet is used to create a serverless application that is deployed using the serverless deployment language. You need to ensure that the Lambda function is present as part of the deployment package
+
+Options A and B are incorrect since these are not cloudformation specific templates
+
+Option D is incorrect since this is normally used for Elastic beanstalk deployments
+
+For more information on serverless deployment  , please refer to the below URL
+
+    https://docs.aws.amazon.com/lambda/latest/dg/serverless-deploy-wt.html
+
+
+-------------------------------------
+Question 38: Incorrect
+
+An application is making a request to AWS STS for temporary access credentials. Below is the response being received:
+
+    <AssumeRoleResponse xmlns="https://sts.amazonaws.com/doc/2011-06-15/">
+     
+    <AssumeRoleResult>
+     
+    <Credentials>
+     
+      <SessionToken>
+     
+       AQoDYXdzEPT//////////wEXAMPLEtc764bNrC9SAPBSM22wDOk4x4HIZ8j4FZTwdQW
+     
+       LWsKWHGBuFqwAeMicRXmxfpSPfIeoIYRqTflfKD8YUuwthAx7mSEI/qkPpKPi/kMcGd
+     
+       QrmGdeehM4IC1NtBmUpp2wUE8phUZampKsburEDy0KPkyQDYwT7WZ0wq5VSXDvp75YU
+     
+       9HFvlRd8Tx6q6fE8YQcHNVXAkiY9q6d+xo0rKwT38xVqr7ZD0u0iPPkUL64lIZbqBAz
+     
+       +scqKmlzm8FDrypNC9Yjc8fPOLn9FX9KSYvKTr4rvx3iSIlTJabIQwj2ICCR/oLxBA==
+     
+      </SessionToken>
+     
+      <SecretAccessKey>
+     
+       wJalrXUtnFEMI/K7MDENG/bPxRfiCYzEXAMPLEKEY
+     
+      </SecretAccessKey>
+     
+      <Expiration>2011-07-15T23:28:33.359Z</Expiration>
+     
+      <AccessKeyId>AKIAIOSFODNN7EXAMPLE</AccessKeyId>
+     
+    </Credentials>
+     
+    <AssumedRoleUser>
+     
+      <Arn>arn:aws:sts::123456789012:assumed-role/demo/lambda</Arn>
+     
+      <AssumedRoleId>ARO123EXAMPLE123:lambda</AssumedRoleId>
+     
+    </AssumedRoleUser>
+     
+    <PackedPolicySize>6</PackedPolicySize>
+     
+    </AssumeRoleResult>
+     
+    <ResponseMetadata>
+     
+    <RequestId>c6104cbe-af31-11e0-8154-cbc7ccf896c7</RequestId>
+     
+    </ResponseMetadata>
+     
+    </AssumeRoleResponse>
+
+
+Which of the following is TRUE with regards to the above response?
+
+Explanation
+
+Correct Answer – B
+
+Some of the aspects that get incorporated in the call to STS are
+
+    The Amazon Resource Name (ARN) of the role that the app should assume.
+    The duration, which specifies the duration of the temporary security credentials.
+    A role session name, which is a string value that you can use to identify the session. This value can be captured and logged by CloudTrail to help you distinguish between your role users during an audit.
+
+Options A and D are invalid because you need the session token to make requests to access other AWS resources
+
+Option C is invalid because these tokens are short lived tokens
+
+For more information on temporary access credentials  , please refer to the below URL
+
+    https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_request.html
+
+
+-------------------------------------
+Question 44: Incorrect
+
+You have docker containers which are going to be deployed in the AWS Elastic Container Service. You need to ensure that instances of containers cannot access each other since these different instances are going to be used by individual customers.
+
+How can you accomplish this?
+
+Explanation
+
+Correct Answer – D
+
+Q: How does Amazon ECS isolate containers belonging to different customers?
+
+Amazon ECS schedules containers for execution on customer-controlled Amazon EC2 instances or with AWS Fargate and builds on the same isolation controls and compliance that are available for EC2 customers. Your compute instances are located in a Virtual Private Cloud (VPC) with an IP range that you specify. You decide which instances are exposed to the Internet and which remain private.
+
+Your EC2 instances use an IAM role to access the ECS service.
+
+    Your ECS tasks use an IAM role to access services and resources.
+    Security Groups and networks ACLs allow you to control inbound and outbound network access to and from your instances.
+    You can connect your existing IT infrastructure to resources in your VPC using industry-standard encrypted IPsec VPN connections.
+    You can provision your EC2 resources as Dedicated Instances. Dedicated Instances are Amazon EC2 Instances that run on hardware dedicated to a single customer for additional isolation.
+
+For more information, please check below AWS Docs:
+
+    https://aws.amazon.com/ecs/faqs/
+
+Option A is incorrect since the Roles need to be assigned on the task level
+
+Options B and C are incorrect since access keys is not the ideal security practise.
+
+For more information on Task IAM Roles  , please refer to the below URL
+
+    https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html
+
+
+-------------------------------------
+Question 47: Incorrect
+
+You have defined some custom policies in AWS. You need to test out the permissions assigned to those policies.
+
+Which of the following can be used for this purpose via the CLI? Choose 2 answers from the options given below
+
+Explanation
+
+Correct Answers – A and B
+
+This is mentioned in the AWS Documentation
+
+Policy simulator commands typically require calling API operations to do two things:
+
+    Evaluate the policies and return the list of context keys that they reference. You need to know what context keys are referenced so that you can supply values for them in the next step.
+    Simulate the policies, providing a list of actions, resources, and context keys that are used during the simulation.
+
+Because of the right command used in the documentation, all other options are incorrect
+
+For more information on policy simulation  , please refer to the below URL
+
+    https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html
+
+
+-------------------------------------
+Question 48: Incorrect
+
+You have been instructed to use the CodePipeline service for the CI/CD automation in your company. Due to security reasons , the resources that would be part of the deployment are placed in another account.
+
+Which of the following steps need to be carried out to accomplish this deployment? Choose 2 answers from the options given below
+
+Explanation
+
+Correct Answers – A and C
+
+Option B is invalid since this would go against the security policy
+
+Option D is invalid since this is not a recommended security practice.
+
+This is mentioned in the AWS Documentation
+
+You might want to create a pipeline that uses resources created or managed by another AWS account. For example, you might want to use one account for your pipeline and another for your AWS CodeDeploy resources. To do so, you must create a AWS Key Management Service (AWS KMS) key to use, add the key to the pipeline, and set up account policies and roles to enable cross-account access.
+
+For more information on pipelines used to access resources in another account  , please refer to the below URL
+
+    https://docs.aws.amazon.com/codepipeline/latest/userguide/pipelines-create-cross-account.html
+
+
+-------------------------------------
+Question 51: Incorrect
+
+Your team has developed an application that makes use of AWS resources. In order to provide frequent releases to the customer, you are required to automate the CI/CD process.
+
+Which of the following can be used for this purpose?
+
+Explanation
+
+Correct Answer – D
+
+Automated continuous delivery pipeline
+
+AWS CodeStar accelerates software release with the help of AWS CodePipeline, a continuous integration and continuous delivery (CI/CD) service. Each project comes pre-configured with an automated pipeline that continuously builds, tests, and deploys your code with each commit.
+
+Option B is incorrect since AWS CodeCommit does not have the facility in itself to carry out the build
+
+Options C is incorrect since the CodePipeline service is used for building build pipelines.
+
+For more information, please refer to the below URL
+
+    https://aws.amazon.com/codestar/features/
+
+Creating a pipeline in Code pipeline is simply not enough to automate the release process you need to integrate with code commit ,
+Code build and then deploy your code through Cloudformation/Elastic Beanstalk etc
+
+Whereas in Code star Each project comes pre-configured with an automated pipeline that continuously builds, tests, and deploys your code with each commit.
+
+
+-------------------------------------
+Question 52: Incorrect
+
+Your using the AWS CodeDeploy service to deploy an application onto AWS. The application uses secure parameters which are stored in the AWS Systems Manager Parameter store.
+
+Which of the following must be done, so that the deployment can be automated via CodeDeploy? Choose 2 answers from the options given below.
+
+Explanation
+
+Correct Answers - A and D
+
+You need to specify the --with-decryption option, this allows the CodeDeploy service to decrypt the password so that it can be used in the application. Also use IAM Roles to ensure the CodeDeploy service can access the KMS service
+
+Option B is incorrect since you need to specify the --with-decryption option
+
+Option C is incorrect since this is not a secure way to access AWS services
+
+For more information on an example on this  , please refer to the below URL
+
+    https://aws.amazon.com/blogs/mt/use-parameter-store-to-securely-access-secrets-and-config-data-in-aws-codedeploy/
+
+
+-------------------------------------
+Question 60: Incorrect
+
+Your application currently points to several Lambda functions in AWS. A change is being made to one of the Lambda functions. You need to ensure that application traffic is shifted slowly from one Lambda function to the other.
+
+Which of the following steps would you carry out? Select 2 Options:
+
+Explanation
+
+Correct Answers – A and B
+
+This is mentioned in the AWS Documentation
+
+By default, an alias points to a single Lambda function version. When the alias is updated to point to a different function version, incoming request traffic in turn instantly points to the updated version. This exposes that alias to any potential instabilities introduced by the new version. To minimize this impact, you can implement the routing-config parameter of the Lambda alias that allows you to point to two different versions of the Lambda function and dictate what percentage of incoming traffic is sent to each version.
+
+Options C and D are incorrect since you need to use ALIAS for this purpose.
+
+Option E is incorrect. Because A & B are the correct ways to achieve the requirement.
+
+For more information on shifting traffic using ALIAS  , please refer to the below URL
+
+    https://docs.aws.amazon.com/lambda/latest/dg/lambda-traffic-shifting-using-aliases.html
+
+
+-------------------------------------
+Question 65: Incorrect
+
+Your application must write to an SQS queue. Your corporate security policies require that AWS credentials are always encrypted and are rotated at least once a week.
+
+How can you securely provide credentials that allow your application to write to the queue?
+
+Explanation
+
+Correct Answer – B
+
+This is clearly mentioned in the AWS Documentation
+
+IAM Roles for Amazon EC2
+
+Applications must sign their API requests with AWS credentials. Therefore, if you are an application developer, you need a strategy for managing credentials for your applications that run on EC2 instances. For example, you can securely distribute your AWS credentials to the instances, enabling the applications on those instances to use your credentials to sign requests, while protecting your credentials from other users. However, it's challenging to securely distribute credentials to each instance, especially those that AWS creates on your behalf, such as Spot Instances or instances in Auto Scaling groups. You must also be able to update the credentials on each instance when you rotate your AWS credentials.
+
+We designed IAM roles so that your applications can securely make API requests from your instances, without requiring you to manage the security credentials that the applications use. Instead of creating and distributing your AWS credentials, you can delegate permission to make API requests using IAM roles as follows:
+
+    Create an IAM role.
+    Define which accounts or AWS services can assume the role.
+    Define which API actions and resources the application can use after assuming the role.
+    Specify the role when you launch your instance, or attach the role to a running or stopped instance.
+    Have the application retrieve a set of temporary credentials and use them.
+
+All other options are invalid because you should not use Access Keys , this is the recommended best practise.
+
+For more information on IAM Roles  , please refer to the below URL
+
+    https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html
