@@ -1,0 +1,176 @@
+
+-------------------------------------
+Question 16: Incorrect
+
+You’ve developed an application script that needs to be bootstrapped into instances that are launched via an Autoscaling Group.
+
+How would you achieve this in the easy way possible?
+
+Explanation
+
+Correct Answer – C
+
+The AWS Documentation mentions the following
+
+When you launch an instance in Amazon EC2, you have the option of passing user data to the instance that can be used to perform common automated configuration tasks and even run scripts after the instance starts. You can pass two types of user data to Amazon EC2: shell scripts and cloud-init directives. You can also pass this data into the launch wizard as plain text, as a file (this is useful for launching instances using the command line tools), or as base64-encoded text (for API calls).
+
+Option A is incorrect because even though this is feasible , bootstrapping needs to be done in the User Data section
+
+Option B is incorrect because this needs to be done in the Userdata section
+
+Option D is incorrect since this is not the right approach for bootstraping
+
+For more information on User data, please refer to the below link
+
+    https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
+
+
+-------------------------------------
+Question 17: Incorrect
+
+Your company has developed a web application and is hosting it in an Amazon S3 bucket configured for static website hosting. The users can log in to this app using their Google/Facebook login accounts. The application is using the AWS SDK for JavaScript in the browser to access data stored in an Amazon DynamoDB table.
+
+How can you ensure that API keys for access to your data in DynamoDB are kept secure?
+
+Explanation
+
+Correct Answer – C
+
+With web identity federation, you don't need to create custom sign-in code or manage your own user identities. Instead, users of your app can sign in using a well-known identity provider (IdP) —such as Login with Amazon, Facebook, Google, or any other OpenID Connect (OIDC)-compatible IdP, receive an authentication token, and then exchange that token for temporary security credentials in AWS that map to an IAM role with permissions to use the resources in your AWS account. Using an IdP helps you keep your AWS account secure, because you don't have to embed and distribute long-term security credentials with your application.
+
+Option A is invalid since Roles cannot be assigned to S3 buckets
+
+Options B and D are invalid since the AWS Access keys should not be used
+
+For more information on Web Identity Federation, please refer to the below link AWS
+
+    https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html
+
+
+-------------------------------------
+Question 40: Incorrect
+
+As a developer , you have created some Lambda functions and are now hosting them via the AWS API gateway service. You need to control access to the API gateway.
+
+Which of the following can be incorporated to control access to the API gateway? Choose 2 answers from the options given below.
+
+Explanation
+
+Correct Answers – A and B
+
+The AWS Documentation mentions the following
+
+As an alternative to using IAM roles and policies or Lambda authorizers (formerly known as custom authorizers), you can use an Amazon Cognito user pool to control who can access your API in Amazon API Gateway.
+
+Option C is invalid since these are used to define methods such as GET , POST for your API gateway
+
+Option D is invalid since this is used to host the different stages for your API gateway
+
+For more information on using the API gateway with Cognito  , please refer to the below URL
+
+    https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrate-with-cognito.html
+
+
+-------------------------------------
+Question 41: Incorrect
+You are developing an application which will make use of Kinesis Firehose for streaming the records onto the Simple Storage Service. You company policy mandates that all data needs to be encrypted at rest. How can you achieve this with Kinesis Firehose? Choose 2 answers for the options given below.
+
+Explanation
+
+Correct Answers – A and D
+
+This is given in the AWS Documentation
+
+If you have sensitive data, you can enable server-side data encryption when you use Amazon Kinesis Data Firehose. However, this is only possible if you use a Kinesis stream as your data source. When you configure a Kinesis stream as the data source of a Kinesis Data Firehose delivery stream, Kinesis Data Firehose no longer stores the data at rest. Instead, the data is stored in the Kinesis stream.
+
+Options B and C are invalid because this is used for encrypting data in transit
+
+For more information on Data encryption with Kinesis Firehose  , please refer to the below URL
+
+    https://docs.aws.amazon.com/firehose/latest/dev/encryption.html
+
+
+-------------------------------------
+Question 57: Incorrect
+
+Your team is using the AWS CodeBuild service for an application build. As part of Integration testing during the build phase, the application needs to access an RDS instance in a private subnet.
+
+How can you ensure this is possible?
+
+Explanation
+
+Correct Answer - B
+
+This is given in the AWS Documentation
+
+Typically, resources in an VPC are not accessible by AWS CodeBuild. To enable access, you must provide additional VPC-specific configuration information as part of your AWS CodeBuild project configuration. This includes the VPC ID, the VPC subnet IDs, and the VPC security group IDs. VPC-enabled builds are then able to access resources inside your VPC. 
+
+VPC connectivity from AWS CodeBuild builds makes it possible to:
+
+    Run integration tests from your build against data in an Amazon RDS database that's isolated on a private subnet.
+    Query data in an Amazon ElastiCache cluster directly from tests.
+    Interact with internal web services hosted on Amazon EC2, Amazon ECS, or services that use internal Elastic Load Balancing.
+
+Since the requirements are clearly mentioned in the documentation, all other options are incorrect
+
+For more information on VPC support for AWS CodeBuild, please refer to the below URL
+
+    https://docs.aws.amazon.com/codebuild/latest/userguide/vpc-support.html
+
+
+-------------------------------------
+Question 61: Incorrect
+Server-side encryption is about data encryption at rest. That is, Amazon S3 encrypts your data at the object level as it writes it to disk in its data centers and decrypts it for you when you go to access it. There are a few different options depending on how you choose to manage the encryption keys. One of the options is called 'Server-Side Encryption with Amazon S3-Managed Keys (SSE-S3)'. Which of the following best describes how this encryption method works? Choose the correct answer from the options below
+
+Explanation
+
+Correct Answer – B
+
+S3 provide many encryption techniques.
+
+Use Server-Side Encryption with Amazon S3-Managed Keys (SSE-S3) – Each object is encrypted with a unique key employing strong multi-factor encryption. As an additional safeguard, it encrypts the key itself with a master key that it regularly rotates. Amazon S3 server-side encryption uses one of the strongest block ciphers available, 256-bit Advanced Encryption Standard (AES-256), to encrypt your data. 
+
+For more information on S3 encryption, please visit the link:
+
+    http://docs.aws.amazon.com/AmazonS3/latest/dev/serv-side-encryption.html
+
+
+-------------------------------------
+Question 63: Incorrect
+
+Regarding the evaluation logic when managing Access to Your Amazon SNS Topics, the following things can be stated. The goal at evaluation time is to decide whether a given request should be allowed or denied. The evaluation logic follows several basic rules:
+
+- By default, all requests to use your resource coming from anyone but you are denied
+
+- An allow overrides any default denies - An explicit deny overrides any allows
+
+- The order in which the policies are evaluated is not important
+
+- A policy results in a default deny if it doesn't directly apply to the request.
+
+Keeping the above in mind, what will be the policy result, if a user requests to use Amazon SNS, but the policy on the topic doesn't refer to the user's AWS account at all?
+
+Explanation
+
+Correct Answer – A
+
+The below diagram shows the evaluation logic of IAM policies. And as per the evaluation logic, it is clear that the above scenario leads to a default deny.
+
+For more information on the IAM policy evaluation logic, please refer to the link:
+
+    http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html
+
+
+-------------------------------------
+Question 65: Incorrect
+You have created an Elastic Load Balancer with Duration-Based sticky sessions enabled in front of your six EC2 web application instances in US-West-2. For High Availability, there are three web application instances in Availability Zone 1 and three web application instances in Availability Zone 2. To load test, you set up a software-based load tester in Availability Zone 2 to send traffic to the Elastic Load Balancer, as well as letting several hundred users browse to the ELB’s hostname. After a while, you notice that the users’ sessions are spread evenly across the EC2 instances in both AZ’s, but the software-based load tester’s traffic is hitting only the instances in Availability Zone 2. What steps can you take to resolve this problem? Choose the 2 correct answer from the options below
+
+Explanation
+
+Correct Answer – B and C
+
+"If you do not ensure that DNS is re-resolved or use multiple test clients to simulate increased load, the test may continue to hit a single IP address when Elastic Load Balancing has actually allocated many more IP addresses. Because your end users will not all be resolving to that single IP address, your test will not be a realistic sampling of real-world behavior.”
+
+Please refer to the below article URL:
+
+    http://aws.amazon.com/articles/1636185810492479
