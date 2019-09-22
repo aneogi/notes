@@ -1,3 +1,30 @@
+
+-------------------------------------
+Question 1: Incorrect
+What is the maximum write throughput I can provision for a single DynamoDB table?
+
+Explanation
+
+Correct answer is C
+
+Refer AWS documentation - DynamoDB limits
+
+An AWS account places some initial maximum limits on the throughput you can provision:
+
+    US East (N. Virginia) Region:
+        Per table – 40,000 read capacity units and 40,000 write capacity units
+        Per account – 80,000 read capacity units and 80,000 write capacity units
+    All Other Regions:
+        Per table – 10,000 read capacity units and 10,000 write capacity units
+        Per account – 20,000 read capacity units and 20,000 write capacity units
+
+The provisioned throughput limit includes the sum of the capacity of the table together with the capacity of all of its global secondary indexes.
+
+To request a service limit increase see https://aws.amazon.com/support.
+
+-------------------------------------
+Question 4: Incorrect
+
 A company is deploying lambda code with has external third-party dependencies. When deploying the code, they are encountering a CodeStorageExceededException error. The compressed zip deployment package size is around 47MB. What can be the issue?
 
 Explanation
@@ -22,7 +49,9 @@ Total size of environment variables set 	4 KB
 Option A and B are wrong as max limit is 50MB
 
 Option D is wrong as max compressed size is 250MB
-Question 5: Incorrect
+
+-------------------------------------
+Question  5: Incorrect
 To scale up the AWS resources using manual Auto Scaling, which of the below mentioned parameters should the user change?
 
 Explanation
@@ -32,7 +61,9 @@ Correct answer is B as manual scaling can be implemented by changing desired cap
 Refer AWS documentation - Auto Scaling Manual Scaling
 
 At any time, you can change the size of an existing Auto Scaling group by updating the desired capacity of the Auto Scaling group, or by updating the instances that are attached to the Auto Scaling group.
-Question 12: Incorrect
+
+-------------------------------------
+Question  12: Incorrect
 An order processing website issuing EC2 instances to process messages from an SQS queue. A user reported an issue that their order was processed twice and hence charged twice. What action would you recommend ensuring this does not happen again? Choose the correct option
 
 Explanation
@@ -48,7 +79,9 @@ Option A is wrong as if the message is not deleted the issue with occur for all 
 Option B is wrong as visibility timeout would not help solve the issue permanently.
 
 Option D is wrong as long polling or short polling will not cause the message to be read twice.
-Question 13: Incorrect
+
+-------------------------------------
+Question  13: Incorrect
 A storage admin wants to encrypt all the objects stored in S3 using server side encryption. The user does not want to use the AES 256 encryption key provided by S3. How can the user achieve this?
 
 Explanation
@@ -58,7 +91,9 @@ Correct answer is D as the admin can use S3 SSE-C to provide the encryption keys
 Refer AWS documentation - S3 SSE-C
 
 Server-side encryption is about protecting data at rest. Using server-side encryption with customer-provided encryption keys (SSE-C) allows you to set your own encryption keys. With the encryption key you provide as part of your request, Amazon S3 manages both the encryption, as it writes to disks, and decryption, when you access your objects. Therefore, you don't need to maintain any code to perform data encryption and decryption. The only thing you do is manage the encryption keys you provide.
-Question 15: Incorrect
+
+-------------------------------------
+Question  15: Incorrect
 A user has launched an EC2 instance and installed a website with the Apache webserver. The webserver is running but the user is not able to access the website from the Internet. What can be the possible reason for this failure?
 
 Explanation
@@ -70,7 +105,9 @@ Option B is wrong as key pairs are required for only ssh login to an EC2 instanc
 Option C is wrong as the website can be made Internet accessible
 
 Option D is wrong as instance can work with Public IP as well and does not need Elastic IP.
-Question 27: Incorrect
+
+-------------------------------------
+Question  27: Incorrect
 
 A user is trying to use AWS CLI and receives a 403 error response.
 
@@ -93,7 +130,9 @@ Note
 Only certain AWS actions return an encoded authorization message. The documentation for an individual action indicates whether that action returns an encoded message in addition to returning an HTTP code.
 
 The message is encoded because the details of the authorization status can constitute privileged information that the user who requested the action should not see. To decode an authorization status message, a user must be granted permissions via an IAM policy to request the decode-authorization-message (sts:DecodeAuthorizationMessage ) action.
-Question 29: Incorrect
+
+-------------------------------------
+Question  29: Incorrect
 A user has created a queue named "myqueue" with SQS. There are four messages published to queue, which are not received by the consumer yet. If the user tries to delete the queue, what will happen?
 
 Explanation
@@ -105,7 +144,9 @@ Refer AWS documentation - SQS Delete Queue
 Deletes the queue specified by the QueueUrl, regardless of the queue's contents. If the specified queue doesn't exist, Amazon SQS returns a successful response.
 
 Important - Be careful with the DeleteQueue action: When you delete a queue, any messages in the queue are no longer available.
-Question 33: Incorrect
+
+-------------------------------------
+Question  33: Incorrect
 Which two components provide connectivity with external networks? When attached to an Amazon VPC which two components provide connectivity with external networks? Choose 2 answers
 
 Explanation
@@ -115,7 +156,9 @@ Correct answers are C & D as VGW is the Amazon side of VPN connection, which can
 Option A is wrong as EIPs are static IPs assigned to instances.
 
 Option B is wrong as NAT is only for private subnets to have access to Internet.
-Question 34: Incorrect
+
+-------------------------------------
+Question  34: Incorrect
 A company is building software on AWS that requires access to various AWS services. Which configuration should be used to ensure that AWS credentials (i.e., Access Key ID/Secret Access Key combination) are not compromised?
 
 Explanation
@@ -131,7 +174,9 @@ Option A is wrong as MFA is to enable two factor authentication
 Option C is wrong as storing credentials is not recommended
 
 Option D is wrong as IAM user cannot be assigned to EC2 instance
-Question 38: Incorrect
+
+-------------------------------------
+Question  38: Incorrect
 
 Developer is creating an Auto Scaling group whose instances need to publish a custom metric to Amazon CloudWatch. Which method would be the MOST secure way to authenticate a CloudWatch PUT request?
 
@@ -148,7 +193,9 @@ You can launch your Auto Scaling instances with an IAM role to automatically ena
 Options A & B are wrong as using IAM user with fixed credentials is not recommended as they can be compromised and hard to rotate.
 
 Option C is wrong as there are no CloudWatch metric policies
-Question 42: Incorrect
+
+-------------------------------------
+Question  42: Incorrect
 
 A Developer is receiving HTTP 400: ThrottlingException errors intermittently when calling the Amazon CloudWatch API. When a call fails, no data is retrieved. What best practice should first be applied to address this issue?
 
@@ -166,4 +213,198 @@ GetMetricData
 180,000 Datapoints Per Second (DPS) if the StartTime used in the API request is less than or equal to three hours from current time. 90,000 DPS if the StartTime is more than three hours from current time. This is the maximum number of datapoints you can request per second using one or more API calls without being throttled.
 
 You can request a limit increase for both of these limits.
+
+
+#####################################################################################################################
+
+Attempt 2
+
+-------------------------------------
+Question  1: Incorrect
+What is the maximum write throughput I can provision for a single DynamoDB table?
+
+Explanation
+
+Correct answer is C
+
+Refer AWS documentation - DynamoDB limits
+
+An AWS account places some initial maximum limits on the throughput you can provision:
+
+    US East (N. Virginia) Region:
+        Per table – 40,000 read capacity units and 40,000 write capacity units
+        Per account – 80,000 read capacity units and 80,000 write capacity units
+    All Other Regions:
+        Per table – 10,000 read capacity units and 10,000 write capacity units
+        Per account – 20,000 read capacity units and 20,000 write capacity units
+
+The provisioned throughput limit includes the sum of the capacity of the table together with the capacity of all of its global secondary indexes.
+
+To request a service limit increase see https://aws.amazon.com/support.
+
+-------------------------------------
+Question  5: Incorrect
+To scale up the AWS resources using manual Auto Scaling, which of the below mentioned parameters should the user change?
+
+Explanation
+
+Correct answer is B as manual scaling can be implemented by changing desired capacity.
+
+Refer AWS documentation - Auto Scaling Manual Scaling
+
+At any time, you can change the size of an existing Auto Scaling group by updating the desired capacity of the Auto Scaling group, or by updating the instances that are attached to the Auto Scaling group.
+
+-------------------------------------
+Question  9: Incorrect
+A root account owner is trying to setup an additional level of security for all his IAM users. Which of the below mentioned options is a recommended solution for the account owner?
+
+Explanation
+
+Correct answer is B as MFA can be used for additional security as multi-factor authentication.
+
+Refer AWS documentation - IAM MFA
+
+For increased security, we recommend that you configure multi-factor authentication (MFA) to help protect your AWS resources. MFA adds extra security because it requires users to enter a unique authentication code from an approved authentication device or SMS text message when they access AWS websites or services.
+
+-------------------------------------
+Question  11: Incorrect
+A user has configured a website and launched it using the Apache web server on port 80. The user is using ELB with the EC2 instances for Load Balancing. What should the user do to ensure that the EC2 instances accept requests only from ELB?
+
+Explanation
+
+Correct answer is B as the EC2 security group can be configured for a rule to allow requests only from ELB security group
+
+Refer AWS documentation - ELB Security Groups
+
+Option A is wrong as ELB does not have any static IP address.
+
+Option C is wrong as you can't enable instance to listen to ELB port
+
+Option D is wrong as you cannot configure listener in security groups but just IP address and security groups
+
+-------------------------------------
+Question  12: Incorrect
+An order processing website issuing EC2 instances to process messages from an SQS queue. A user reported an issue that their order was processed twice and hence charged twice. What action would you recommend ensuring this does not happen again? Choose the correct option
+
+Explanation
+
+Correct answer is C as SWF can help handle the duplicates and make sure of only once processing
+
+Refer AWS documentation - SWF FAQs
+
+Amazon SWF provides useful guarantees around task assignment. It ensures that a task is never duplicated and is assigned only once. Thus, even though you may have multiple workers for a particular activity type (or a number of instances of a decider), Amazon SWF will give a specific task to only one worker (or one decider instance). Additionally, Amazon SWF keeps at most one decision task outstanding at a time for a workflow execution. Thus, you can run multiple decider instances without worrying about two instances operating on the same execution simultaneously. These facilities enable you to coordinate your workflow without worrying about duplicate, lost, or conflicting tasks.
+
+Option A is wrong as if the message is not deleted the issue with occur for all the messages.
+
+Option B is wrong as visibility timeout would not help solve the issue permanently.
+
+Option D is wrong as long polling or short polling will not cause the message to be read twice.
+
+-------------------------------------
+Question  13: Incorrect
+A storage admin wants to encrypt all the objects stored in S3 using server side encryption. The user does not want to use the AES 256 encryption key provided by S3. How can the user achieve this?
+
+Explanation
+
+Correct answer is D as the admin can use S3 SSE-C to provide the encryption keys
+
+Refer AWS documentation - S3 SSE-C
+
+Server-side encryption is about protecting data at rest. Using server-side encryption with customer-provided encryption keys (SSE-C) allows you to set your own encryption keys. With the encryption key you provide as part of your request, Amazon S3 manages both the encryption, as it writes to disks, and decryption, when you access your objects. Therefore, you don't need to maintain any code to perform data encryption and decryption. The only thing you do is manage the encryption keys you provide.
+
+-------------------------------------
+Question  15: Incorrect
+A user has launched an EC2 instance and installed a website with the Apache webserver. The webserver is running but the user is not able to access the website from the Internet. What can be the possible reason for this failure?
+
+Explanation
+
+Correct answer is A as the instance is not accessible the security group inbound rules might not be configured properly.
+
+Option B is wrong as key pairs are required for only ssh login to an EC2 instance
+
+Option C is wrong as the website can be made Internet accessible
+
+Option D is wrong as instance can work with Public IP as well and does not need Elastic IP.
+
+-------------------------------------
+Question  25: Incorrect
+A company is managing a customer's application which currently includes a three-tier application configuration. The first tier manages the web instances and is configured in a public subnet. The second layer is the application layer. As part of the application code, the application instances upload large amounts of data to Amazon S3. Currently, the private subnets that the application instances are running for on have a route to a single NAT t2.micro NAT instance. The application, during peak loads, becomes slow and customer uploads from the application to S3 are not completing and taking a long time. Which steps might you take to solve the issue using the most cost efficient method? Choose the correct answer from the options below
+
+Explanation
+
+Correct answer is B as VPC S3 endpoint would help the instances to connect to S3 without having to route the traffic through NAT and IGW.
+
+Refer AWS documentation - VPC Endpoints
+
+A VPC endpoint enables you to create a private connection between your VPC and another AWS service without requiring access over the Internet, through a NAT device, a VPN connection, or AWS Direct Connect. Endpoints are virtual devices. They are horizontally scaled, redundant, and highly available VPC components that allow communication between instances in your VPC and AWS services without imposing availability risks or bandwidth constraints on your network traffic.
+
+-------------------------------------
+Question  33: Incorrect
+Which two components provide connectivity with external networks? When attached to an Amazon VPC which two components provide connectivity with external networks? Choose 2 answers
+
+Explanation
+
+Correct answers are C & D as VGW is the Amazon side of VPN connection, which can help establish connection between your Amazon VPC and your datacenter, home network, or co-location facility and IGW allow direct access to Internet.
+
+Option A is wrong as EIPs are static IPs assigned to instances.
+
+Option B is wrong as NAT is only for private subnets to have access to Internet.
+
+-------------------------------------
+Question  40: Incorrect
+
+A Developer needs temporary access to resources in a second account. What is the MOST secure way to achieve this?
+
+Explanation
+
+Correct answer is C as IAM allows setting up cross account access roles, which can be assumed to retrieve temporary credentials and access the resources.
+
+Refer AWS documentation - IAM Cross Account Role
+
+You share resources in one account with users in a different account. By setting up cross-account access in this way, you don't need to create individual IAM users in each account. In addition, users don't have to sign out of one account and sign into another in order to access resources that are in different AWS accounts. After configuring the role, you see how to use the role from the AWS Management Console, the AWS CLI, and the API
+
+
+
+
+
+-------------------------------------
+Question  42: Incorrect
+
+A Developer is receiving HTTP 400: ThrottlingException errors intermittently when calling the Amazon CloudWatch API. When a call fails, no data is retrieved. What best practice should first be applied to address this issue?
+
+Explanation
+
+Correct answer is A as CloudWatch allows you to GetMetricData at 50 transactions per second (TPS). The maximum number of operation requests you can make per second without being throttled. If you need more you need to increase the limit.
+
+Refer AWS documentation - CloudWatch Limits
+
+GetMetricData
+	
+
+50 transactions per second (TPS). The maximum number of operation requests you can make per second without being throttled.
+
+180,000 Datapoints Per Second (DPS) if the StartTime used in the API request is less than or equal to three hours from current time. 90,000 DPS if the StartTime is more than three hours from current time. This is the maximum number of datapoints you can request per second using one or more API calls without being throttled.
+
+You can request a limit increase for both of these limits.
+
+-------------------------------------
+Question  49: Incorrect
+
+When working with Amazon RDS, by default AWS is responsible for implementing which two management-related activities? (Pick 2 correct answers)
+
+Explanation
+
+Correct answer are B & C
+
+Refer AWS documentation - RDS FAQs & RDS PIT
+
+Once your database is up and running, Amazon RDS automates common administrative tasks such as performing backups and patching the software that powers your database.
+
+Amazon RDS automated backup feature automatically creates a storage volume snapshot of your DB instance, backing up the entire DB instance and not just individual databases. You can restore to any point in time during your backup retention period. To determine the latest restorable time for a DB instance, use the AWS CLI describe-db-instances command and look at the value returned in the LatestRestorableTime field for the DB instance. The latest restorable time for a DB instance is typically within 5 minutes of the current time.
+
+Option A is wrong as it is user's responsibility
+
+Option D is wrong as automated backup retention period is maximum 35 days and is not suitable for regulatory requirements. Use manual snapshots instead.
+
+After you create a DB instance, you can modify the backup retention period. You can set the backup retention period to between 1 and 35 days. You can also set the backup retention period to 0, which disables automated backups.
 
