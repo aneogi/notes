@@ -250,3 +250,167 @@ Numerous components on a network, such as DNS servers, switches, load balancers,
 In addition to simple retries, each AWS SDK implements exponential backoff algorithm for better flow control. The idea behind exponential backoff is to use progressively longer waits between retries for consecutive error responses. You should implement a maximum delay interval, as well as a maximum number of retries. The maximum delay interval and maximum number of retries are not necessarily fixed values, and should be set based on the operation being performed, as well as other local factors, such as network latency.
 
 -------------------------------------
+
+
+#####################################################################################################################
+
+Attempt 2
+
+-------------------------------------
+Question 6: Incorrect
+A user is creating a snapshot of an EBS volume. Which of the below statements is incorrect in relation to the creation of an EBS snapshot?
+
+Explanation
+
+Correct answer is C as EBS snapshots are have limited scope spanning region and not AZ.
+
+Refer AWS documentation - EBS Snapshots
+
+You can back up the data on your Amazon EBS volumes to Amazon S3 by taking point-in-time snapshots. Snapshots are incremental backups, which means that only the blocks on the device that have changed after your most recent snapshot are saved. This minimizes the time required to create the snapshot and saves on storage costs by not duplicating data. When you delete a snapshot, only the data unique to that snapshot is removed. Each snapshot contains all of the information needed to restore your data (from the moment when the snapshot was taken) to a new EBS volume.
+
+-------------------------------------
+Question 17: Incorrect
+What is true of the way that encryption works with EBS?
+
+Explanation
+
+Correct answer is C as volumes created from encrypted snapshots are ALWAYS encrypted.
+
+Refer AWS documentation - EBS Encryption
+
+Snapshots of encrypted volumes are automatically encrypted, and volumes that are created from encrypted snapshots are also automatically encrypted.
+
+-------------------------------------
+Question 32: Incorrect
+You have multiple AWS users with access to an Amazon S3 bucket. These users have permission to add and delete objects. If you wanted to prevent accidental deletions, what might you do to prevent these users from performing accidental deletions of an object?
+
+Explanation
+
+Correct answer is B as Object versioning would help recovery of object in case of accidental deletes or overwriting.
+
+Refer AWS documentation - S3 Object Versioning
+
+This functionality prevents you from accidentally overwriting or deleting objects and affords you the opportunity to retrieve a previous version of an object.
+
+Option A is wrong as it would remove the complete deletion access, even for valid requests.
+
+Option C is wrong as MFA just adds an additional authentication check, but it would not prevent the user from deleting the object
+
+Option D is wrong as Bucket policy cannot prevent accident deletion, it can basically allow or deny.
+
+-------------------------------------
+Question 41: Incorrect
+
+Your organization has developed a Lambda function to respond to S3 as an event source. Whenever an CSV file is uploaded, the Lambda function is invoked, which in then stores the file, and inserts the records into an RDS database. Lambda function is failing when a user has uploaded an 600MB file. What can be the reason ?
+
+Explanation
+
+Correct answer is B as one of the valid reasons can be the file has hit AWS Lambda limits where only 512 MB of space is provided.
+
+Refer AWS documentation - Lambda Limits
+Resource 	Limits
+Memory allocation range 	Minimum = 128 MB / Maximum = 1536 MB (with 64 MB increments)
+Ephemeral disk capacity ("/tmp" space) 	512 MB
+
+-------------------------------------
+Question 45: Incorrect
+You are building a lambda function receiving messages from SNS. There are intermittent errors and the log just shows parse log error. What is the easiest and quickest way to help debug the same?
+
+Explanation
+
+Correct answer is C as for failures in handling the messages, the message can be redirected to a Dead Letter Queue which can be used for debugging.
+
+Any Lambda function invoked asynchronously is retried twice before the event is discarded. If the retries fail and you're unsure why, use Dead Letter Queues (DLQ) to direct unprocessed events to an Amazon SQS queue or an Amazon SNS topic to analyze the failure.
+
+AWS Lambda directs events that cannot be processed to the specified Amazon SNS topic or Amazon SQS queue. Functions that don't specify a DLQ will discard events after they have exhausted their retries.
+
+-------------------------------------
+Question 47: Incorrect
+A user has created a simple lambda function. He wants to deploy the Lambda function. What steps would help him deploy the lambda function?
+
+Explanation
+
+Correct answer is C as aws cloudformation package helps package the code and upload it to a S3 bucket. The output template then can be used with aws cloudformation deploy to deploy the application.
+
+Refer AWS documentation - CloudFormation Using CLI
+
+-------------------------------------
+Question 50: Incorrect
+
+A Developer is working on an application that tracks hundreds of millions of product reviews in an Amazon DynamoDB table. The records include the data elements shown in the table:
+
+Larger image
+
+Which field, when used as the partition key, would result in the MOST consistent performance using DynamoDB?
+
+Explanation
+
+Correct answer is D as Product Id with its multiple values would help spread the data across multiple partitions and provide a good distribution of queries across partitions.
+
+Refer AWS documentation - DynamoDB Design partition key
+
+The partition key portion of a table's primary key determines the logical partitions in which a table's data is stored. This in turn affects the underlying physical partitions. Provisioned I/O capacity for the table is divided evenly among these physical partitions. Therefore a partition key design that doesn't distribute I/O requests evenly can create "hot" partitions that result in throttling and use your provisioned I/O capacity inefficiently.
+
+The optimal usage of a table's provisioned throughput depends not only on the workload patterns of individual items, but also on the partition-key design. This doesn't mean that you must access all partition key values to achieve an efficient throughput level, or even that the percentage of accessed partition key values must be high. It does mean that the more distinct partition key values that your workload accesses, the more those requests will be spread across the partitioned space. In general, you will use your provisioned throughput more efficiently as the ratio of partition key values accessed to the total number of partition key values increases.
+
+Option A is wrong as starRating has a limited number of values.
+
+Option B is wrong as reviewID is a unique identifier and would not be queried on.
+
+Option C is wrong as comment is a random text and would not be queried on.
+
+-------------------------------------
+Question 57: Incorrect
+
+A development team consists of 10 team members. Similar to a home directory for each team member the manager wants to grant access to user-specific folders in an Amazon S3 bucket. For the team member with the username "TeamMemberX", the snippet of the IAM policy looks like this:
+
+    {
+      "Sid": "AllowS3ActionToFolders",
+      "Action": ["s3:*"],
+      "Effect": "Allow",
+      "Resource": ["arn:aws:s3:::companyname/home/TeamMemberX/*"]
+    }    
+
+Instead of creating distinct policies for each team member, what approach can be used to make this policy snippet generic for all team members?
+
+Explanation
+
+Correct answer is C as IAM policy variables provides the ability to create a generic policy so that it works for multiple users making it dynamic.
+
+Refer AWS documentation - IAM Policy Variables
+
+In IAM policies, many actions allow you to provide a name for the specific resources that you want to control access to. For example, the following policy allows the user to list, read, and write objects with a prefix David in the Amazon S3 bucket mybucket.
+
+In some cases, you might not know the exact name of the resource when you write the policy. You might want to generalize the policy so it works for many users without having to make a unique copy of the policy for each user. For example, consider writing a policy to allow each user to have access to his or her own objects in an Amazon S3 bucket, as in the previous example. But don't create a separate policy for each user that explicitly specifies the user's name as part of the resource. Instead, create a single group policy that works for any user in that group.
+
+You can do this by using policy variables, a feature that lets you specify placeholders in a policy. When the policy is evaluated, the policy variables are replaced with values that come from the context of the request itself.
+
+Option A is wrong as IAM policy condition element (or Condition block) lets you specify conditions for when a policy is in effect.
+
+Option B is wrong as IAM policy principal element helps specify the user (IAM user, federated user, or assumed-role user), AWS account, AWS service, or other principal entity that is allowed or denied access to a resource.
+
+Option D is wrong as IAM policy resource element specifies the object or objects that the statement covers.
+
+-------------------------------------
+Question 61: Incorrect
+
+A company needs to deploy services to an AWS region, which they have not previously used. The company currently has an AWS identity and Access Management (IAM) role for the Amazon EC2 instances, which permits the instance to have access to Amazon DynamoDB. The company wants their EC2 instances in the new region to have the same privileges. How should the company achieve this?
+
+Explanation
+
+Correct answer is B as IAM Role are global and are valid across regions. IAM role once created can be assigned to EC2 instances launched across regions
+
+IAM Role are global. No region is required to be specified when you define IAM Role and can use AWS services in any geographic region.
+
+-------------------------------------
+Question 62: Incorrect
+
+A user is enabling logging on a particular bucket. Which of the below mentioned options may be best suitable to allow access to the log bucket?
+
+Explanation
+
+Correct answer is D
+
+Refer AWS documentation - S3 Server log
+
+Amazon S3 uses a special log delivery account, called the Log Delivery group, to write access logs. These writes are subject to the usual access control restrictions. You will need to grant the Log Delivery group write permission on the target bucket by adding a grant entry in the bucket's access control list (ACL). If you use the Amazon S3 console to enable logging on a bucket, the console will both enable logging on the source bucket and update the ACL on the target bucket to grant write permission to the Log Delivery group.

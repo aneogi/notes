@@ -1,4 +1,6 @@
 
+
+-------------------------------------
 Question 3: Incorrect
 You are designing a web application that stores static assets in an Amazon Simple Storage Service (S3) bucket. You expect this bucket to immediately receive over 150 PUT requests per second. What should you do to ensure optimal performance?
 
@@ -17,6 +19,8 @@ Option A is wrong as multi part upload only helps improve object upload times
 Option C is wrong as Amazon S3 scales to support very high request rates. However, If your workload in an Amazon S3 bucket routinely exceeds 100 PUT/LIST/DELETE requests per second or more than 300 GET requests per second it is recommended to implement best practices.
 
 Option D is wrong as using predictable naming scheme would reduce the performance
+
+-------------------------------------
 Question 6: Incorrect
 
 A company is building a product ratings review tracking system for hundreds of thousands of products.
@@ -38,6 +42,8 @@ Refer AWS documentation - DynamoDB Design partition key
 The partition key portion of a table's primary key determines the logical partitions in which a table's data is stored. This in turn affects the underlying physical partitions. Provisioned I/O capacity for the table is divided evenly among these physical partitions. Therefore a partition key design that doesn't distribute I/O requests evenly can create "hot" partitions that result in throttling and use your provisioned I/O capacity inefficiently.
 
 The optimal usage of a table's provisioned throughput depends not only on the workload patterns of individual items, but also on the partition-key design. This doesn't mean that you must access all partition key values to achieve an efficient throughput level, or even that the percentage of accessed partition key values must be high. It does mean that the more distinct partition key values that your workload accesses, the more those requests will be spread across the partitioned space. In general, you will use your provisioned throughput more efficiently as the ratio of partition key values accessed to the total number of partition key values increases.
+
+-------------------------------------
 Question 11: Incorrect
 A company has an application that uses the S3 bucket as its data layer. As per the monitoring on the S3 bucket, it can be seen that the number of GET requests is 400 requests per second. The IT Operations team receives service requests about users getting HTTP 500 or 503 errors while accessing the application. What can be done to resolve these errors? Choose 2 answers
 
@@ -60,6 +66,8 @@ For example, suppose that you have a few objects that are very popular. Amazon C
 Option B is wrong as ELB is used to distribute traffic on to EC2 Instances and does not work with S3.
 
 Options D is wrong as versioning helps in maintaining multiple copies and helps to recover from accidental deletion or overwrites.
+
+-------------------------------------
 Question 13: Incorrect
 A company manages the keys through their on-premises Key Management System. They want to upload large videos with the encryption being handled by AWS so that they don't need to maintain any code to perform data encryption and decryption. How can they implement the same?
 
@@ -72,6 +80,8 @@ Refer AWS documentation - S3 Server Side Encryption Customer Provided Encryption
 Server-side encryption is about protecting data at rest. Using server-side encryption with customer-provided encryption keys (SSE-C) allows you to set your own encryption keys. With the encryption key you provide as part of your request, Amazon S3 manages both the encryption, as it writes to disks, and decryption, when you access your objects. Therefore, you don't need to maintain any code to perform data encryption and decryption. The only thing you do is manage the encryption keys you provide.
 
 When you upload an object, Amazon S3 uses the encryption key you provide to apply AES-256 encryption to your data and removes the encryption key from memory.
+
+-------------------------------------
 Question 14: Incorrect
 How is provisioned throughput affected by the chosen consistency model when reading data from a DynamoDB table?
 
@@ -82,6 +92,8 @@ Correct answer is C as One read capacity unit = 1 strongly consistent read per s
 Refer AWS documentation - DynamoDB Provisioned Throughput
 
 One read capacity unit represents one strongly consistent read per second, or two eventually consistent reads per second, for items up to 4 KB in size. If you need to read an item that is larger than 4 KB, DynamoDB will need to consume additional read capacity units. The total number of read capacity units required depends on the item size, and whether you want an eventually consistent or strongly consistent read.
+
+-------------------------------------
 Question 22: Incorrect
 An organization has hosted an application on the EC2 instances. There will be multiple users connecting to the instance for setup and configuration of application. The organization is planning to implement certain security best practices. Which of the below mentioned pointers will not help the organization achieve better security arrangement?
 
@@ -96,6 +108,8 @@ Option A is wrong as the EC2 instance should always be updated for latest patch
 Option C is wrong as password based login should be disabled, and for each individual user their keys should be added to the instance from them to login
 
 Option D is wrong as the access should be removed when not required.
+
+-------------------------------------
 Question 23: Incorrect
 What is the data model of DynamoDB?
 
@@ -106,6 +120,8 @@ Correct answer is C as it consists of Table -> Items -> Attributes.
 Refer AWS documentation - DynamoDB Core Components
 
 In DynamoDB, tables, items, and attributes are the core components that you work with. A table is a collection of items, and each item is a collection of attributes. DynamoDB uses primary keys to uniquely identify each item in a table and secondary indexes to provide more querying flexibility. You can use DynamoDB Streams to capture data modification events in DynamoDB tables.
+
+-------------------------------------
 Question 24: Incorrect
 
 You have been doing a lot of testing of your VPC Network by deliberately failing EC2 instances to test whether instances are failing over properly. Your customer who will be paying the AWS bill for all this asks you if he is being charged for all these instances. You try to explain to him how the billing works on EC2 instances to the best of your knowledge. What would be an appropriate response to give to the customer in regards to this?
@@ -119,6 +135,8 @@ Refer AWS documentation - EC2 FAQs
 Q: When does billing of my Amazon EC2 systems begin and end?
 
 Billing commences when Amazon EC2 initiates the boot sequence of an AMI instance. Billing ends when the instance terminates, which could occur through a web services command, by running "shutdown -h", or through instance failure. When you stop an instance, we shut it down but don't charge hourly usage for a stopped instance, or data transfer fees, but we do charge for the storage for any Amazon EBS volumes.
+
+-------------------------------------
 Question 27: Incorrect
 A company uses CodeBuild to run their builds. After a minor change in the code, the last build cycle failed. How can they debug the issue?
 
@@ -129,6 +147,8 @@ Correct answer is A as CodeBuild uses CloudWatch to store the detailed build inf
 Refer AWS documentation - CodeBuild Concepts & View Detailed Build Information
 
 While the build is running, you can use the AWS CodeBuild console, AWS CLI, or AWS SDKs, to get summarized build information from AWS CodeBuild and detailed build information from Amazon CloudWatch Logs. If you use AWS CodePipeline to run builds, you can get limited build information from AWS CodePipeline.
+
+-------------------------------------
 Question 28: Incorrect
 A user has configured a VPC with a new subnet. The user has created a security group. The user wants to configure that instances of the same subnet communicate with each other. How can the user configure this with the security group?
 
@@ -143,6 +163,8 @@ Option B is wrong as Security group rule can be configured only with IP addresse
 Option D is wrong as VPC peering is for enabling communication between VPCs.
 
 A VPC peering connection is a networking connection between two VPCs that enables you to route traffic between them using private IPv4 addresses or IPv6 addresses. Instances in either VPC can communicate with each other as if they are within the same network.
+
+-------------------------------------
 Question 33: Incorrect
 Instance A and instance B are running in two different subnets A and B of a VPC. Instance A is not able to ping instance B. What are two possible reasons for this? (Pick 2 correct answers)
 
@@ -153,6 +175,8 @@ Correct answer is B & D as for instance to instance communication is basically c
 Option A is wrong as subnets within a VPC can communicate with each other and need routing configured.
 
 Option C is wrong as IAM role on instance is to control what the instance can access.
+
+-------------------------------------
 Question 37: Incorrect
 A company is using Kinesis data streams to store the log data, which is processed by an application every 12 hours. As the data needs to reside in Kinesis data streams for 12 hours, the Security team wants the data to be encrypted at rest. How can it be secured in a most efficient way?
 
@@ -171,6 +195,8 @@ Option A is wrong as Kinesis supports encryption at rest
 Option B is wrong as SSL/TLS is for Encryption for data in transit
 
 Option C is wrong as S3 SSE does not work with Kinesis
+
+-------------------------------------
 Question 38: Incorrect
 An ELB is diverting traffic across 5 instances. One of the instances was unhealthy only for 20 minutes. What will happen after 20 minutes when the instance becomes healthy?
 
@@ -181,6 +207,8 @@ Correct answer is C
 Refer AWS documentation - ELB
 
 A load balancer accepts incoming traffic from clients and routes requests to its registered EC2 instances in one or more Availability Zones. The load balancer also monitors the health of its registered instances and ensures that it routes traffic only to healthy instances. When the load balancer detects an unhealthy instance, it stops routing traffic to that instance, and then resumes routing traffic to that instance when it detects that the instance is healthy again.
+
+-------------------------------------
 Question 41: Incorrect
 A system admin is planning to encrypt all objects being uploaded to S3 from an application. The system admin does not want to implement his own encryption algorithm; instead he is planning to use server side encryption by supplying his own key (SSE-C). Which parameter is not required while making a call for SSE-C?
 
@@ -201,6 +229,8 @@ x-amz-server-side-encryption-customer-key-MD5
 Use this header to provide the base64-encoded 128-bit MD5 digest of the encryption key according to RFC 1321. Amazon S3 uses this header for a message integrity check to ensure the encryption key was transmitted without error.
 
 Refer AWS documentation - S3 Server Side Encryption Customer Keys
+
+-------------------------------------
 Question 45: Incorrect
 A company is testing a lambda function which takes in an image and converts it into different format which are stored in S3. They tested the code on a standalone EC2 instance with 1GB of RAM and it completed in 500 secs. However, when executed using Lambda the image files are available in the S3 bucket. What could be the reason for failure?
 
@@ -221,6 +251,8 @@ Invoke request body payload size (Event/asynchronous invocation) 	128 KB
 Option A and B are wrong as the max memory allocation can be upto 3GB
 
 Option C is wrong as the ephemeral disk is not related to the question
+
+-------------------------------------
 Question 49: Incorrect
 With EC2, Select the incorrect statement from the behavior when the instance is either stopped or terminated.
 
@@ -233,6 +265,8 @@ Refer AWS documentation - EC2 Stop Start
 EC2-Classic: We release the public and private IPv4 addresses for the instance when you stop the instance, and assign new ones when you restart it.
 
 EC2-VPC: The instance retains its private IPv4 addresses and any IPv6 addresses when stopped and restarted. We release the public IPv4 address and assign a new one when you restart it.
+
+-------------------------------------
 Question 58: Incorrect
 
 A Developer wants to use AWS X-Ray to trace a user request end-to-end throughput the software stack. The Developer made the necessary changes in the application tested it and found that the application is able to send the traces to AWS X-Ray. However, when the application is deployed to an EC2 instance, the traces are not available. Which of the following could create this situation? (Select TWO)
@@ -251,3 +285,248 @@ Option C is wrong as the developer already tested the X-Ray endpoint url, it can
 
 Option D is wrong as xray:BatchGetTraces and xray:GetTraceGraph are for reading the data from X-Ray.
 
+
+#####################################################################################################################
+
+Attempt 2
+
+-------------------------------------
+Question 3: Incorrect
+You are designing a web application that stores static assets in an Amazon Simple Storage Service (S3) bucket. You expect this bucket to immediately receive over 150 PUT requests per second. What should you do to ensure optimal performance?
+
+Explanation
+
+Correct answer is B
+
+NOTE - Circa July 2018, S3 Performance has undergone performance enhancements. However, the same were not yet reflected on the exam.
+
+Refer AWS documentation - S3 Performance
+
+One way to introduce randomness to key names is to add a hash string as prefix to the key name. For example, you can compute an MD5 hash of the character sequence that you plan to assign as the key name
+
+Option A is wrong as multi part upload only helps improve object upload times
+
+Option C is wrong as Amazon S3 scales to support very high request rates. However, If your workload in an Amazon S3 bucket routinely exceeds 100 PUT/LIST/DELETE requests per second or more than 300 GET requests per second it is recommended to implement best practices.
+
+Option D is wrong as using predictable naming scheme would reduce the performance
+
+-------------------------------------
+Question 22: Incorrect
+An organization has hosted an application on the EC2 instances. There will be multiple users connecting to the instance for setup and configuration of application. The organization is planning to implement certain security best practices. Which of the below mentioned pointers will not help the organization achieve better security arrangement?
+
+Explanation
+
+Correct answer is B as IAM users cannot connect to EC2 instances using their access keys. Access to EC2 instances are governed by ssh keys.
+
+Refer AWS Article - Tips for Securing EC2 Instance
+
+Option A is wrong as the EC2 instance should always be updated for latest patch
+
+Option C is wrong as password based login should be disabled, and for each individual user their keys should be added to the instance from them to login
+
+Option D is wrong as the access should be removed when not required.
+
+-------------------------------------
+Question 26: Incorrect
+A user is using the AWS SQS to decouple the services. Which of the below mentioned operations is not supported by SQS?
+
+Explanation
+
+Correct answer is D as DeleteMessageQueue is not supported.
+
+Refer AWS documentation - SQS API Operation
+
+AddPermission
+ChangeMessageVisibility
+ChangeMessageVisibilityBatch
+CreateQueue
+DeleteMessage
+DeleteMessageBatch
+DeleteQueue
+GetQueueAttributes
+GetQueueUrl
+ListDeadLetterSourceQueues
+ListQueues
+PurgeQueue
+ReceiveMessage
+RemovePermission
+SendMessage
+SendMessageBatch
+SetQueueAttributes
+
+-------------------------------------
+Question 27: Incorrect
+A company uses CodeBuild to run their builds. After a minor change in the code, the last build cycle failed. How can they debug the issue?
+
+Explanation
+
+Correct answer is A as CodeBuild uses CloudWatch to store the detailed build information.
+
+Refer AWS documentation - CodeBuild Concepts & View Detailed Build Information
+
+While the build is running, you can use the AWS CodeBuild console, AWS CLI, or AWS SDKs, to get summarized build information from AWS CodeBuild and detailed build information from Amazon CloudWatch Logs. If you use AWS CodePipeline to run builds, you can get limited build information from AWS CodePipeline.
+
+-------------------------------------
+Question 28: Incorrect
+A user has configured a VPC with a new subnet. The user has created a security group. The user wants to configure that instances of the same subnet communicate with each other. How can the user configure this with the security group?
+
+Explanation
+
+Correct answer is C as a rule for the same security group needs to be added to it with all ports and protocols.
+
+Option A is wrong as instances within the same subnet cannot communicate with each other
+
+Option B is wrong as Security group rule can be configured only with IP addresses and Security groups.
+
+Option D is wrong as VPC peering is for enabling communication between VPCs.
+
+A VPC peering connection is a networking connection between two VPCs that enables you to route traffic between them using private IPv4 addresses or IPv6 addresses. Instances in either VPC can communicate with each other as if they are within the same network.
+
+-------------------------------------
+Question 33: Incorrect
+Instance A and instance B are running in two different subnets A and B of a VPC. Instance A is not able to ping instance B. What are two possible reasons for this? (Pick 2 correct answers)
+
+Explanation
+
+Correct answer is B & D as for instance to instance communication is basically controlled using Security Groups configured at the instance level and NACLs configured at the subnet level. Security groups are stateful and need to allow inbound ICMP, while NACL being stateless need to allow both inbound and outbound ICMP
+
+Option A is wrong as subnets within a VPC can communicate with each other and need routing configured.
+
+Option C is wrong as IAM role on instance is to control what the instance can access.
+
+-------------------------------------
+Question 36: Incorrect
+A company is using DynamoDB to design storage for their IOT project to store sensor data. Which combination would give the highest throughput?
+
+Explanation
+
+Correct answer is A as Eventual Consistent read will always give double the Strongly Consistent Read Capacity.
+
+5 Eventual Consistent reads capacity with Item Size of 4KB = 40KB
+
+Option B is wrong as 15 Eventual Consistent reads capacity with Item Size of 1KB = 30KB
+
+Option C is wrong as 5 Strongly Consistent reads capacity with Item Size of 4KB = 20KB
+
+Option D is wrong as 15 Strongly Consistent reads capacity with Item Size of 1KB = 15KB
+
+Refer AWS Documentation - DynamoDB ProvisionedThroughput
+
+You specify throughput capacity in terms of read capacity units and write capacity units:
+
+One read capacity unit represents one strongly consistent read per second, or two eventually consistent reads per second, for an item up to 4 KB in size. If you need to read an item that is larger than 4 KB, DynamoDB will need to consume additional read capacity units. The total number of read capacity units required depends on the item size, and whether you want an eventually consistent or strongly consistent read.
+
+One write capacity unit represents one write per second for an item up to 1 KB in size. If you need to write an item that is larger than 1 KB, DynamoDB will need to consume additional write capacity units. The total number of write capacity units required depends on the item size.
+
+-------------------------------------
+Question 37: Incorrect
+A company is using Kinesis data streams to store the log data, which is processed by an application every 12 hours. As the data needs to reside in Kinesis data streams for 12 hours, the Security team wants the data to be encrypted at rest. How can it be secured in a most efficient way?
+
+Explanation
+
+Correct answer is D as Kinesis support Server Side Encryption with which the data can be encrypted at rest.
+
+Refer AWS documentation - Kinesis Server Side Encryption
+
+Server-side encryption is a feature in Amazon Kinesis Data Streams that automatically encrypts data before it's at rest by using an AWS KMS customer master key (CMK) you specify. Data is encrypted before it's written to the Kinesis stream storage layer, and decrypted after it’s retrieved from storage. As a result, your data is encrypted at rest within the Kinesis Data Streams service. This allows you to meet strict regulatory requirements and enhance the security of your data.
+
+With server-side encryption, your Kinesis stream producers and consumers don't need to manage master keys or cryptographic operations. Your data is automatically encrypted as it enters and leaves the Kinesis Data Streams service, so your data at rest is encrypted. AWS KMS provides all the master keys that are used by the server-side encryption feature. AWS KMS makes it easy to use a CMK for Kinesis that is managed by AWS, a user-specified AWS KMS CMK, or a master key imported into the AWS KMS service.
+
+Option A is wrong as Kinesis supports encryption at rest
+
+Option B is wrong as SSL/TLS is for Encryption for data in transit
+
+Option C is wrong as S3 SSE does not work with Kinesis
+
+-------------------------------------
+Question 39: Incorrect
+A company is deploying lambda code with has external third-party dependencies. When deploying the code, they are encountering a CodeStorageExceededException error. The compressed zip deployment package size is around 60MB. What can be the issue?
+
+Explanation
+
+Correct answer is A as the size of the compressed zip code is exceeding 50MB
+
+Refer AWS documentation - Lambda limits
+
+AWS Lambda Deployment Limits
+Item 	Default Limit
+Lambda function deployment package size (compressed .zip/.jar file) 	50 MB
+Total size of all the deployment packages that can be uploaded per region 	75 GB
+
+Size of code/dependencies that you can zip into a deployment package (uncompressed .zip/.jar size).
+
+Note
+
+Each Lambda function receives an additional 500MB of non-persistent disk space in its own /tmp directory. The /tmp directory can be used for loading additional resources like dependency libraries or data sets during function initialization.
+	250 MB
+Total size of environment variables set 	4 KB
+
+Option B is wrong as max limit is 50MB
+
+Option C & D is wrong as max compressed size is 250MB
+
+-------------------------------------
+Question 41: Incorrect
+A system admin is planning to encrypt all objects being uploaded to S3 from an application. The system admin does not want to implement his own encryption algorithm; instead he is planning to use server side encryption by supplying his own key (SSE-C). Which parameter is not required while making a call for SSE-C?
+
+Explanation
+
+Correct answer is A as it cannot be specified.
+
+When using server-side encryption with customer-provided encryption keys (SSE-C), you must provide encryption key information using the following request headers.
+Name 	Description
+x-amz-server-side-encryption-customer-algorithm 	
+
+Use this header to specify the encryption algorithm. The header value must be "AES256".
+x-amz-server-side-encryption-customer-key 	
+
+Use this header to provide the 256-bit, base64-encoded encryption key for Amazon S3 to use to encrypt or decrypt your data.
+x-amz-server-side-encryption-customer-key-MD5 	
+
+Use this header to provide the base64-encoded 128-bit MD5 digest of the encryption key according to RFC 1321. Amazon S3 uses this header for a message integrity check to ensure the encryption key was transmitted without error.
+
+Refer AWS documentation - S3 Server Side Encryption Customer Keys
+
+-------------------------------------
+Question 44: Incorrect
+
+A user wants to achieve High Availability with PostgreSQL DB. Which of the below mentioned functionalities help achieve HA?
+
+Explanation
+
+Correct answer is B as Multi-AZ provides HA solution for RDS PostgreSQL.
+
+Refer AWS documentation - RDS Multi-AZ
+
+Amazon RDS provides high availability and failover support for DB instances using Multi-AZ deployments. Amazon RDS uses several different technologies to provide failover support. Multi-AZ deployments for Oracle, PostgreSQL, MySQL, and MariaDB DB instances use Amazon's failover technology.
+
+-------------------------------------
+Question 49: Incorrect
+With EC2, Select the incorrect statement from the behavior when the instance is either stopped or terminated.
+
+Explanation
+
+Correct answer is C as in EC2-VPC, the instance does retain its private IP when stopped.
+
+Refer AWS documentation - EC2 Stop Start
+
+EC2-Classic: We release the public and private IPv4 addresses for the instance when you stop the instance, and assign new ones when you restart it.
+
+EC2-VPC: The instance retains its private IPv4 addresses and any IPv6 addresses when stopped and restarted. We release the public IPv4 address and assign a new one when you restart it.
+
+-------------------------------------
+Question 62: Incorrect
+
+A .NET application that you manage is running in Elastic Beanstalk. Your developers tell you they will need access to application log files to debug issues that arise. The infrastructure will scale up and down. How can you ensure the developers will be able to access only the log files?
+
+Explanation
+
+Correct answer is B as Elastic Beanstalk allows storing logs in S3 thus providing access to the logs without logging into the application servers.
+
+Refer AWS documentation - Elastic Beanstalk FAQs
+
+Access log files without logging in to the application servers
+
+Q: Does AWS Elastic Beanstalk store anything in Amazon S3?
+
+Yes. AWS Elastic Beanstalk stores your application files and, optionally, server log files in Amazon S3. If you are using the AWS Management Console, the AWS Toolkit for Visual Studio, or AWS Toolkit for Eclipse, an Amazon S3 bucket will be created in your account for you and the files you upload will be automatically copied from your local client to Amazon S3. Optionally, you may configure Elastic Beanstalk to copy your server log files every hour to Amazon S3. You do this by editing the environment configuration settings. 

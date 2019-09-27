@@ -1,4 +1,5 @@
 
+-------------------------------------
 Question 2: Incorrect
 A company is deploying lambda code with has external third-party dependencies with lot of environment variables. When deploying the code, they are encountering a CodeStorageExceededException error. The compressed zip deployment package size is around 20MB while the uncompressed size with 200MB. What can be the issue?
 
@@ -27,6 +28,8 @@ Functions that exceed any of the limits listed in the previous limits tables wil
 Option A is wrong as max limit is 50MB
 
 Option B & C are wrong as max compressed size is 250MB
+
+-------------------------------------
 Question 4: Incorrect
 In relation to Amazon Simple Workflow Service (Amazon SWF), What is an "Activity Worker"?
 
@@ -37,6 +40,8 @@ Correct answer is C, as with SWF an activity worker is a program that receives a
 Refer AWS documentation - SWF Activity Worker
 
 An activity worker provides the implementation of one or more activity types. An activity worker communicates with Amazon SWF to receive activity tasks and perform them. You can have a fleet of multiple activity workers performing activity tasks of the same activity type.
+
+-------------------------------------
 Question 7: Incorrect
 In AWS Elastic Beanstalk Worker Environment, if the application returns any response other than 200 OK or there is no response within the configured InactivityTimeout period, ____.
 
@@ -49,6 +54,8 @@ Refer AWS documentation - Elastic Beanstalk - Worker Env
 Worker environments run a daemon process provided by Elastic Beanstalk
 
 When the application in the worker environment returns a 200 OK response to acknowledge that it has received and successfully processed the request, the daemon sends a DeleteMessage call to the SQS queue so that the message will be deleted from the queue. If the application returns any response other than 200 OK, then Elastic Beanstalk waits to put the message back in the queue after the configured ErrorVisibilityTimeout period. If there is no response, then Elastic Beanstalk waits to put the message back in the queue after the InactivityTimeout period so that the message is available for another attempt at processing.
+
+-------------------------------------
 Question 9: Incorrect
 A company has deployed their lambda function. The lambda function is running successfully. However, there are no CloudWatch logs even after 10 minutes? What could be the reason?
 
@@ -63,6 +70,8 @@ When the Lambda function in this tutorial executes, it needs permissions to writ
     AWS service role of the "AWS Lambda" type. This role grants AWS Lambda permission to assume the role.
     "AWSLambdaBasicExecutionRole" access policy that you attach to the role. This existing policy grants permissions that include permissions for Amazon CloudWatch actions that your Lambda function needs.
 
+
+-------------------------------------
 Question 10: Incorrect
 Your CloudFormation template launches a two-tier web application in us-east-1. When you attempt to create a development stack in us-west-1, the process fails. What could be the problem?
 
@@ -79,6 +88,8 @@ Regional
 	
 
 An AMI is tied to the region where its files are located within Amazon S3. You can copy an AMI from one region to another. For more information, see Copying an AMI.
+
+-------------------------------------
 Question 12: Incorrect
 A user has created photo editing software and hosted it on EC2. The software accepts requests from the user about the photo format and resolution and sends a message to S3 to enhance the picture accordingly. Which of the below mentioned AWS services will help make a scalable software with the AWS infrastructure in this scenario?
 
@@ -95,6 +106,8 @@ Option A is wrong as Elastic Transcoder helps transcode videos to different form
 Option B is wrong as SNS is a notification service
 
 Option C is wrong as Glacier is more of an archival solution
+
+-------------------------------------
 Question 24: Incorrect
 You have a massive social networking application which is already deployed on North Virginia region with around 100 EC2 instances, you want to deploy your application to multiple regions for better availability. You don't want to handle multiple key pairs and want to reuse existing key pairs from North Virginia region. How will you accomplish this?
 
@@ -109,6 +122,8 @@ Option A is wrong as key pairs have region level scope
 Option B is wrong as there is no copy key command but import key pair exists
 
 Option D is wrong as Copying AMI does not copy the key, but the key should be available for the AMI to work
+
+-------------------------------------
 Question 26: Incorrect
 You are building an online store on AWS that uses Standard SQS queues to process your customer orders. Your backend system needs those messages in the same sequence the customer orders have been put in. How can you achieve that?
 
@@ -123,6 +138,8 @@ Q: Does Amazon SQS provide message ordering?
 Yes. FIFO (first-in-first-out) queues preserve the exact order in which messages are sent and received. If you use a FIFO queue, you don't have to place sequencing information in your messages. For more information, see FIFO Queue Logic in the Amazon SQS Developer Guide.
 
 Standard queues provide a loose-FIFO capability that attempts to preserve the order of messages. However, because standard queues are designed to be massively scalable using a highly distributed architecture, receiving messages in the exact order they are sent is not guaranteed.
+
+-------------------------------------
 Question 32: Incorrect
 
 A company wants to use CodeDeploy to perform in place deployment of an application. What's the run order of the lifecycle event hooks available for each application deployment?
@@ -135,6 +152,8 @@ Refer AWS documentation - CodeDeploy AppSpec hooks
 
 
 
+
+-------------------------------------
 Question 42: Incorrect
 An organization is setting up their website on AWS. The organization is working on various security measures to be performed on the AWS EC2 instances. Which of the below mentioned security mechanisms will not help the organization to avoid future data leaks and identify security weaknesses?
 
@@ -145,6 +164,8 @@ Correct answer is D as Code Check for memory will only help in targeting perform
 Refer AWS Security Whitepaper
 
 Other options help avoid future data leaks and identify security weaknesses. Perform penetration testing as performed by attackers to find any vulnerability with prior approval from AWS. Hardening testing to find if there are any unnecessary ports open Perform SQL injection to find any DB security issues.
+
+-------------------------------------
 Question 48: Incorrect
 Does Amazon DynamoDB support both increment and decrement atomic operations?
 
@@ -157,6 +178,8 @@ Refer AWS documentation - DynamoDB FAQs
 Q: Does DynamoDB support in-place atomic updates?
 
 Amazon DynamoDB supports fast in-place updates. You can increment or decrement a numeric attribute in a row using a single API call. Similarly, you can atomically add or remove to sets, lists, or maps
+
+-------------------------------------
 Question 50: Incorrect
 
 A developer wants to automate the deployment of a serverless application. What are the steps to using the AWS CLI to launch a templatized serverless application?
@@ -174,6 +197,8 @@ You can deploy your application by using AWS SAM command line interface (CLI) co
 After you develop and test your serverless application locally, you can deploy your application by using the sam package and sam deploy commands.
 
 Note - Both the sam package and sam deploy commands described in this section are identical to their AWS CLI equivalent commands aws cloudformation package and aws cloudformation deploy, respectively.
+
+-------------------------------------
 Question 51: Incorrect
 
 A large e-commerce site is being designed to deliver static objects from Amazon S3. The Amazon S3 bucket will server more than 300 GET requests per second. What should be done to optimize performance? (Select TWO)
@@ -196,6 +221,8 @@ Option B is wrong as S3 cross region replication is for disaster recovery or com
 Option C is wrong as deleting server logs file do not impact performance.
 
 Option D is wrong as S3 lifecycle rules are to help transition objects to a different storage class or to expire objects.
+
+-------------------------------------
 Question 53: Incorrect
 
 A company is migrating its on-premises database to Amazon RDS for MySQL. The company has read-heavy workloads and wants to make sure they re-factor their code to achieve optimum read performance for its queries. How can this objective be met?
@@ -213,6 +240,8 @@ Option A is wrong as retries would increase the load on RDS and it has a limited
 Option B is wrong as Multi-AZ is for high availability and does not help improve read performance.
 
 Option D is wrong as the connection string needs to be used by the application and not EC2 instance.
+
+-------------------------------------
 Question 56: Incorrect
 
 A Developer is developing an application that manages financial transactions. To improve security, multi-factor authentication (MFA) will be required as part of the login protocol. What services can the Developer use to meet these requirements?
@@ -230,6 +259,8 @@ Option A is wrong as DynamoDB and SNS cannot be used to implement dynamic two fa
 Option C is wrong as AWS Directory Service for Microsoft Active Directory, also known as AWS Managed Microsoft AD, enables your directory-aware workloads and AWS resources to use managed Active Directory in the AWS Cloud.
 
 Option D is wrong as IAM with MFA is available for users trying to access AWS services.
+
+-------------------------------------
 Question 60: Incorrect
 
 A Company is developing a social media application which allows users to share pics within their follower’s circle. User and follower’s data are currently stored in DynamoDB. They want to automatically notify the mobile devices of all friends in a circle as soon as a user uploads a new selfie with a sub millisecond response. Currently the notifications are taking few milliseconds even with high provisioned throughput on DynamoDB. How can the read performance on DynamoDB be improved further?
@@ -243,6 +274,8 @@ Refer AWS documentation - DynamoDB DAX
 Amazon DynamoDB Accelerator (DAX) is a fully managed, highly available, in-memory cache for DynamoDB that delivers up to a 10x performance improvement – from milliseconds to microseconds – even at millions of requests per second. DAX does all the heavy lifting required to add in-memory acceleration to your DynamoDB tables, without requiring developers to manage cache invalidation, data population, or cluster management.
 
 While DynamoDB offers consistent single-digit millisecond latency, DynamoDB + DAX takes performance to the next level with response times in microseconds for millions of requests per second for read-heavy workloads. With DAX, your applications remain fast and responsive, even when a popular event or news story drives unprecedented request volumes your way. No tuning required.
+
+-------------------------------------
 Question 62: Incorrect
 
 An employee keeps terminating EC2 instances on the production environment. You've determined the best way to ensure this doesn't happen is to add an extra layer of defense against terminating the instances. What is the best method to ensure the employee does not terminate the production instances? Choose 2 answers
@@ -252,6 +285,8 @@ Explanation
 Correct answer are A & B as the restrictions can be added by tagging the instances and either explicitly allowing the user to start/stop but not terminate the instances or denying user to terminate the instance.
 
 Option C & D are wrong as MFA will not prevent the user from terminating the instance, but just adds and additional layer of security.
+
+-------------------------------------
 Question 65: Incorrect
 
 You are planning on using AWS Code Deploy in your AWS environment. Which of the following deployment types are available with CodeDeploy?
@@ -275,6 +310,8 @@ CodeDeploy provides two deployment type options, in-place deployments and blue/g
         Blue/green on an AWS Lambda compute platform: Traffic is shifted from your current serverless environment to one with your updated Lambda function versions. You can specify Lambda functions that perform validation tests and choose the way in which the traffic shift occurs. All AWS Lambda compute platform deployments are blue/green deployments. For this reason, you do not need to specify a deployment type.
         Blue/green on an Amazon ECS compute platform: Traffic is shifted from the task set with the original version of a containerized application in an Amazon ECS service to a replacement task set in the same service. The protocol and port of a specified load balancer listener is used to reroute production traffic. During a deployment, a test listener can be used to serve traffic to the replacement task set while validation tests are run.
 
+
+-------------------------------------
 Question 66: Incorrect
 
 A company is planning on using AWS CodePipeline for their underlying CI/CD process. The code will be picked up from an S3 bucket. The company policy mandates that all data should be encrypted at rest. Which of the following measures would you take to ensure that the CI/CD process conforms to this policy? Choose 2
@@ -296,3 +333,174 @@ Option B is wrong as server-side encryption needs to be enabled on S3 and not on
 
 Option C is wrong as CloudHSM cannot be integrated with CodePipeline.
 
+
+#####################################################################################################################
+
+Attempt 2
+
+-------------------------------------
+Question 8: Incorrect
+A company uses the S3 bucket to store its documents. They expect a mix of around 1000 PUT/GET requests per second. How can the company configure their system for maximum performance? Choose 2 answers
+
+Explanation
+
+Correct answers are B & E as S3 recommends using random prefix for scalability of all requests and if the requests are GET-intensive use CloudFront to cache the requests to reduce load from S3
+
+Refer AWS documentation - S3 Performance
+
+The Amazon S3 best practice guidance given in this topic is based on two types of workloads:
+
+    Workloads that include a mix of request types – If your requests are typically a mix of GET, PUT, DELETE, or GET Bucket (list objects), choosing appropriate key names for your objects ensures better performance by providing low-latency access to the Amazon S3 index. It also ensures scalability regardless of the number of requests you send per second.
+    Workloads that are GET-intensive – If the bulk of your workload consists of GET requests, we recommend using the Amazon CloudFront content delivery service.
+
+
+-------------------------------------
+Question 25: Incorrect
+How can you allow an application to write data to a DynamoDB table? Choose the correct answer
+
+Explanation
+
+Correct answer is D as it is recommended to use IAM Role with write access to DynamoDB tables
+
+Option A is wrong as Role needs read access.
+
+Option C is wrong as IAM user cannot be added to an EC2 instance
+
+Option B is wrong as IAM user is not recommended for usage as the credentials need to be hardcoded and cannot be rotated leading to security risks.
+
+-------------------------------------
+Question 26: Incorrect
+You are building an online store on AWS that uses Standard SQS queues to process your customer orders. Your backend system needs those messages in the same sequence the customer orders have been put in. How can you achieve that?
+
+Explanation
+
+Correct answer is B as you can use sequencing within the message or use FIFO queues.
+
+Refer AWS documentation - SQS FAQs
+
+Q: Does Amazon SQS provide message ordering?
+
+Yes. FIFO (first-in-first-out) queues preserve the exact order in which messages are sent and received. If you use a FIFO queue, you don't have to place sequencing information in your messages. For more information, see FIFO Queue Logic in the Amazon SQS Developer Guide.
+
+Standard queues provide a loose-FIFO capability that attempts to preserve the order of messages. However, because standard queues are designed to be massively scalable using a highly distributed architecture, receiving messages in the exact order they are sent is not guaranteed.
+
+-------------------------------------
+Question 41: Incorrect
+You are inserting 1000 new items every second in a DynamoDB table. Once an hour these items are analyzed and then are no longer needed. You need to minimize provisioned throughput, storage, and API calls. Given these requirements, what is the most efficient way to manage these Items after the analysis?
+
+Explanation
+
+Correct answer is C as the items per hour once analyzed are not needed anymore, a new table can be created for each hour and deleted which will help reduce the storage cost.
+
+Refer AWS documentation - DynamoDB Pricing
+
+-------------------------------------
+Question 42: Incorrect
+An organization is setting up their website on AWS. The organization is working on various security measures to be performed on the AWS EC2 instances. Which of the below mentioned security mechanisms will not help the organization to avoid future data leaks and identify security weaknesses?
+
+Explanation
+
+Correct answer is D as Code Check for memory will only help in targeting performance issues.
+
+Refer AWS Security Whitepaper
+
+Other options help avoid future data leaks and identify security weaknesses. Perform penetration testing as performed by attackers to find any vulnerability with prior approval from AWS. Hardening testing to find if there are any unnecessary ports open Perform SQL injection to find any DB security issues.
+
+-------------------------------------
+Question 44: Incorrect
+What is the maximum time messages can be stored in SQS?
+
+Explanation
+
+Correct answer is A as SQS allows max message retention for 14 days.
+
+Refer AWS documentation - SQS FAQs
+
+Q: How long can I keep my messages in Amazon SQS message queues?
+
+Longer message retention provides greater flexibility to allow for longer intervals between message production and consumption.
+
+You can configure the Amazon SQS message retention period to a value from 1 minute to 14 days. The default is 4 days. Once the message retention limit is reached, your messages are automatically deleted.
+
+-------------------------------------
+Question 45: Incorrect
+Which one of the following operations is NOT a DynamoDB operation?
+
+Explanation
+
+Correct answer is D as DeleteItem deletes a single item in a table by primary key, but BatchDeleteItem doesn't exist
+
+Refer AWS documentation - DynamoDB APIs
+
+-------------------------------------
+Question 59: Incorrect
+
+A developer is writing an application that will store data in a DynamoDB table. The ratio of reads operations to write operations will be 1000 to 1, with the same data being accessed frequently. What should the Developer enable on the DynamoDB table to optimize performance and minimize costs?
+
+Explanation
+
+Correct answer is D as DynamoDB Accelerator helps provide caching for DynamoDB to give a 10x performance.
+
+Refer AWS documentation - DynamoDB DAX
+
+Amazon DynamoDB is designed for scale and performance. In most cases, the DynamoDB response times can be measured in single-digit milliseconds. However, there are certain use cases that require response times in microseconds. For these use cases, DynamoDB Accelerator (DAX) delivers fast response times for accessing eventually consistent data.
+
+DAX is a DynamoDB-compatible caching service that enables you to benefit from fast in-memory performance for demanding applications. DAX addresses three core scenarios:
+
+    As an in-memory cache, DAX reduces the response times of eventually-consistent read workloads by an order of magnitude, from single-digit milliseconds to microseconds.
+    DAX reduces operational and application complexity by providing a managed service that is API-compatible with Amazon DynamoDB, and thus requires only minimal functional changes to use with an existing application.
+    For read-heavy or bursty workloads, DAX provides increased throughput and potential operational cost savings by reducing the need to over-provision read capacity units. This is especially beneficial for applications that require repeated reads for individual keys.
+
+Option A and B are wrong as Auto Scaling and Read Replicas do not exist.
+
+Option C is wrong as DynamoDB Streams provides a time ordered sequence of item level changes in any DynamoDB table. The changes are de-duplicated and stored for 24 hours.
+
+-------------------------------------
+Question 60: Incorrect
+
+A Company is developing a social media application which allows users to share pics within their follower’s circle. User and follower’s data are currently stored in DynamoDB. They want to automatically notify the mobile devices of all friends in a circle as soon as a user uploads a new selfie with a sub millisecond response. Currently the notifications are taking few milliseconds even with high provisioned throughput on DynamoDB. How can the read performance on DynamoDB be improved further?
+
+Explanation
+
+Correct answer is B as DynamoDB Accelerator helps provide caching for DynamoDB to give a 10x microseconds performance.
+
+Refer AWS documentation - DynamoDB DAX
+
+Amazon DynamoDB Accelerator (DAX) is a fully managed, highly available, in-memory cache for DynamoDB that delivers up to a 10x performance improvement – from milliseconds to microseconds – even at millions of requests per second. DAX does all the heavy lifting required to add in-memory acceleration to your DynamoDB tables, without requiring developers to manage cache invalidation, data population, or cluster management.
+
+While DynamoDB offers consistent single-digit millisecond latency, DynamoDB + DAX takes performance to the next level with response times in microseconds for millions of requests per second for read-heavy workloads. With DAX, your applications remain fast and responsive, even when a popular event or news story drives unprecedented request volumes your way. No tuning required.
+
+-------------------------------------
+Question 62: Incorrect
+
+An employee keeps terminating EC2 instances on the production environment. You've determined the best way to ensure this doesn't happen is to add an extra layer of defense against terminating the instances. What is the best method to ensure the employee does not terminate the production instances? Choose 2 answers
+
+Explanation
+
+Correct answer are A & B as the restrictions can be added by tagging the instances and either explicitly allowing the user to start/stop but not terminate the instances or denying user to terminate the instance.
+
+Option C & D are wrong as MFA will not prevent the user from terminating the instance, but just adds and additional layer of security.
+
+-------------------------------------
+Question 65: Incorrect
+
+You are planning on using AWS Code Deploy in your AWS environment. Which of the following deployment types are available with CodeDeploy?
+
+Explanation
+
+Correct answers are A & D as CodeDeploy supports In-place and Blue/Green deployment types.
+
+Refer AWS documentation - CodeDeploy Deployment Types
+
+CodeDeploy provides two deployment type options, in-place deployments and blue/green deployments.
+
+    In-place deployment: The application on each instance in the deployment group is stopped, the latest application revision is installed, and the new version of the application is started and validated. You can use a load balancer so that each instance is deregistered during its deployment and then restored to service after the deployment is complete. Only deployments that use the EC2/On-Premises compute platform can use in-place deployments.
+    Blue/green deployment: The behavior of your deployment depends on which compute platform you use:
+        Blue/green on an EC2/On-Premises compute platform: The instances in a deployment group (the original environment) are replaced by a different set of instances (the replacement environment) using these steps:
+            Instances are provisioned for the replacement environment.
+            The latest application revision is installed on the replacement instances.
+            An optional wait time occurs for activities such as application testing and system verification.
+            Instances in the replacement environment are registered with an Elastic Load Balancing load balancer, causing traffic to be rerouted to them. Instances in the original environment are deregistered and can be terminated or kept running for other uses.
+        NoteIf you use an EC2/On-Premises compute platform, be aware that blue/green deployments work with Amazon EC2 instances only.
+        Blue/green on an AWS Lambda compute platform: Traffic is shifted from your current serverless environment to one with your updated Lambda function versions. You can specify Lambda functions that perform validation tests and choose the way in which the traffic shift occurs. All AWS Lambda compute platform deployments are blue/green deployments. For this reason, you do not need to specify a deployment type.
+        Blue/green on an Amazon ECS compute platform: Traffic is shifted from the task set with the original version of a containerized application in an Amazon ECS service to a replacement task set in the same service. The protocol and port of a specified load balancer listener is used to reroute production traffic. During a deployment, a test listener can be used to serve traffic to the replacement task set while validation tests are run.
