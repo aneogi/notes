@@ -297,4 +297,176 @@ The resulting Method Execution pane presents a logical view of the chosen (POST 
 
 Options A & C are wrong as Method Request and Method Response helps control behaviour of the frontend interaction. 
 
+
+#####################################################################################################################
+
+Attempt 2
+
 -------------------------------------
+Question 6: Incorrect
+In IAM, is there a limit to the number of groups you can have?
+
+Explanation
+
+Correct answer is D as currently maximum of 100 groups can be created per AWS account. It is a soft limit and can be increased.
+
+Refer AWS documentation - IAM limits
+Description 	Limit
+Groups in an AWS account 	100
+
+You can request to increase some of these quotas for your AWS account on the IAM Limit Increase Contact Us Form. Currently you can request to increase the limit on users per AWS account, groups per AWS account, roles per AWS account, instance profiles per AWS account, and server certificates per AWS account.
+
+-------------------------------------
+Question 13: Incorrect
+Which method can be used to prevent an IP address block from accessing public objects in an S3 bucket?
+
+Explanation
+
+Correct answer is A as a bucket policy can be used to restrict access to all objects within a bucket to specific IP addresses
+
+{   "Version": "2012-10-17",   "Id": "S3PolicyId1",   "Statement": [     {       "Sid": "IPAllow",       "Effect": "Allow",       "Principal": "*",       "Action": "s3:*",       "Resource": "arn:aws:s3:::examplebucket/*",       "Condition": {          "IpAddress": {"aws:SourceIp": "54.240.143.0/24"},          "NotIpAddress": {"aws:SourceIp": "54.240.143.188/32"}        }      }    ] } 
+
+Refer to AWS documentation for S3 Bucket Policy
+
+Option B is wrong as NACL will help only control access to resources within the VPC and S3 is public
+
+Option C and D are wrong as ACL would not help control access from specific IP and nor does IAM user policy.
+
+-------------------------------------
+Question 14: Incorrect
+How do you configure SQS to support longer message retention?
+
+Explanation
+
+Correct answer is A as retention period can be changed by setting the MessageRetentionPeriod attribute using the SetQueueAttributes method
+
+Refer AWS documentation - SQS Message Lifecycle
+
+Amazon SQS automatically deletes messages that have been in a queue for more than maximum message retention period. The default message retention period is 4 days. However, you can set the message retention period to a value from 60 seconds to 1,209,600 seconds (14 days) using the SetQueueAttributes action.
+
+SetQueueAttributes - Sets the value of one or more queue attributes. When you change a queue's attributes, the change can take up to 60 seconds for most of the attributes to propagate throughout the Amazon SQS system. Changes made to the MessageRetentionPeriod attribute can take up to 15 minutes.
+
+-------------------------------------
+Question 18: Incorrect
+You are providing AWS consulting service for a company developing a new mobile application that will be leveraging amazon SNS push for push notifications. In order to send direct notification messages to individual devices each device registration identifier or token needs to be registered with SNS, however the developers are not sure of the best way to do this. You advise them to
+
+Explanation
+
+Correct answer is D as when migrating several tokens, it is recommended to use the CreatePlatformEndpoint API
+
+Refer AWS documentation - SNS Mobile Push Send Device Token
+
+When you first register an app and mobile device with a notification service, such as Apple Push Notification Service (APNS) and Google Cloud Messaging for Android (GCM), device tokens or registration IDs are returned from the notification service. When you add the device tokens or registration IDs to Amazon SNS, they are used with the PlatformApplicationArn API to create an endpoint for the app and device. When Amazon SNS creates the endpoint, an EndpointArn is returned. The EndpointArn is how Amazon SNS knows which app and mobile device to send the notification message to.
+
+You can add device tokens and registration IDs to Amazon SNS using the following methods:
+
+    Manually add a single token to AWS using the AWS Management Console
+
+    Migrate existing tokens from a CSV file to AWS using the AWS Management Console
+
+    Upload several tokens using the CreatePlatformEndpoint API
+
+    Register tokens from devices that will install your apps in the future
+
+
+-------------------------------------
+Question 21: Incorrect
+You are developing a highly available web application using stateless web servers. Which services are suitable for storing session state data? Choose 3 answers.
+
+Explanation
+
+Correct answers are B, D & E as RDS, ElastiCache and DynamoDB can be used for storing state data.
+
+Option A is wrong as ELB is mainly for load balancing.
+
+Option C is wrong as CloudWatch is for monitoring and metrics
+
+Option F is wrong as Storage gateway is mostly for backups and archival
+
+Refer to Storage Options Whitepaper
+
+-------------------------------------
+Question 22: Incorrect
+A user wants to access RDS from an EC2 instance using IP addresses. Both RDS and EC2 are in the same region, but different AZs. Which of the below mentioned options help configure that the instance is accessed faster?
+
+Explanation
+
+Correct answer is A as the access should be using IP addresses, Private IP address should be used as the traffic is routed through the Amazon internal network.
+
+Option B is wrong as security group, even though is valid, the 
+-------------------------------------
+Question asks using IP addresses.
+
+When you specify a security group as the source or destination for a rule, the rule affects all instances associated with the security group. Incoming traffic is allowed based on the private IP addresses of the instances that are associated with the source security group (and not the public IP or Elastic IP addresses).
+
+Option C & D are wrong Elastic IP or Public IP would cause the traffic to be routed through internet.
+
+-------------------------------------
+Question 26: Incorrect
+Your company has developed a web application and is hosting it in an Amazon S3 bucket configured for static website hosting. The application is using the AWS SDK for JavaScript in the browser to access data stored in an Amazon DynamoDB table. How can you ensure that API keys for access to your data in DynamoDB are kept secure?
+
+Explanation
+
+Correct answer is C as the application is using AWS JavaScript SDK it can use Web Identity Federation to authentication the user and have temporary credentials to access the correct DynamoDB credentials
+
+Refer AWS documentation - Web Identity Federation & Web Identity Federation using JavaScript SDK
+
+When you write such an app, you'll make requests to AWS services that must be signed with an AWS access key. However, we strongly recommend that you do not embed or distribute long-term AWS credentials with apps that a user downloads to a device, even in an encrypted store. Instead, build your app so that it requests temporary AWS security credentials dynamically when needed using web identity federation. The supplied temporary credentials map to an AWS role that has only the permissions needed to perform the tasks required by the mobile app.
+
+-------------------------------------
+Question 32: Incorrect
+
+You support a website with a large user base concentrated on the east coast, but very few users outside of that region. Traffic load is much heavier on the site during business hours so, you are planning to implement Auto Scaling to optimize the number of running EC2 instances to meet the traffic load throughout the day. You are also looking for a solution to distribute traffic evenly among those instances. Which of the following solutions will distribute traffic most evenly among the EC2 instances hosting this website in the us-east-1 region?
+
+Explanation
+
+Correct answer is A as the requirement is to evenly distribute the traffic, ELB with session affinity turned off can be used, which would make it stateless. Session stickiness being turned off, would prevent the user session being associated with a single EC2 instance. This would work even when Auto Scaling launches new instance.
+
+Refer AWS Article - ELB Best Practices
+
+Sticky Sessions
+
+Elastic Load Balancing has features that support sticky sessions (also known as session affinity) using cookies. By default, these features are disabled, and enabling them is a simple change. There are two types of stickiness policies that you can use, but the net effect is the same. If the elastic load balancer has sticky sessions enabled, this traffic will be routed to the same back-end instances as the user continues to access your application. When you design your load tests and are using sticky sessions, it will be important to decide how you will test this feature. Consider how sticky sessions can be an issue in both load testing and in the real world.
+
+For example, consider an application that normally has four instances serving a site. Each user receives a cookie that contains instructions for Elastic Load Balancing to send their requests to one of the instances with a duration of ten minutes. When a major change in traffic occurs and the number of users coming to your site triples, all of these new users will get cookies that direct their requests to one of the four instances. No matter how much capacity you add to the back-end, a huge number of users now have their requests sent to the original four instances until the cookies expire.
+
+Although sticky sessions can be a powerful feature, it is important to think about how they fit into your architecture and whether they are a good solution for your scenario.
+
+-------------------------------------
+Question 51: Incorrect
+
+A user has created a photo editing software and hosted it on EC2. The software accepts requests from the user about the photo format and resolution and sends a message to S3 to enhance the picture accordingly. Which of the below mentioned AWS services will help make a scalable software with the AWS infrastructure in this scenario?
+
+Explanation
+
+Correct answer is D as SQS can be used to build scalable & decoupled software. SQS can be used to store messages, with files in S3 and process and scale accordingly.
+
+-------------------------------------
+Question 59: Incorrect
+
+A Developer is creating a Lambda function and will be using external libraries that are not included in the standard Lambda libraries. What action would minimize the Lambda compute time consumed?
+
+Explanation
+
+Correct answer is B as the deployment time can be reduced by packaging all the dependencies together.
+
+Refer AWS documentation - Lambda Best Practices
+
+Control the dependencies in your function's deployment package. The AWS Lambda execution environment contains a number of libraries such as the AWS SDK for the Node.js and Python runtimes (a full list can be found here: Lambda Execution Environment and Available Libraries). To enable the latest set of features and security updates, Lambda will periodically update these libraries. These updates may introduce subtle changes to the behavior of your Lambda function. To have full control of the dependencies your function uses, we recommend packaging all your dependencies with your deployment package.
+
+-------------------------------------
+Question 62: Incorrect
+
+An application reads data from an Amazon DynamoDB table. Several times a day, for a period of 15 seconds, the application receives multiple ProvisionedThroughputExceeded errors. How should this exception be handled?
+
+Explanation
+
+Correct answer is B to retry with exponential backoff, which basically retries by increasing the retry interval with every failed attempt, and would help the application to recover from the temporary burst errors.
+
+Refer AWS documentation - DynamoDB Retries and Backoff
+
+Each AWS SDK implements retry logic, automatically. You can modify the retry parameters to your needs. For example, consider a Java application that requires a fail-fast strategy, with no retries allowed in case of an error. With the AWS SDK for Java, you could use the ClientConfiguration class and provide amaxErrorRetry value of 0 to turn off the retries. For more information, see the AWS SDK documentation for your programming language
+
+If you're not using an AWS SDK, you should retry original requests that receive server errors (5xx). However, client errors (4xx, other than a ThrottlingException or aProvisionedThroughputExceededException) indicate you need to revise the request itself to correct the problem before trying again.
+
+In addition to simple retries, each AWS SDK implements exponential backoff algorithm for better flow control. The concept behind exponential backoff is to use progressively longer waits between retries for consecutive error responses. For example, up to 50 milliseconds before the first retry, up to 100 milliseconds before the second, up to 200 milliseconds before third, and so on. However, after a minute, if the request has not succeeded, the problem might be the request size exceeding your provisioned throughput, and not the request rate. Set the maximum number of retries to stop around one minute. If the request is not successful, investigate your provisioned throughput options. 
