@@ -210,3 +210,57 @@ For more information on troubleshooting, please refer to the below URL
 
     https://docs.aws.amazon.com/AmazonS3/latest/dev/troubleshooting.html
 
+
+#####################################################################################################################
+	
+	
+Attempt 2
+
+-------------------------------------
+Question 21: Incorrect
+
+Your development team is testing out an application that is being deployed onto AWS Elastic Beanstalk. The application needs to have an RDS Instance provisioned as part of the Elastic Beanstalk setup, but they want to ensure that the database is preserved for analysis even after the environment is torn down.
+
+How can you achieve this? Choose 2 answers from the options given below
+
+Explanation
+
+Correct Answers – A and C
+
+The AWS Documentation mentions that you should ensure the Retention field is marked as “Create snapshot” for ensuring the database lives even after environment is deleted.
+
+Alternatively, you can also ensure that the database is created outside of the Elastic beanstalk environment
+
+Option B is incorrect since it is not necessary that the engine type only has to be MySQL
+
+Option D is incorrect since the option should be “Create Snapshot”
+
+For more information on managing a database in Elastic Beanstalk, please refer to the below URL
+
+https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.managing.db.html
+
+Note:
+For a production environment,AWS recommends to launch a database instance outside of your environment and configure your application to connect to it outside of the functionality provided by Elastic Beanstalk. Using a database instance that is external to your environment requires additional security group and connection string configuration. However, it also lets you connect to the database from multiple environments, use database types not supported with integrated databases, perform blue/green deployments, and tear down your environment without affecting the database instance.
+
+
+-------------------------------------
+Question 23: Incorrect
+
+Your team is planning on creating a DynamoDB table and use it with their application. They are planning to place the initial Read Capacity to 10 with the default read consistency. Each item is of size 2 KB. You want to read 10 items from the table per second where each item is of size 2 KB.
+
+What is the total size of data that can be read using the above read throughput capacity?
+
+Explanation
+
+Correct Answer - D
+
+One read capacity unit represents one strongly consistent read per second, or two eventually consistent reads per second, for an item up to 4 KB in size. 
+The default is eventually consistent read. 
+As per the Question for each 2 KB we need 1 RCU.  (2/4=1 RCU - rounded to the larger whole number)
+So for 10 RCU we can have up to 20KB per sec.
+
+For more information on Throughputs, please refer to the below URL
+
+    https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ProvisionedThroughput.html
+
+ 	
