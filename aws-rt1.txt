@@ -269,3 +269,104 @@ For more information on how to deploy an API, please refer to the below URL
 
     https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-deploy-api.html
 
+
+#####################################################################################################################
+	
+	
+Attempt 2
+
+-------------------------------------
+Question 7: Incorrect
+
+Your team is planning on creating a Lambda function which will interact with a DynamoDB stream.
+
+Which of the following would need to be in place to ensure the Lambda function can interact with the DynamoDB table.
+
+Explanation
+
+Correct Answer - B
+
+The AWS Documentation mentions the following
+
+Regardless of what invokes a Lambda function, AWS Lambda always executes a Lambda function on your behalf. If your Lambda function needs to access any AWS resources, you need to grant the relevant permissions to access those resources. You also need to grant AWS Lambda permissions to poll your DynamoDB stream. You grant all of these permissions to an IAM role (execution role) that AWS Lambda can assume to poll the stream and execute the Lambda function on your behalf. You create this role first and then enable it at the time you create the Lambda function
+
+For more information on using Lambda with DynamoDB, please refer to the below URL
+
+    https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html
+
+
+-------------------------------------
+Question 12: Incorrect
+
+You are a developer for a company. You are planning on using the X-Ray service to trace all incoming HTTP requests for an application being developed.
+
+In the X-Ray SDK which of the following feature would you use to fulfil this requirement?
+
+Explanation
+
+Correct Answer - A
+
+This is given in the AWS Documentation
+
+The X-Ray SDK provides:
+
+    Interceptors to add to your code to trace incoming HTTP requests
+    Client handlers to instrument AWS SDK clients that your application uses to call other AWS services
+    An HTTP client to use to instrument calls to other internal and external HTTP web services
+
+Since this is clearly given in the documentation, all other options are incorrect
+
+For more information on using AWS X-Ray, please refer to the below URL
+
+    https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html
+
+	
+-------------------------------------
+Question 45: Incorrect
+
+Your team is currently publishing items to an S3 bucket. You need to record the size of the objects in a separate DynamoDB table.
+
+How can you ensure that each uploaded object triggers a record in the DynamoDB table in an ideal manner? Choose 2 answers from the options given below.
+
+Explanation
+
+Correct Answers – B and D
+
+This is given in the AWS Documentation
+
+Amazon S3 can publish events (for example, when an object is created in a bucket) to AWS Lambda and invoke your Lambda function by passing the event data as a parameter. This integration enables you to write Lambda functions that process Amazon S3 events. In Amazon S3, you add bucket notification configuration that identifies the type of event that you want Amazon S3 to publish and the Lambda function that you want to invoke.
+
+Options A and C are incorrect since the ideal option would be to create a Lambda function that could be used to automatically record the data size and then place a record in the DynamoDB table
+
+For more information on S3 with Lambda, please refer to the below URL
+
+    https://docs.aws.amazon.com/lambda/latest/dg/with-s3.html
+
+
+-------------------------------------
+Question 50: Incorrect
+
+Your team is planning on deploying an application using the worker environment on AWS Elastic beanstalk.
+
+Which of the following is an additional requirement for a worker environment in AWS Elastic Beanstalk?
+
+Explanation
+
+Correct Answer - D
+
+The AWS Documentation mentions the following
+
+When you use the AWS Elastic Beanstalk console to deploy a new application or an application version, you'll need to upload a source bundle. Your source bundle must meet the following requirements:
+
+    Consist of a single ZIP file or WAR file (you can include multiple WAR files inside your ZIP file)
+    Not exceed 512 MB
+    Not include a parent folder or top-level directory (subdirectories are fine)
+
+If you want to deploy a worker application that processes periodic background tasks, your application source bundle must also include a cron.yaml file
+
+Since this is clearly mentioned in the documentation all other options are incorrect.
+
+For more information on application source bundles in Elastic beanstalk, please refer to the below URL
+
+    https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/applications-sourcebundle.html
+	
