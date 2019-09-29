@@ -364,9 +364,6 @@ Refer AWS documentation - IAM Cross Account Role
 You share resources in one account with users in a different account. By setting up cross-account access in this way, you don't need to create individual IAM users in each account. In addition, users don't have to sign out of one account and sign into another in order to access resources that are in different AWS accounts. After configuring the role, you see how to use the role from the AWS Management Console, the AWS CLI, and the API
 
 
-
-
-
 -------------------------------------
 Question  42: Incorrect
 

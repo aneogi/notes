@@ -411,3 +411,150 @@ Option C is incorrect since Cloudwatch events will not be able to carry out this
 For more information on using Lambda triggers with AWS Cognito , please refer to the below URL
 
     https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html
+
+
+#####################################################################################################################
+	
+	
+Attempt 2
+
+-------------------------------------
+Question 19: Incorrect
+
+You’ve developed an AWS Lambda function but are running into a lot of performance issues. You decide to use the AWS X-Ray service to diagnose the issues.
+
+Which of the following must be done to ensure that you can use the X-Ray service with your Lambda function?
+
+Explanation
+
+Correct Answer – C
+
+The AWS Documentation mentions the following
+
+Setting Up AWS X-Ray with Lambda
+
+Following, you can find detailed information on how to set up X-Ray with Lambda.
+
+Before You Begin
+
+To enable tracing on your Lambda function using the Lambda CLI, you must first add tracing permissions to your function's execution role. To do so, take the following steps:
+
+    Sign in to the AWS Management Console and open the IAM console at https://console.aws.amazon.com/iam/.
+    Find the execution role for your Lambda function.
+    Attach the following managed policy: AWSXrayWriteOnlyAccess
+
+Option A is incorrect since this is used if you need to use X-Ray with an application which is hosted on an EC2 Instance
+
+Option B is incorrect since this is not required to begin using the X-Ray service with AWS Lambda
+
+Option D is incorrect since the permissions need to be assigned the other way around.
+
+For more information on enabling X-Ray with AWS Lambda  , please refer to the below URL
+
+    https://docs.aws.amazon.com/lambda/latest/dg/enabling-x-ray.html
+	
+	
+-------------------------------------
+Question 36: Incorrect
+
+A DynamoDB table is set to have a Read capacity of 10. Which of the following will give the maximum read throughput for the table?
+
+Explanation
+
+Correct Answer – B
+
+The calculation of throughput capacity for option B would be
+
+Read capacity(10) * Amount of data(4) = 40.
+
+Since its required at eventual consistency , we can double the read throughput to 40*2=80
+
+For Option A
+
+Read capacity(10) * Amount of data(4) = 40. Since we need strong consistency we have would get a read throughput of 40
+
+For Option C
+
+Read capacity(15) * Amount of data(1) = 15. Since we need strong consistency we have would get a read throughput of 15
+
+Option D is incorrect. Because it's talking about the write capacity.
+	
+	
+-------------------------------------
+Question 50: Incorrect
+
+You’ve just started developing an application on your On-premise network. This application will interact with the Simple Storage Service and some DynamoDB tables.
+
+How would you as the developer ensure that your SDK can interact with the AWS services on the cloud?
+
+Explanation
+
+Correct Answer – C
+
+Options A and B are incorrect since we need to use AWS Access keys during development and not IAM Roles
+
+Option D is incorrect since we should not be generating a security token to interact with the various AWS services during the development phase.
+
+When working on development, you need to use the AWS Access keys to work with the AWS Resources
+
+The AWS Documentation additionally mentions the following
+
+You use different types of security credentials depending on how you interact with AWS. For example, you use a user name and password to sign in to the AWS Management Console. You use access keys to make programmatic calls to AWS API operations.
+
+For more information on usage of credentials in AWS , please refer to the below link
+
+    https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html
+	
+
+-------------------------------------
+Question 55: Incorrect
+
+You are working as a team lead for your company. You have been told to manage the Blue Green Deployment methodology for one of the applications.
+
+Which of the following are some of the approaches for implementing this methodology? Choose 2 answers from the options given below
+
+Explanation
+
+Correct Answers – B and D
+
+The AWS Documentation mentions the following
+
+Weighted routing lets you associate multiple resources with a single domain name (example.com) or subdomain name (acme.example.com) and choose how much traffic is routed to each resource. This can be useful for a variety of purposes, including load balancing and testing new versions of software.
+
+Because AWS Elastic Beanstalk performs an in-place update when you update your application versions, your application can become unavailable to users for a short period of time. You can avoid this downtime by performing a blue/green deployment, where you deploy the new version to a separate environment, and then swap CNAMEs of the two environments to redirect traffic to the new version instantly.
+
+Option A is incorrect as on its own Autoscaling should be used to shift traffic and not on demand for such deployments
+
+Option C is incorrect since you need to use Route 53 with Weighted Routing policies
+
+For more information on weighted routing policy, please refer to the below link
+
+    https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html#routing-policy-weighted
+
+For more information on the Swap URL feature, please refer to the below link
+
+    https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.CNAMESwap.html
+	
+	
+-------------------------------------
+Question 64: Incorrect
+
+You are currently deploying an application that needs to have a sign-up and sign-in functionality added. As much as possible , you would want to reduce the coding effort required for these modules. You also need to ensure that code is executed automatically after the sign-in process is complete.
+
+How can you achieve this? Choose 2 answers from the options below.
+
+Explanation
+
+Correct Answers – A and D
+
+This is mentioned in the AWS Documentation
+
+You can create an AWS Lambda function and then trigger that function during user pool operations such as user sign-up, confirmation, and sign-in (authentication) with a Lambda trigger. You can add authentication challenges, migrate users, and customize verification messages.
+
+Option B is incorrect since IAM cannot simulate the sign-in and sign-up process that would be required by the application.
+
+Option C is incorrect since Cloudwatch events will not be able to carry out this requirement.
+
+For more information on using Lambda triggers with AWS Cognito , please refer to the below URL
+
+    https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html

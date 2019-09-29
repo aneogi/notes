@@ -382,3 +382,160 @@ All other options are invalid because you should not use Access Keys , this is t
 For more information on IAM Roles  , please refer to the below URL
 
     https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html
+
+
+#####################################################################################################################
+	
+Attempt 2
+
+-------------------------------------
+Question 7: Incorrect
+
+As a developer you have created a Lambda function that is used to work with a bucket in Amazon S3. The Lambda function is not working as expected. You need to debug the issue and understand what’s the underlying issue.
+
+How can you accomplish this?
+
+Explanation
+
+Correct Answer – B
+
+This is also mentioned in the AWS Documentation
+
+You can insert logging statements into your code to help you validate that your code is working as expected. Lambda automatically integrates with Amazon CloudWatch Logs and pushes all logs from your code to a CloudWatch Logs group associated with a Lambda function (/aws/lambda/). 
+
+Option A is incorrect since the metrics will only give the rate at which the function is executing , but not help debug the actual error
+
+Option C is incorrect since there is no such option
+
+Option D is incorrect since this is only used for API monitoring
+
+For more information on monitoring functions  , please refer to the below URL
+
+    https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions.html
+
+
+-------------------------------------
+Question 13: Incorrect
+
+A company is planning on developing an application that is going to make use of a DynamoDB table. The structure of the table is given below
+Larger image
+
+Which of the following should be chosen as the partition key to ensure the MOST effective distribution of keys?
+
+Explanation
+
+Correct Answer – B
+
+The most effective one will be the Review ID since you have a uniquely generated GUID for each record.
+
+Option A is partially correct. It can be used as the partition key , but the 
+
+Question asks for the MOST effective distribution of keys and that would be the Review ID
+
+Options C and D are incorrect since it would not be a best practise to keep these as the partition keys
+
+For more information on DynamoDB  , please refer to the below URL
+
+    https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html
+    https://aws.amazon.com/blogs/database/choosing-the-right-dynamodb-partition-key/
+
+-------------------------------------
+Question 19: Incorrect
+
+Your company has asked you to maintain an application using Elastic Beanstalk. They have mentioned that when updates are made to the application , that the infrastructure maintains its full capacity.
+
+Which of the following deployment methods should you use for this requirement?
+
+Explanation
+
+Answer - D
+
+The AWS Documentation mentions the following
+
+"If you need to maintain full capacity during deployments, you can configure your environment to launch a new batch of instances prior to taking any instances out of service. This option is called a rolling deployment with an additional batch. When the deployment completes, Elastic Beanstalk terminates the additional batch of instances".
+
+Because of what the AWS Documentation , all other options are invalid
+
+For more information on rolling version deployment in Elastic beanstalk  , please refer to the below URL
+
+    https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.rolling-version-deploy.html
+
+It is clearly mentioned in the 
+
+Question that you want to maintain full capacity during deployment and Rolling with additional batch deployment does not impact the capacity and ensures full capacity during the deployment process.
+
+you can refer this table for the differences:
+
+To perform an immutable environment update, Elastic Beanstalk creates a second, temporary Auto Scaling group behind your environment's load balancer to contain the new instances. First, Elastic Beanstalk launches a single instance with the new configuration in the new group. This instance serves traffic alongside all of the instances in the original Auto Scaling group that is running the previous configuration.
+When the first instance passes health checks, Elastic Beanstalk launches additional instances with the new configuration, matching the number of instances running in the original Auto Scaling group. 
+
+If you need to maintain full capacity during deployments, you can configure your environment to launch a new batch of instances prior to taking any instances out of service. This option is called a rolling deployment with an additional batch. When the deployment completes, Elastic Beanstalk terminates the additional batch of instances.
+
+With immutable environment updates, the autoscaling group starts with adding a single instance initially but whereas for rolling deployment with an additional batch all the new instances are launched behind the ELB and thus it maintains a full capacity during deployments.
+ 
+
+    Rolling with additional batch – Deploy the new version in batches, but first launch a new batch of instances to ensure full capacity during the deployment process.
+
+
+Please refer to the following links for more information.
+
+    https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.rolling-version-deploy.html#environments-cfg-rollingdeployments-method
+    https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/environmentmgmt-updates-immutable.html
+
+Note: "If the Question says which method will deploy code ONLY to new instances". Then the answer would be Immutable deployment.
+
+ 
+-------------------------------------
+Question 40: Incorrect
+
+You’ve define a DynamoDB table with a read capacity of 5 and a write capacity of 5.
+
+Which of the following statements are TRUE? Choose 3 answers from the options given below
+
+Explanation
+
+Correct Answers – A,D and E
+
+This is also given in the AWS Documentation
+
+For example, suppose that you create a table with 5 read capacity units and 5 write capacity units. With these settings, your application could:
+
+    Perform strongly consistent reads of up to 20 KB per second (4 KB × 5 read capacity units).
+    Perform eventually consistent reads of up to 40 KB per second (twice as much read throughput).
+    Write up to 5 KB per second (1 KB × 5 write capacity units).
+
+Based on the documentation , all other options are incorrect
+
+For more information on provisioned throughput  , please refer to the below URL
+
+    https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ProvisionedThroughput.html
+
+
+-------------------------------------
+Question 55: Incorrect
+
+You are planning on deploying an application to the worker role in Elastic Beanstalk. Moreover, this worker application is going to run the periodic tasks.
+
+Which of the following is a must have as part of the deployment?
+
+Explanation
+
+Correct Answer – B
+
+This is also given in the AWS Documentation
+
+Create an Application Source Bundle
+
+When you use the AWS Elastic Beanstalk console to deploy a new application or an application version, you'll need to upload a source bundle. Your source bundle must meet the following requirements:
+
+    Consist of a single ZIP file or WAR file (you can include multiple WAR files inside your ZIP file)
+    Not exceed 512 MB
+    Not include a parent folder or top-level directory (subdirectories are fine)
+
+If you want to deploy a worker application that processes periodic background tasks, your application source bundle must also include a cron.yaml file. For more information, see Periodic Tasks.
+
+Because of the exact requirement given in the AWS Documentation, all other options are invalid.
+
+For more information on creating an application source bundle for Elastic beanstalk  , please refer to the below URL
+
+    https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/applications-sourcebundle.html
