@@ -174,3 +174,116 @@ Correct Answer – B and C
 Please refer to the below article URL:
 
     http://aws.amazon.com/articles/1636185810492479
+	
+
+#####################################################################################################################
+	
+Attempt 2
+
+-------------------------------------
+Question 12: Incorrect
+
+Your team has completed the development of an application and now this needs to be deployed to an application on an EC2 Instance. The Application data will be stored on a separate volume which needs to be encrypted at rest.
+
+How can you ensure this requirement is met? Choose 2 answers from the options given below
+
+Explanation
+
+Correct Answers – A and C
+
+The AWS Documentation mentions the following
+
+Amazon EBS encryption uses AWS Key Management Service (AWS KMS) customer master keys (CMKs) when creating encrypted volumes and any snapshots created from them. A unique AWS-managed CMK is created for you automatically in each region where you store AWS assets. This key is used for Amazon EBS encryption unless you specify a customer-managed CMK that you created separately using AWS KMS.
+
+Option B is incorrect since Encryption is possible on all EBS volume types
+
+Option D is incorrect since you need to create the Encryption Key in the KMS service
+
+For more information on EBS Encryption, please refer to the below Link:
+
+    https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
+ 
+
+-------------------------------------
+Question 17: Incorrect
+
+Your company has developed a web application and is hosting it in an Amazon S3 bucket configured for static website hosting. The users can log in to this app using their Google/Facebook login accounts. The application is using the AWS SDK for JavaScript in the browser to access data stored in an Amazon DynamoDB table.
+
+How can you ensure that API keys for access to your data in DynamoDB are kept secure?
+
+Explanation
+
+Correct Answer – C
+
+With web identity federation, you don't need to create custom sign-in code or manage your own user identities. Instead, users of your app can sign in using a well-known identity provider (IdP) —such as Login with Amazon, Facebook, Google, or any other OpenID Connect (OIDC)-compatible IdP, receive an authentication token, and then exchange that token for temporary security credentials in AWS that map to an IAM role with permissions to use the resources in your AWS account. Using an IdP helps you keep your AWS account secure, because you don't have to embed and distribute long-term security credentials with your application.
+
+Option A is invalid since Roles cannot be assigned to S3 buckets
+
+Options B and D are invalid since the AWS Access keys should not be used
+
+For more information on Web Identity Federation, please refer to the below link AWS
+
+    https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html
+ 
+
+-------------------------------------
+Question 36: Incorrect
+
+You are using the AWS CodeDeploy service to deploy an application onto AWS. The application uses secure parameters which are stored in the AWS Systems Manager Parameter store.
+
+Which of the following must be done, so that the deployment can be automated via CodeDeploy? Choose 2 answers from the options given below.
+
+Explanation
+
+Correct Answers - A and D
+
+You need to specify the --with-decryption option, this allows the CodeDeploy service to decrypt the password so that it can be used in the application. Also, use IAM Roles to ensure the CodeDeploy service can access the KMS service
+
+    Option B is incorrect since you need to specify the --with-decryption option
+    Option C is incorrect since this is not a secure way to access AWS services
+
+    For more information on an example on this, please refer to the below URL
+        https://aws.amazon.com/blogs/mt/use-parameter-store-to-securely-access-secrets-and-config-data-in-aws-codedeploy/
+		
+
+-------------------------------------
+Question 61: Incorrect
+Server-side encryption is about data encryption at rest. That is, Amazon S3 encrypts your data at the object level as it writes it to disk in its data centers and decrypts it for you when you go to access it. There are a few different options depending on how you choose to manage the encryption keys. One of the options is called 'Server-Side Encryption with Amazon S3-Managed Keys (SSE-S3)'. Which of the following best describes how this encryption method works? Choose the correct answer from the options below
+
+Explanation
+
+Correct Answer – B
+
+S3 provide many encryption techniques.
+
+Use Server-Side Encryption with Amazon S3-Managed Keys (SSE-S3) – Each object is encrypted with a unique key employing strong multi-factor encryption. As an additional safeguard, it encrypts the key itself with a master key that it regularly rotates. Amazon S3 server-side encryption uses one of the strongest block ciphers available, 256-bit Advanced Encryption Standard (AES-256), to encrypt your data. 
+
+For more information on S3 encryption, please visit the link:
+
+    http://docs.aws.amazon.com/AmazonS3/latest/dev/serv-side-encryption.html
+
+
+-------------------------------------
+Question 63: Incorrect
+
+Regarding the evaluation logic when managing Access to Your Amazon SNS Topics, the following things can be stated. The goal at evaluation time is to decide whether a given request should be allowed or denied. The evaluation logic follows several basic rules:
+
+- By default, all requests to use your resource coming from anyone but you are denied
+
+- An allow overrides any default denies - An explicit deny overrides any allows
+
+- The order in which the policies are evaluated is not important
+
+- A policy results in a default deny if it doesn't directly apply to the request.
+
+Keeping the above in mind, what will be the policy result, if a user requests to use Amazon SNS, but the policy on the topic doesn't refer to the user's AWS account at all?
+
+Explanation
+
+Correct Answer – A
+
+The below diagram shows the evaluation logic of IAM policies. And as per the evaluation logic, it is clear that the above scenario leads to a default deny.
+
+For more information on the IAM policy evaluation logic, please refer to the link:
+
+    http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html

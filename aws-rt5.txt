@@ -351,3 +351,170 @@ All other options are invalid since you should use Cognito Streams
 For more information on Cognito Streams, please refer to the below link
 
     https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-streams.html
+	
+
+#####################################################################################################################
+	
+Attempt 2
+
+-------------------------------------
+Question 1: Incorrect
+
+A developer is writing an application that will run on –premises, but must access AWS services through an AWS SDK.
+
+How can the Developer allow the SDK to access the AWS services?
+
+Explanation
+
+Correct Answer – B
+
+When working on development, you need to use the AWS Access keys to work with the AWS Resources
+
+The AWS Documentation additionally mentions the following
+
+You use different types of security credentials depending on how you interact with AWS. For example, you use a user name and password to sign in to the AWS Management Console. You use access keys to make programmatic calls to AWS API operations.
+
+Option A is incorrect since we need to do this from an on-premise server you cannot use an EC2 role to work with an on-premise server.
+
+Option C is incorrect. If you want to test your application on your local machine, you're going to need to generate temporary security credentials (access key id, secret access key, and session token). You can do this by using the access keys from an IAM user to call assumeRole. The result of that call will include credentials that you can use to set the AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_SESSION_TOKEN (note without the token, they keys will be invalid). The SDK/CLI should then use these credentials. This will give your app a similar experience to running in an Amazon EC2 instance that was launched using an IAM role.
+
+https://forums.aws.amazon.com/thread.jspa?messageID=604424
+
+Option D is incorrect since the access keys should be on the local machine
+
+For more information on usage of credentials in AWS , please refer to the below link:
+
+    https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html
+
+ 
+-------------------------------------
+Question 24: Incorrect
+
+A company is planning on using AWS CodePipeline for their underlying CI/CD process. The code will be picked up from an S3 bucket. The company policy mandates that all data should be encrypted at rest.
+
+Which of the following measures would you take to ensure that the CI/CD process conforms to this policy? Choose 2 possible actions from the options given below.
+
+Explanation
+
+Correct Answers – A and D
+
+This is also mentioned in the AWS Documentation
+
+There are two ways to configure server-side encryption for Amazon S3 artifacts:
+
+    AWS CodePipeline creates an Amazon S3 artifact bucket and default AWS-managed SSE-KMS encryption keys when you create a pipeline using the Create Pipeline wizard. The master key is encrypted along with object data and managed by AWS.
+    You can create and manage your own customer-managed SSE-KMS keys.
+
+ 
+
+Options B and C are incorrect since this needs to be configured at the S3 bucket level.
+
+For more information on Encryption in S3 with CodePipeline, please refer to the below Link:
+
+    https://docs.aws.amazon.com/codepipeline/latest/userguide/S3-artifact-encryption.html
+
+ 
+-------------------------------------
+Question 38: Incorrect
+
+Your team has completed the development of an application and now this needs to be deployed to an application on an EC2 Instance. The Application data will be stored on a separate volume which needs to be encrypted at rest.
+
+How can you ensure this requirement is met? Choose 2 answers from the options given below
+
+Explanation
+
+Correct Answers – A and D
+
+The AWS Documentation mentions the following
+
+Amazon EBS encryption uses AWS Key Management Service (AWS KMS) customer master keys (CMKs) when creating encrypted volumes and any snapshots created from them. A unique AWS-managed CMK is created for you automatically in each region where you store AWS assets. This key is used for Amazon EBS encryption unless you specify a customer-managed CMK that you created separately using AWS KMS.
+
+Option B is incorrect since Encryption is possible on all EBS volume types
+
+Option D is incorrect since you need to create the Encryption Key in the KMS service
+
+For more information on EBS Encryption, please refer to the below Link:
+
+    https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
+
+
+-------------------------------------
+Question 43: Incorrect
+
+You have a number of Lambda functions that need to be deployed using AWS CodeDeploy. The lambda functions have gone through multiple code revisions and versioning in Lambda is being used to maintain the revisions.
+
+Which of the following must be done to ensure that the right version of the function is deployed in AWS CodeDeploy?
+
+Explanation
+
+Correct Answer - A
+
+The AWS Documentation mentions the following
+
+If your application uses the AWS Lambda compute platform, the AppSpec file can be formatted with either YAML or JSON. It can also be typed directly into an editor in the console. The AppSpec file is used to specify:
+
+    The AWS Lambda function version to deploy.
+    The functions to be used as validation tests.
+
+ 
+
+All other options are incorrect since the right approach is to use the AppSpec file.
+
+For more information on the application specification files, please refer to the below Link:
+
+    https://docs.aws.amazon.com/codedeploy/latest/userguide/application-specification-files.html
+
+
+-------------------------------------
+Question 50: Incorrect
+
+You are in charge of deploying an application that will be hosted on an EC2 Instance and sit behind an Elastic Load balancer. You have been requested to monitor the incoming connections to the Elastic Load Balancer.
+
+Which of the below options can suffice this requirement?
+
+Explanation
+
+Correct Answer – B
+
+The AWS Documentation mentions the following
+
+Elastic Load Balancing provides access logs that capture detailed information about requests sent to your load balancer. Each log contains information such as the time the request was received, the client's IP address, latencies, request paths, and server responses. You can use these access logs to analyze traffic patterns and troubleshoot issues.
+
+Option A is invalid since the Cloudtrail service is used for API activity monitoring
+
+Option C is invalid since the Logs agents are installed on EC2 Instances and not on the ELB
+
+Option D is invalid since the metrics will not provide the detailed information on the incoming connections
+
+For more information on Application Load balancer Logs, please refer to the below link
+
+    https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
+
+
+-------------------------------------
+Question 53: Incorrect
+
+Your mobile application includes a photo-sharing service that is expecting tens of thousands of users at launch. You will leverage Amazon Simple Storage Service (S3) for storage of the user Images, and you must decide how to authenticate and authorize your users for access to these images. You also need to manage the storage of these images.
+
+Which two of the following approaches should you use? Choose two answers from the options below
+
+Explanation
+
+Correct Answers – C and E
+
+The AWS Security Token Service (STS) is a web service that enables you to request temporary, limited-privilege credentials for AWS Identity and Access Management (IAM) users or for users that you authenticate (federated users).
+
+The token can then be used to grant access to the objects in S3.
+
+You can then provides access to the objects based on the key values generated via the user id.
+
+Option A is possible but then becomes a maintenance overhead because of the number of buckets.
+
+Option B is invalid because IAM users is not a good security practice.
+
+Option D is invalid because SMS tokens are not efficient for this requirement.
+
+For more information on the Security Token Service please refer to the below link
+
+    https://docs.aws.amazon.com/STS/latest/APIReference/Welcome.html
+	
