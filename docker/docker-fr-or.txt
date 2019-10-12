@@ -1,0 +1,86 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+														VMs & Containers
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+What is Virtualization?
+	Virtualization is a creation of logical object version in place of an actual version.
+	Few examples are virtual computer hardware platform, virtual storage, and virtual LANs.
+	Hardware virtualization means creating virtual machine that acts like a real physical computer with an OS.
+	For example, a virtual machine (VM) hosted on a computer with Microsoft Windows may behave like Ubuntu and Ubuntu supported software may run on the VM.
+
+	
+Need for a Virtual Machine
+Virtual machine setup has the following benefits.
+    Multiple operating systems can be hosted on the same machine simultaneously with complete isolation.
+    Multiple VMs can be deployed on the same physical box. This reduces the total number of physical machines.
+    Easy maintenance, app provisioning, and quick recovery.
+
+
+Problems with Virtual Machine
+    A lot of wastage of resources like ram, processor, disk space due to fixed space slicing for every application deployed. Hence this is not ideal for a large scale application developed using micro services.
+    Inconsistent computing environment across the software delivery life cycle (Prod/Dev/QA).
+    Hardware failures like malfunctioning and power supply loss will stop all working servers since many servers run on a single physical server.
+
+
+What are Containers?
+	Containers are multiple isolated services that are run on a single control host (underlying infrastructure) and they access a single kernel.
+	Container based virtualization is an OS-level virtualization method for deploying and running distributed applications without launching an entire VM for each application.
+	They isolate applications from one another.
+	
+
+VMs vs Containers
+	Size:
+		VMs - Resource wastage is high
+		Containers - No wastage
+	Start up:
+		VMs - Starts slow
+		Containers - Starts really quick
+	Integration with DevOps tools:
+		VMs - Complex (infrastructure wastage, repetitive configuration and minimal scalability)
+		Containers - Very simple
+
+
+Container - Benefits
+    Improved portability
+    Better performance
+    Optimum RAM/disk space/cloud utilization
+    Suited for agile environment
+    Facilitates approaches such as micro services, continuous integration, and delivery.
+    Eliminates environment inconsistencies.
+	
+
+Benefits from Container Orchestration Tools
+	Container Orchestration tools like Docker Swarm, Amazon ECS, and Azure Container Service:
+		Facilitate auto deployment
+		Scale application easily
+		Quickly push application from one environment to another
+		Enable automated rollbacks and backups
+		Support load balancing and service healing
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------	
+														Docker - Introduction
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Docker - Introduction
+	Docker is a tool intended to make the process of creating, deploying and running applications easier by using container based virtualization technology.
+	Docker is an open source container technology that provisions far more apps running on the same old servers compared to traditional VMs.
+	
+
+Docker Engine
+	Docker engine is the Docker core component that is responsible for creating Docker Images and running them as services.
+	Let us learn in detail about Docker Images in the next topic.
+
+
+Docker Core Components
+	Docker Engine Core Components:
+	Docker Daemon - Continuous running program (daemon process) that manages the service and other docker objects tied to it.
+    REST API - Specifies interfaces, that programs can utilize to speak to the daemon and direct it what to do.
+    Docker Client - CLI is utilized to interact with the daemon (docker command).
+	
+
+Docker on Linux and non-Linux Kernel
+	Docker hosted on Linux: This requires just a Docker client and Docker daemon.
+	Docker hosted on non-Linux: We need to install an additional Virtual box and then an extra layer boot2docker that will spin up Linux virtual environment on top of non-Linux kernel.
+	
+	
+

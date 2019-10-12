@@ -1,0 +1,277 @@
+
+Question 6: Incorrect
+Which of the following are supported platforms in Elastic Beanstalk? Choose 2 correct answer from the options below
+
+Explanation
+This is clearly given in the AWS documentation For more information on elastic beanstalk, please refer to the below URL: https://aws.amazon.com/elasticbeanstalk/faqs/
+Question 12: Incorrect
+You're creating a forum DynamoDB database for hosting web forums. Your "thread" table contains the forum name and each "forum name" can have one or more "subjects". What primary key type would you give the thread table in order to allow more than one subject to be tied to the forum primary key name? Choose an answer from the options below
+
+Explanation
+The partition key of an item is also known as its hash attribute. The term hash attribute derives from DynamoDB's usage of an internal hash function to evenly distribute data items across partitions, based on their partition key values.The sort key of an item is also known as its range attribute. The term range attribute derives from the way DynamoDB stores items with the same partition key physically close together, in sorted order by the sort key value.For more information on the core components of DynamoDB please visit the below link:http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.CoreComponents.html
+Question 32: Incorrect
+What are the different ways to access SWF?
+
+Explanation
+This is clearly mentioned in the AWS documentation For more information on SWF , please visit the link: https://aws.amazon.com/swf/faqs/
+Question 37: Incorrect
+How long can messages live in an SQS queue. Choose the correct answer from the options below
+
+Explanation
+This is clearly given in the AWS documentation For more information on SQS , please visit the following URL: https://aws.amazon.com/sqs/faqs/
+Question 46: Incorrect
+What is the maximum number of SWF workflows/activity types allowed in each SWF domain? Choose the correct answer from the options below.
+
+Explanation
+You can have a maximum of 10,000 workflow and activity types (in total) that are either registered or deprecated in each domain. You can have a maximum of 100 Amazon SWF domains (including registered and deprecated domains) in your AWS account. For more information on SWF , please visit the link: https://aws.amazon.com/swf/faqs/
+Question 49: Incorrect
+You need to announce an emergency downtime for a production AWS web application. This downtime notification will require different sets of instructions for different devices. All of the application users signed up to receive SNS notifications from the “mywebapp” topic when they began using the application and they are currently subscribed to this topic. What are appropriate ways for you to provide timely, device-specific instructions to end users when announcing this downtime? Choose an answer from the options below
+
+Explanation
+In addition to sending custom data as key-value pairs, you can also send platform-specific key-value pairs within the JSON payload. For example, if you wanted to include time_to_live and collapse_key GCM parameters after the custom data key-value pairs included in the data GCM parameter, then the JSON payload without escaped quotation marks would look similar to the following:{   "GCM":"{      "data":{         "message":"Check out these awesome deals!",         "url":"www.amazon.com"      },         "time_to_live": 3600,         "collapse_key": "deals"   }"}For more information on customizing SNS messages please visit the below link:http://docs.aws.amazon.com/sns/latest/dg/mobile-push-send-custommessage.html
+Question 58: Incorrect
+What is the size limit for volumes in instances that are based on Amazon Instance Store backed AMI’s. Choose an answer from the options below?
+
+Explanation
+As per the AWS documentation, the Size limit for Amazon Instance Store backed instances is 10 GiB. For more information on Instance type differences, please refer to the below link: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ComponentsAMIs.html
+Question 63: Incorrect
+What is the maximum limit of data that can be retrieved by a scan operation in DynamoDB? Choose the correct answer from the options below.
+
+Explanation
+This is clearly given in the AWS documentation For more information on DynamoDB limits, please visit the link: http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html
+Question 71: Incorrect
+Which of the following is NOT a common S3 API call? Choose the correct answer from the options below
+
+Explanation
+https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectOps.html  There is no read object in S3. The API call to get an object is GetObject For more information on S3 GetObject, please refer to the below URL: http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectGET.html
+Question 74: Incorrect
+An item stored in a DynamoDB can contain any number of ___ associated to it. Choose the correct answer from the options below
+
+Explanation
+This is clearly mentioned in the AWS documentation For more information on working with DynamoDB items, please refer to the below URL: http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithItems.html
+Question 78: Incorrect
+You are inserting 1000 new items every second in a DynamoDB table. Once an hour these items are analyzed and then are no longer needed. You need to minimize provisioned throughput, storage, and API calls. Given these requirements, what is the most efficient way to manage these Items after the analysis? Choose an answer from the options below
+
+Explanation
+The main point of the question is to minimize provisioned throughput.Option A is wrong because the table will grow and increase provisioned throughput.Option B is wrong because the table will grow and increase provisioned throughput over the 24 hour period.Option D is partially correct , you still need to delete the older table.For more information on DynamoDB provisioned throughput please visit the below link:http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ProvisionedThroughput.html
+Question 79: Incorrect
+What are some of the owner operations possible in SNS?Choose 3 correct answers from the options below
+
+Explanation
+This is clearly given in the AWS documentationAmazon SNS provides a set of simple APIs to enable event notifications for topic owners, subscribers and publishers.Owner operations:    CreateTopic – Create a new topic.    DeleteTopic – Delete a previously created topic.    ListTopics – List of topics owned by a particular user (AWS ID).    ListSubscriptionsByTopic – List of subscriptions for a particular topic    SetTopicAttributes – Set/modify topic attributes, including setting and modifying publisher/subscriber permissions, transports supported, etc.    GetTopicAttributes – Get/view existing attributes of a topic    AddPermission – Grant access to selected users for the specified actions    RemovePermission – Remove permissions for selected users for the specified actions  For more information on SNS , please visit the following URL:https://aws.amazon.com/sns/faqs/
+Question 82: Incorrect
+What is one difference between an Amazon EBS-backed and an instance-store backed instance? Choose the correct answer from the options below
+
+Explanation
+This is clearly mentioned in the AWS documentation For more information on Instance type differences, please refer to the below link: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ComponentsAMIs.html
+Question 98: Incorrect
+What are the protocol versions supported by SQS.  Choose 3 answers from the options below
+
+Explanation
+This is clearly given in the AWS documentation For more information on SQS , please visit the following URL: https://aws.amazon.com/sqs/faqs/
+Question 110: Incorrect
+What kind of message does SNS send to endpoints? Choose the correct answer from the options below
+
+Explanation
+AWS documentation on the format of the SNS message. There is no source , hence Option A and B are wrong. And since SNS messages are JSON, only option C is correct. For more information on sending SNS messages, please refer to the below URL: http://docs.aws.amazon.com/sns/latest/dg/SendMessageToHttp.html
+Question 112: Incorrect
+Which of the below API calls can be used to get information about stacks based on a specific filter. Choose an answer from the options below
+
+Explanation
+This is clearly given in the AWS documentation For more information on the API, please visit the below URL: http://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ListStacks.html
+Question 114: Incorrect
+Which of the following SNS information item has the following information - ” A Universally Unique Identifier, unique for each notification published”. Choose the correct answer from the options below
+
+Explanation
+This is clearly given in the AWS documentation For more information on SNS , please visit the following URL: https://aws.amazon.com/sns/faqs/
+Question 116: Incorrect
+You have software on an EC2 instance that needs to access both the private and public IP address of that instance. What's the best way for the software to get that information? Choose the correct answer from the options below
+
+Explanation
+You can get the below information from the instance metadataami-idami-launch-indexami-manifest-pathblock-device-mapping/hostnameinstance-actioninstance-idinstance-typekernel-idlocal-hostnamelocal-ipv4macnetwork/placement/public-hostnamepublic-ipv4public-keys/reservation-idsecurity-groupsservices/For more information on Ec2 instance metadata please refer to the below URL:http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html
+Question 117: Incorrect
+You are providing AWS consulting services for a company developing a new mobile application that will be leveraging Amazon SNS Mobile Push for push notifications. In order to send direct notification messages to individual devices each device registration identifier or token needs to be registered with SNS; however the developers are not sure of the best way to do this. You advise them to
+
+Explanation
+The CreatePlatformEndPoint  API creates an endpoint for a device and mobile app on one of the supported push notification services, such as GCM and APNS. CreatePlatformEndpoint requires the PlatformApplicationArn that is returned from CreatePlatformApplication. The EndpointArn that is returned when using CreatePlatformEndpointcan then be used by the Publish action to send a message to a mobile app or by the Subscribe action for subscription to a topic.  For more information on the command please visit the below link: http://docs.aws.amazon.com/sns/latest/api/API_CreatePlatformEndpoint.html
+Question 118: Incorrect
+At what size does does AWS recommend customers to use the multi-part upload tool when uploading object to S3?
+
+Explanation
+This is clearly mentioned in the AWS documentation For more information on S3 please refer to the below URL: https://aws.amazon.com/s3/faqs/
+Question 122: Incorrect
+What can be used in DynamoDB as part of the Query API call to filter results based on the values of primary keys? Choose an answer from the options below
+
+Explanation
+This is clearly provided in the AWS documentation  For more information on DynamoDB please refer to the below link: https://aws.amazon.com/dynamodb/faqs/
+Question 133: Incorrect
+An IT admin is worried about the number of message queues being created in the SQS in their AWS account? Is there a limit, if yes, what is the correct limit? Choose the correct answer from the options below
+
+Explanation
+As per the AWS documentation, there is no limit on the number of queues. For more information on AWS SQS, please refer to the link: https://aws.amazon.com/sqs/faqs/
+Question 136: Incorrect
+What result would you expect from the Fn::Select function in the following line in a CloudFormation template? Choose an answer from the options below{ "Fn::Select" : [ "1", [ "1", "2", "3", "4" ] ] }
+
+Explanation
+The intrinsic function Fn::Select returns a single object from a list of objects by index.In this case, Fn::Select returns 2 which is Answer B.For more information on intrinsic functions, Please checkhttp://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.htmlIntrinsic function Fn::Select reference:http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-select.html
+
+
+#####################################################################################################################
+
+Attempt 2
+
+-------------------------------------
+Question 5: Incorrect
+A recent increase in the amount of users of an application hosted on an EC2 instance that you manage has caused the instance’s OS to run out of CPU resources and crash. The crash caused several users’ unsaved data to be lost and your supervisor wants to know how this problem can be avoided in the future.Which of the following would you not recommend?
+
+Explanation
+If you take snapshots during business hours , the situation can become worse since I/O is required to create the snapshot. Hence this is the worse solution to recommend for the problem. For more information on EBS snapshots, please refer to the below URL: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSSnapshots.html
+
+-------------------------------------
+Question 7: Incorrect
+What are some of the owner operations possible in SNS?Choose 3 correct answers from the options below
+
+Explanation
+This is clearly given in the AWS documentationAmazon SNS provides a set of simple APIs to enable event notifications for topic owners, subscribers and publishers.Owner operations:    CreateTopic – Create a new topic.    DeleteTopic – Delete a previously created topic.    ListTopics – List of topics owned by a particular user (AWS ID).    ListSubscriptionsByTopic – List of subscriptions for a particular topic    SetTopicAttributes – Set/modify topic attributes, including setting and modifying publisher/subscriber permissions, transports supported, etc.    GetTopicAttributes – Get/view existing attributes of a topic    AddPermission – Grant access to selected users for the specified actions    RemovePermission – Remove permissions for selected users for the specified actions  For more information on SNS , please visit the following URL:https://aws.amazon.com/sns/faqs/
+
+-------------------------------------
+Question 8: Incorrect
+What is the maximum number of topics allowed per account in SNS? Choose the correct answer from the options below
+
+Explanation
+This is clearly given in the AWS documentation For more information on SNS , please visit the following URL: https://aws.amazon.com/sns/faqs/
+
+-------------------------------------
+Question 12: Incorrect
+For which of these languages does AWS provide an SDK? Choose 3 correct answer from the options below
+
+Explanation
+This is as per the AWS documentation For more information on AWS toolkits available, please refer to the below URL: https://aws.amazon.com/tools/
+
+-------------------------------------
+Question 27: Incorrect
+What is one difference between an Amazon EBS-backed and an instance-store backed instance? Choose the correct answer from the options below
+
+Explanation
+This is clearly mentioned in the AWS documentation For more information on Instance type differences, please refer to the below link: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ComponentsAMIs.html
+
+-------------------------------------
+Question 35: Incorrect
+What is required for a subnet to control the flow of traffic in a subnet? Choose one answer from the options below?
+
+Explanation
+This is clearly mentioned in the AWS documentation that Route tables are used to control the flow of traffic in a subnet. For more information on Route tables, please refer to the below link: http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html
+
+-------------------------------------
+Question 50: Incorrect
+As per the IAM decision logic what is the first step of access permissions for any resource in AWS. Choose the correct answer from the options below
+
+Explanation
+The below diagram shows the evaluation logic of IAM policies. And as per the evaluation logic, it is clear that the above scenario leads to a default deny. For more information on the IAM policy evaluation logic, please refer to the link: http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html
+
+-------------------------------------
+Question 62: Incorrect
+Which of the below API calls can be used to get information about stacks based on a specific filter. Choose an answer from the options below
+
+Explanation
+This is clearly given in the AWS documentation For more information on the API, please visit the below URL: http://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ListStacks.html
+
+-------------------------------------
+Question 66: Incorrect
+An administrator is getting an error while trying to create a new bucket in S3? You feel that bucket limit has been crossed. What is the bucket limit per account in AWS?Choose the correct answer from the options below
+
+Explanation
+This is clearly mentioned in the AWS documentation. For more information on AWS service limitations, please visit the link: http://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html
+
+-------------------------------------
+Question 70: Incorrect
+What is the maximum size of an item in DynamoDB? Choose the correct answer from the options below.
+
+Explanation
+This is clearly given in the AWS documentation For more information on DynamoDB limits, please visit the link: http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html
+
+-------------------------------------
+Question 76: Incorrect
+Which API call is used to Bundle an Amazon instance store-backed Windows instance? Choose the correct answer from the options below
+
+Explanation
+This is given in the AWS documentation For more information on BundleInstance, please refer to the below link: http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_BundleInstance.html
+
+-------------------------------------
+Question 77: Incorrect
+What result would you expect from the Fn::Select function in the following line in a CloudFormation template? Choose an answer from the options below{ "Fn::Select" : [ "1", [ "1", "2", "3", "4" ] ] }
+
+Explanation
+The intrinsic function Fn::Select returns a single object from a list of objects by index.In this case, Fn::Select returns 2 which is Answer B.For more information on intrinsic functions, Please checkhttp://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.htmlIntrinsic function Fn::Select reference:http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-select.html
+
+-------------------------------------
+Question 79: Incorrect
+What are the different ways to access SWF?
+
+Explanation
+This is clearly mentioned in the AWS documentation For more information on SWF , please visit the link: https://aws.amazon.com/swf/faqs/
+
+-------------------------------------
+Question 80: Incorrect
+Which of the below functions is used in Cloudformation to retrieve an object from a set of objects? Choose an answer from the options below
+
+Explanation
+This is clearly given in the AWS documentation For more information on the function please refer to the below link: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-select.html
+
+-------------------------------------
+Question 84: Incorrect
+What kind of message does SNS send to endpoints? Choose the correct answer from the options below
+
+Explanation
+AWS documentation on the format of the SNS message. There is no source , hence Option A and B are wrong. And since SNS messages are JSON, only option C is correct. For more information on sending SNS messages, please refer to the below URL: http://docs.aws.amazon.com/sns/latest/dg/SendMessageToHttp.html
+
+-------------------------------------
+Question 96: Incorrect
+Which features can be used to restrict access to data in S3? Choose 2 answers from the options below
+
+Explanation
+By default, all Amazon S3 resources—buckets, objects, and related subresources (for example, lifecycleconfiguration and website configuration)—are private: only the resource owner, an AWS account that created it, can access the resource. The resource owner can optionally grant access permissions to others by writing an access policy. Amazon S3 offers access policy options broadly categorized as resource-based policies and user policies. Access policies you attach to your resources (buckets and objects) are referred to as resource-based policies. For example, bucket policies and access control lists (ACLs) are resource-based policies. You can also attach access policies to users in your account. These are called user policies. You may choose to use resource-based policies, user policies, or some combination of these to manage permissions to your Amazon S3 resources. For more information on S3 access permissions please visit the below link: http://docs.aws.amazon.com/AmazonS3/latest/dev/s3-access-control.html
+
+-------------------------------------
+Question 103: Incorrect
+What is the size limit for volumes in instances that are based on Amazon Instance Store backed AMI’s. Choose an answer from the options below?
+
+Explanation
+As per the AWS documentation, the Size limit for Amazon Instance Store backed instances is 10 GiB. For more information on Instance type differences, please refer to the below link: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ComponentsAMIs.html
+
+-------------------------------------
+Question 109: Incorrect
+What in AWS can be used to restrict access to SWF?
+
+Explanation
+This is clearly mentioned in the AWS documentation For more information on SWF, please visit the link: https://aws.amazon.com/swf/faqs/
+
+-------------------------------------
+Question 111: Incorrect
+What can be used in DynamoDB as part of the Query API call to filter results based on the values of primary keys? Choose an answer from the options below
+
+Explanation
+This is clearly provided in the AWS documentation  For more information on DynamoDB please refer to the below link: https://aws.amazon.com/dynamodb/faqs/
+
+-------------------------------------
+Question 126: Incorrect
+What is the maximum number of items that the BatchGetItem API retrieve from DynamoDB? Choose the correct answer from the options below.
+
+Explanation
+This is clearly given in the AWS documentation For more information on DynamoDB limits, please visit the link: http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html
+
+-------------------------------------
+Question 137: Incorrect
+Which of the following is a highly available, scalable deployment model for a web service. Choose an answer from the options below
+
+Explanation
+Auto Scaling helps you maintain application availability and allows you to scale your Amazon EC2 capacity up or down automatically according to conditions you define. You can use Auto Scaling to help ensure that you are running your desired number of Amazon EC2 instances By default all other answers are wrong because they have fixed number which is wrong for scalable deployment. For more information on Autoscaling, please refer to the below URL: https://aws.amazon.com/autoscaling/
+
+-------------------------------------
+Question 140: Incorrect
+You are inserting 1000 new items every second in a DynamoDB table. Once an hour these items are analyzed and then are no longer needed. You need to minimize provisioned throughput, storage, and API calls. Given these requirements, what is the most efficient way to manage these Items after the analysis? Choose an answer from the options below
+
+Explanation
+The main point of the 
+-------------------------------------
+Question is to minimize provisioned throughput.Option A is wrong because the table will grow and increase provisioned throughput.Option B is wrong because the table will grow and increase provisioned throughput over the 24 hour period.Option D is partially correct , you still need to delete the older table.For more information on DynamoDB provisioned throughput please visit the below link:http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ProvisionedThroughput.html
