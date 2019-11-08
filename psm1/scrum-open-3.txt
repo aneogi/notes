@@ -1,0 +1,700 @@
+
+Question 1 of 30
+The maximum length of the Sprint Review (its time-box) is:
+
+(choose the best answer)
+
+Correct answer: B)
+You chose: B)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+2 hours.
+Correct answer
+B)
+4 hours for a monthly Sprint. For shorter Sprints it is usually shorter.
+ 
+C)
+As long as needed.
+ 
+D)
+1 day.
+ 
+E)
+4 hours and longer as needed.
+Feedback
+
+Sprint Review is a four-hour time-boxed meeting for one-month Sprints. For shorter Sprints, the event is usually shorter.
+Question 2 of 30
+Which three behaviors demonstrate that a team is NOT self-organizing and are NOT following the Scrum Guide?
+
+(choose the best three answers)
+
+Correct answer: D) E) F)
+You chose: D) E) F)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+The Development Team creates their own sprint backlog, reflecting all work that is part of the definition of "Done".
+ 
+B)
+Development Team members collaboratively selecting their own work during the Sprint.
+ 
+C)
+The Development Team has all the skills needed to create a releasable Increment.
+Correct answer
+D)
+Stakeholders attend the Daily Scrum to check progress and work with the Scrum Master to optimize the functional scope for the Sprint.
+Correct answer
+E)
+The Development Team invites external people to the Sprint Planning to ask them how to turn a Product Backlog item into an Increment via a complete and detailed Sprint Backlog.
+Correct answer
+F)
+The Development Team members are working within the boundaries of their functional description and nicely handing off work from analyst to developer to tester to integration.
+Feedback
+
+    The Daily Scrum is for the Development Team and attended by the Development Team.  It should not be used by external stakeholders to check progress.
+    During Sprint Planning the Scrum Team should be crafting the Sprint Goal based on the set of Product Backlog items selected for the sprint.  The Development Team identifies the necessary work to meet the Sprint Goal.
+    Scrum Development Team members don’t have titles, and no sub-teams; such as, testing, architecture, or operations are recognized.  Accountability belongs with the Development Team as a whole, regardless of whether team members have specialized skills.
+
+Question 3 of 30
+The CEO asks the Development Team to add a "very important" item to a Sprint that is in progress. What should the Development Team do?
+
+(choose the best answer)
+
+Correct answer: D)
+You chose: D)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+Add the item to the current Sprint without any adjustments.
+ 
+B)
+Add the item to the current Sprint and drop an item of equal size.
+ 
+C)
+Add the item to the next Sprint.
+Correct answer
+D)
+Inform the Product Owner so he/she can work with the CEO.
+Feedback
+
+The items selected for a Sprint have been selected as most valuable with the Product Owner. The items serve the Sprint's goal. No changes should be made that endanger the Sprint Goal. No one external to the Scrum Team can force changes on the Development Team (Sprint Backlog) and the Product Owner (Product Backlog).
+Question 4 of 30
+The time-box for a Daily Scrum is?
+
+(choose the best answer)
+
+Correct answer: D)
+You chose: D)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+The same time of day every day.
+ 
+B)
+Two minutes per person.
+ 
+C)
+4 hours.
+Correct answer
+D)
+15 minutes.
+ 
+E)
+15 minutes for a 4 week sprint. For shorter Sprints it is usually shorter.
+Feedback
+
+The length of a daily Scrum is time-boxed at 15 minutes, it does not change with the length of a Sprint.
+Question 5 of 30
+True or False:  The Scrum Team should choose at least one high priority process improvement, identified during the Sprint Retrospective, and place it in the Product Backlog.
+
+Correct answer: B)
+You chose: A)
+Incorrect answer
+A)
+True
+Missed correct answer
+B)
+False
+Feedback
+
+False, to ensure continuous improvement, the Sprint Backlog rather than the Product Backlog includes at least one high priority process improvement identified in the previous Sprint Retrospective meeting.
+Question 6 of 30
+When does the next Sprint begin?
+
+(choose the best answer)
+
+Correct answer: D)
+You chose: D)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+Next Monday.
+ 
+B)
+Immediately following the next Sprint Planning.
+ 
+C)
+When the Product Owner is ready.
+Correct answer
+D)
+Immediately after the conclusion of the previous Sprint.
+Feedback
+
+A new Sprint starts immediately after the conclusion of the previous Sprint.
+Question 7 of 30
+Which statement best describes the Sprint Review?
+
+(choose the best answer)
+
+Correct answer: B)
+You chose: B)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+It is a mechanism to control the Development Team's activities during a Sprint.
+Correct answer
+B)
+It is when the Scrum Team and stakeholders inspect the outcome of a Sprint and figure out what to do next.
+ 
+C)
+It is a demo at the end of the Sprint for everyone in the organization to check on the work done.
+Feedback
+
+Every event in Scrum, besides the Sprint which is a container for the other events, is an opportunity to Inspect AND Adapt.
+Question 8 of 30
+True or False: Scrum does not have a role called "project manager."
+
+Correct answer: A)
+You chose: A)
+Correct answer
+A)
+True
+ 
+B)
+False
+Feedback
+
+A Scrum Team has a Scrum Master, a Product Owner and a Development Team. As a whole they have all controls needed.
+Question 9 of 30
+The three pillars of empirical process control are:
+
+(choose the best answer)
+
+Correct answer: C)
+You chose: C)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+Respect For People, Kaizen, Eliminating Waste
+ 
+B)
+Planning, Demonstration, Retrospective
+Correct answer
+C)
+Inspection, Transparency, Adaptation
+ 
+D)
+Planning, Inspection, Adaptation
+ 
+E)
+Transparency, Eliminating Waste, Kaizen
+Feedback
+
+Scrum is founded on empirical process control theory, or empiricism. Empiricism asserts that knowledge comes from experience and making decisions based on what is known.
+Three pillars uphold every implementation of empirical process control: transparency, inspection, and adaptation.
+Question 10 of 30
+Development Team membership should change:
+
+(choose the best answer)
+
+Correct answer: C)
+You chose: C)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+Every Sprint to promote shared learning.
+ 
+B)
+Never, because it reduces productivity.
+Correct answer
+C)
+As needed, while taking into account a short term reduction in productivity.
+ 
+D)
+As needed, with no special allowance for changes in productivity.
+Feedback
+
+Teams typically go through some steps before achieving a state of increased performance. Changing membership typically reduces cohesion, affecting performance and productivity in the short term.
+Question 11 of 30
+When many Development Teams are working on a single product, what best describes the definition of "Done?"
+
+(choose the best answer)
+
+Correct answer: C)
+You chose: C)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+Each Development Team defines and uses its own. The differences are discussed and reconciled during a hardening Sprint.
+ 
+B)
+Each Development Team uses its own but must make their definition clear to all other teams so the differences are known.
+Correct answer
+C)
+All Development Teams must have a definition of "Done" that makes their combined work potentially releasable.
+ 
+D)
+It depends.
+Feedback
+
+Scrum requires an Increment to be releasable. This is an Increment of product. Many teams working on a single product are expected to deliver such an Increment.
+Question 12 of 30
+The Development Team should have all the skills needed to:
+
+(choose the best answer)
+
+Correct answer: C)
+You chose: C)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+Complete the project as estimated when the date and cost are committed to the Product Owner.
+ 
+B)
+Do all of the development work, except for specialized testing that requires additional tools and environments.
+Correct answer
+C)
+Turn the Product Backlog items it selects into an increment of potentially releasable product functionality.
+Feedback
+
+The Development Team consists of professionals who do the work of delivering a potentially releasable Increment of "Done" product at the end of each Sprint. Development Teams are cross-functional, with all of the skills as a team necessary to create a product Increment.
+Question 13 of 30
+Upon what type of process control is Scrum based?
+
+(choose the best answer)
+
+Correct answer: A)
+You chose: A)
+Note: This question displayed answer options in random order when taking this Test.
+Correct answer
+A)
+Empirical
+ 
+B)
+Hybrid
+ 
+C)
+Defined
+ 
+D)
+Complex
+Feedback
+
+Scrum is founded on empirical process control theory, or empiricism. Empiricism asserts that knowledge comes from experience and making decisions based on what is known.
+Question 14 of 30
+Who creates the definition of "Done"?
+
+(choose the best answer)
+
+Correct answer: A)
+You chose: A)
+Note: This question displayed answer options in random order when taking this Test.
+Correct answer
+A)
+The development organization (or Development Team if none is available from the development organization)
+ 
+B)
+The Scrum Team, in a collaborative effort where the result is the common denominator of all members' definitions
+ 
+C)
+The Product Owner as he/she is responsible for the product's success
+ 
+D)
+The Scrum Master as he/she is responsible for the Development Team's productivity
+Feedback
+
+If the definition of "done" is part of the conventions, standards or guidelines of the development organization, all Scrum Teams must follow it as a minimum. The Development Team of the Scrum Team can complement it with elements specific for the product or context.
+If "done" for an increment is not a convention of the development organization, the Development Team of the Scrum Team must define a definition of "done" appropriate for the product.
+Question 15 of 30
+Which of the below are roles on a Scrum Team?
+
+(choose the best three answers)
+
+Correct answer: A) D) E)
+You chose: A) D) E)
+Note: This question displayed answer options in random order when taking this Test.
+Correct answer
+A)
+Development Team
+ 
+B)
+Users
+ 
+C)
+Customers
+Correct answer
+D)
+Product Owner
+Correct answer
+E)
+Scrum Master
+Feedback
+
+The Scrum Team consists of a Product Owner, the Development Team, and a Scrum Master.
+Question 16 of 30
+Which statement best describes Scrum?
+
+(choose the best answer)
+
+Correct answer: C)
+You chose: C)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+A complete methodology that defines how to develop software.
+ 
+B)
+A cookbook that defines best practices for software development.
+Correct answer
+C)
+A framework within which complex products in complex environments are developed.
+ 
+D)
+A defined and predictive process that conforms to the principles of Scientific Management.
+Feedback
+
+Scrum is not a process or a technique for building products; rather, it is a framework within which you can employ various processes and techniques.
+Question 17 of 30
+The length of a Sprint should be:
+
+(choose the best answer)
+
+Correct answer: D)
+You chose: D)
+ 
+A)
+Short enough to keep the business risk acceptable to the Product Owner.
+ 
+B)
+Short enough to be able to synchronize the development work with other business events.
+ 
+C)
+No more than one month.
+Correct answer
+D)
+All of these answers are correct.
+Feedback
+
+All of these choices are appropriate considerations in determining the length of a Sprint.
+Question 18 of 30
+How much work must a Development Team do to a Product Backlog item it selects for a Sprint?
+
+(choose the best answer)
+
+Correct answer: A)
+You chose: A)
+Note: This question displayed answer options in random order when taking this Test.
+Correct answer
+A)
+As much as it has told the Product Owner will be done for every Product Backlog item it selects in conformance with the definition of "Done".
+ 
+B)
+As much as it can fit into the Sprint.
+ 
+C)
+All development work and at least some testing.
+ 
+D)
+Analysis, design, programming, testing and documentation.
+Feedback
+
+The purpose of each Sprint is to deliver Increments of potentially releasable functionality that adhere to the Scrum Team's current definition of "Done".
+Question 19 of 30
+When does a Development Team member become the sole owner of a Sprint Backlog item?
+
+(choose the best answer)
+
+Correct answer: B)
+You chose: B)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+At the Sprint planning meeting.
+Correct answer
+B)
+Never. All Sprint Backlog Items are "owned" by the entire Development Team, even though each one may be implemented by an individual development team member.
+ 
+C)
+Whenever a team member can accommodate more work.
+ 
+D)
+During the Daily Scrum.
+Feedback
+
+Sprint Backlog and all of its items are collectively owned by the Development Team. No individual team member can claim ownership over an item as this would block communication and collaboration.
+Question 20 of 30
+Who is on the Scrum Team?
+
+(choose the best three answers)
+
+Correct answer: A) B) C)
+You chose: A) B) C)
+Correct answer
+A)
+The Scrum Master
+Correct answer
+B)
+The Product Owner
+Correct answer
+C)
+The Development Team
+ 
+D)
+Project Manager
+ 
+E)
+None of the above
+Feedback
+
+The Scrum Team consists of the Scrum Master (manages the process), the Product Owner (decides what to do) and the Development Team (does the work).
+Question 21 of 30
+Who is required to attend the Daily Scrum?
+
+(choose the best answer)
+
+Correct answer: A)
+You chose: A)
+Note: This question displayed answer options in random order when taking this Test.
+Correct answer
+A)
+The Development Team.
+ 
+B)
+The Scrum team.
+ 
+C)
+The Development Team and Scrum Master.
+ 
+D)
+The Development Team and Product Owner.
+ 
+E)
+The Scrum Master and Product Owner.
+Feedback
+
+Only the people doing the work described on the Sprint Backlog need to inspect and adapt at the Daily Scrum. If the Scrum Master or Product Owner is also on the Development Team, they will need to be at the Daily Scrum. Otherwise, the Scrum Master simply has to make sure the Development Team knows how to conduct a Daily Scrum and does so.
+Question 22 of 30
+The time-box for the Sprint Planning meeting is?
+
+(choose the best answer)
+
+Correct answer: B)
+You chose: B)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+4 hours.
+Correct answer
+B)
+8 hours for a monthly Sprint. For shorter Sprints it is usually shorter.
+ 
+C)
+Whenever it is done.
+ 
+D)
+Monthly.
+Feedback
+
+Sprint Planning is time-boxed to a maximum of eight hours for a one-month Sprint. For shorter Sprints, the event is usually shorter.
+Question 23 of 30
+Why is the Daily Scrum held at the same time and same place?
+
+(choose the best answer)
+
+Correct answer: B)
+You chose: B)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+The place can be named.
+Correct answer
+B)
+The consistency reduces complexity.
+ 
+C)
+The Product Owner demands it.
+ 
+D)
+Rooms are hard to book and this lets it be booked in advance.
+Feedback
+
+The Daily Scrum is held at the same time and place each day to reduce complexity.
+Question 24 of 30
+What does it mean to say that an event has a time-box?
+
+(choose the best answer)
+
+Correct answer: D)
+You chose: D)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+The event must happen at a set time.
+ 
+B)
+The event must happen by a given time.
+ 
+C)
+The event must take at least a minimum amount of time.
+Correct answer
+D)
+The event can take no more than a maximum amount of time.
+Feedback
+
+Time-boxed events are events that have a maximum duration.
+Question 25 of 30
+Which of the following services are appropriate for a Scrum Master in regard to the Daily Scrum?
+
+(choose the best answer)
+
+Correct answer: D)
+You chose: D)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+Lead the discussions of the Development Team.
+ 
+B)
+Ensure that all 3 questions have been answered.
+ 
+C)
+Facilitate in a way that ensures each team member has a chance to speak.
+Correct answer
+D)
+Teach the Development Team to keep the Daily Scrum within the 15 minute time-box.
+ 
+E)
+All answers apply.
+Feedback
+
+The Scrum Master ensures that the Development Team has the meeting, but the Development Team is responsible for conducting the Daily Scrum. The Scrum Master teaches the Development Team to keep the Daily Scrum within the 15-minute time-box. The Scrum Master enforces the rule that only Development Team members participate in the Daily Scrum.
+Question 26 of 30
+The Product Backlog is ordered by:
+
+(choose the best answer)
+
+Correct answer: E)
+You chose: E)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+Size, where small items are at the top and large items are at the bottom.
+ 
+B)
+Risk, where safer items are at the top, and riskier items are at the bottom.
+ 
+C)
+Least valuable items at the top to most valuable at the bottom.
+ 
+D)
+Items are randomly arranged.
+Correct answer
+E)
+Whatever is deemed most appropriate by the Product Owner.
+Feedback
+
+The Product Owner decides what makes the most sense to optimize the value of the work being done by the Development Team.
+Question 27 of 30
+Select three incorrect, untrue, or misleading statements about Scrum?
+
+(choose the best three answers)
+
+Correct answer: A) B) C)
+You chose: A) B) C)
+Note: This question displayed answer options in random order when taking this Test.
+Correct answer
+A)
+Scrum is a methodology where you can pick and choose which parts of Scrum you think will work for your environment.
+Correct answer
+B)
+Scrum is like traditional processes but with self-organization to replace Project Managers.
+Correct answer
+C)
+Scrum is a framework that eliminates complexity.
+ 
+D)
+Scrum is a framework for developing and sustaining complex products.
+ 
+E)
+Scrum is based on empirical process control theory.
+ 
+F)
+Each component of Scrum serves a specific purpose and is essential to Scrum's success and your usage of Scrum to develop complex products.
+Feedback
+
+    Scrum is meant to be implemented as prescribed in the Scrum Guide.  For example, the five events in the Scrum Guide are mandatory, each event has a specific purpose.  
+    Scrum does not eliminate the complexity that is inherent in delivering a product in today’s world, instead it offers a framework for dealing with complexity.  By regularly delivering increments of value teams gain the ability to inspect and rapidly adapt based on the feedback received.
+    Project Managers are not simply replaced by self-organizing teams. Scrum is a framework for optimizing decision making based on the knowledge and experience of the entire team.  
+
+Question 28 of 30
+During a Sprint, a Development Team determines that it will not be able to finish the complete forecast. Who should be present to review and adjust the Sprint work selected?
+
+(choose the best answer)
+
+Correct answer: B)
+You chose: B)
+Note: This question displayed answer options in random order when taking this Test.
+ 
+A)
+The Scrum Master, the project manager and the Development Team.
+Correct answer
+B)
+The Product Owner and the Development Team.
+ 
+C)
+The Product Owner and all stakeholders.
+ 
+D)
+The Development Team.
+Feedback
+
+During the Sprint, scope may be clarified and re-negotiated between the Product Owner and Development Team as more is learned.
+Question 29 of 30
+Which statement best describes a Product Owner's responsibility?
+
+(choose the best answer)
+
+Correct answer: A)
+You chose: A)
+Note: This question displayed answer options in random order when taking this Test.
+Correct answer
+A)
+Optimizing the value of the work the Development Team does.
+ 
+B)
+Directing the Development Team.
+ 
+C)
+Managing the project and ensuring that the work meets the commitments to the stakeholders.
+ 
+D)
+Keeping stakeholders at bay. 
+Feedback
+
+The Product Owner is responsible for maximizing the value of the product and the work of the Development Team.
+Question 30 of 30
+True or False: It is mandatory that the product increment be released to production at the end of each Sprint.
+
+Correct answer: B)
+You chose: B)
+ 
+A)
+True
+Correct answer
+B)
+False
+Feedback
+
+The product increment should be usable and releasable at the end of every Sprint, but it does not have to be released.
