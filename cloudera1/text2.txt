@@ -1,0 +1,31 @@
+hadoop fs -ls /user/neogia01/sqoop_import/retail_db/user_items
+
+hadoop fs -get /user/neogia01/sqoop_import/retail_db/order_items .
+
+sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table order_items --warehouse-dir /user/neogia01/sqoop_import/retail_db --delete-target-dir --as-avrodatafile
+
+sqoop import -Dmapreduce.job.user.classpath.first=true --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table order_items --warehouse-dir /user/neogia01/sqoop_import/retail_db --delete-target-dir --as-avrodatafile --compress --compression-codec snappy
+
+sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table order_items --warehouse-dir /user/neogia01/sqoop_import/retail_db --delete-target-dir --as-parquetfile
+
+sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table order_items --warehouse-dir /user/neogia01/sqoop_import/retail_db --delete-target-dir --as-sequencefile
+
+avro-tools getschema part-m-00000.avro
+
+avro-tools tojson part-m-00000.avro
+
+avro-tools tojson part-m-00000.avro >> part-m-00000.json
+
+cat part-m-00000.json
+
+wc -l part-m-00000.json
+
+sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table order_items --warehouse-dir /user/neogia01/sqoop_import/retail_db --delete-target-dir --compress
+
+cd /etc/hadoop/conf
+
+org.apache.hadoop.io.compress.SnappyCodec
+
+
+
+
