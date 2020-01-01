@@ -63,7 +63,7 @@ cd /etc/hadoop/conf
 
 org.apache.hadoop.io.compress.SnappyCodec
 
-##### Chapter #####
+##### Chapter 6 #####
 
 sqoop import \
 --connect jdbc:mysql://ms.itversity.com:3306/retail_db \
@@ -106,5 +106,37 @@ sqoop import \--connect jdbc:mysql://ms.itversity.com:3306/retail_db \--userna
 sqoop import \--connect jdbc:mysql://ms.itversity.com:3306/retail_db \--username retail_user \--password itversity \--table order_items_nopk \--warehouse-dir /user/neogia01/sqoop_import/retail_db \--split-by order_item_id \--delete-target-dir
 
 sqoop import \--connect jdbc:mysql://ms.itversity.com:3306/retail_db \--username retail_user \--password itversity \--table order_items_nopk \--warehouse-dir /user/neogia01/sqoop_import/retail_db \--num-mappers 1 \--delete-target-dir
+
+sqoop import \--connect jdbc:mysql://ms.itversity.com:3306/retail_db \--username retail_user \--password itversity \--table order_items \--warehouse-dir /user/neogia01/sqoop_import/retail_db \--delete-target-dir \--autoreset-to-one-mapper
+
+sqoop import \--connect jdbc:mysql://ms.itversity.com:3306/retail_db \--username retail_user \--password itversity \--table order_items_nopk \--warehouse-dir /user/neogia01/sqoop_import/retail_db \--delete-target-dir \--autoreset-to-one-mapper
+
+sqoop import \--connect jdbc:mysql://ms.itversity.com:3306/retail_db \--username retail_user \--password itversity \--table order \--warehouse-dir /user/neogia01/sqoop_import/retail_db \--delete-target-dir \--fields-terminated-by '|' \--lines-terminated-by ':'
+
+hadoop fs -get /user/neogia01/sqoop_import/retail_db/orders .
+
+sqoop import \--connect jdbc:mysql://ms.itversity.com:3306/hr_db \--username hr_user \--password itversity \--table employees \--warehouse-dir /user/neogia01/sqoop_import/hr_db \--delete-target-dir \--null-non-string "-1"
+
+sqoop import-all-tables \--connect jdbc:mysql://ms.itversity.com:3306/retail_db \--username retail_user \--password itversity \--warehouse-dir /user/neogia01/sqoop_import/retail_db \--autoreset-to-one-mapper \--num-mappers 2
+
+
+##### Chapter 7 #####
+
+create database if not exists neogia01_sqoop_retail;
+use  neogia01_sqoop_retail;
+
+sqoop create-hive-table \--connect jdbc:mysql://ms.itversity.com:3306/retail_db \--username retail_user \--password itversity \--table orders \--hive-database neogia01_sqoop_retail
+
+sqoop import \--connect jdbc:mysql://ms.itversity.com:3306/retail_db \--username retail_user \--password itversity \--table orders \--hive-import \--hive-database neogia01_sqoop_retail
+
+sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table orders --hive-import --hive-database neogia01_sqoop_retail --hive-overwrite
+
+sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table orders --hive-import --hive-database neogia01_sqoop_retail --create-hive-table
+
+hadoop fs -rm -r /user/neogia01/orders
+
+sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table orders --hive-import --hive-database neogia01_sqoop_retail --hive-overwrite
+
+
 
 
