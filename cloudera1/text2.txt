@@ -129,14 +129,43 @@ sqoop create-hive-table \--connect jdbc:mysql://ms.itversity.com:3306/retail_db
 
 sqoop import \--connect jdbc:mysql://ms.itversity.com:3306/retail_db \--username retail_user \--password itversity \--table orders \--hive-import \--hive-database neogia01_sqoop_retail
 
-sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table orders --hive-import --hive-database neogia01_sqoop_retail --hive-overwrite
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table orders \
+--hive-import \
+--hive-database neogia01_sqoop_retail \
+--hive-overwrite
 
-sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table orders --hive-import --hive-database neogia01_sqoop_retail --create-hive-table
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table orders \
+--hive-import \
+--hive-database neogia01_sqoop_retail \
+--create-hive-table
 
 hadoop fs -rm -r /user/neogia01/orders
 
-sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table orders --hive-import --hive-database neogia01_sqoop_retail --hive-overwrite
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table orders \
+--hive-import \
+--hive-database neogia01_sqoop_retail \
+--hive-overwrite
 
-
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table orders \
+--hive-import \
+--hive-database neogia01_sqoop_retail \
+--hive-overwrite \
+--verbose 1>sqoopimport.log 2>sqoopimport.err
 
 
