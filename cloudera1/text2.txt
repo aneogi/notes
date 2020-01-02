@@ -122,6 +122,7 @@ sqoop import-all-tables \--connect jdbc:mysql://ms.itversity.com:3306/retail_db
 
 ##### Chapter 7 #####
 
+
 create database if not exists neogia01_sqoop_retail;
 use  neogia01_sqoop_retail;
 
@@ -167,5 +168,35 @@ sqoop import \
 --hive-database neogia01_sqoop_retail \
 --hive-overwrite \
 --verbose 1>sqoopimport.log 2>sqoopimport.err
+
+create table order_items (
+order_item_id INT,
+order_item_order_id INT,
+order_item_product_id INT,
+order_item_quantity INT,
+order_item_subtotal FLOAT,
+order_item_product_price FLOAT
+) stored as parquetfile;
+
+sqoop import \--connect jdbc:mysql://ms.itversity.com:3306/retail_db \--username retail_user \--password itversity \--table order_items \--hive-import \--hive-database neogia01_sqoop_retail \--as-parquetfile
+
+SET hive.compute.query.using.stats=false;
+
+select count(1) from order_items;
+
+sqoop import \--connect jdbc:mysql://ms.itversity.com:3306/retail_db \--username retail_user \--password itversity \--table order_items \--hive-import \--hive-database neogia01_sqoop_retail \--as-avrodatafile
+==> Hive import is not compatible with importing into AVRO format.
+
+sqoop import \--connect jdbc:mysql://ms.itversity.com:3306/retail_db \--username retail_user \--password itversity \--table order_items \--hive-import \--hive-database neogia01_sqoop_retail \--as-sequencefile
+==> Hive import is not compatible with importing into SequenceFile format.
+
+sqoop import-all-tables \--connect jdbc:mysql://ms.itversity.com:3306/retail_db \--username retail_user \--password itversity \--hive-import \--hive-database neogia01_sqoop_retail \--hive-overwrite
+--autoreset-to-one-mapper
+
+
+##### Chapter 8 #####
+
+
+
 
 
