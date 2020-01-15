@@ -1,0 +1,174 @@
+
+##### Chapter 10 #####
+
+hadoop fs -ls /public/retail_db
+hadoop fs -ls /public/retail_db/order_items
+hadoop fs -cat /public/retail_db/order_items/part-00000 | head
+
+pyspark --master yarn --conf spark.ui.port=12888
+
+>>> orderItems = sc.textFile("/public/retail_db/order_items")
+>>> type(orderItems)
+>>> orderItems.first()
+>>> for i in orderItems.take(10): print(i)
+
+>>> orderItems = sc.textFile("/public/retail_db/order_items/part-00000")
+>>> orderItems.first()
+>>> orderItems.take(10)
+>>> orderItemsList = orderItems.collect()
+>>> print(orderItemsList)
+>>> type(orderItems)
+<class 'pyspark.rdd.RDD'>
+>>> type(orderItemsList)
+<type 'list'>
+
+>>> l = range(1,10000)
+>>> type(l)
+<type 'list'>
+>>> lrdd = sc.parallelize(l)
+>>> type(lrdd)
+<class 'pyspark.rdd.RDD'>
+
+>>> productsRaw = open("/data/retail_db/products/part-00000").read().splitlines()
+>>> type(productsRaw)
+<type 'list'>
+>>> products = sc.parallelize(productsRaw)
+>>> type(products)
+<class 'pyspark.rdd.RDD'>
+>>> products.first()
+>>> products.take(10)
+>>> products.count()
+
+>>> sqlContext.load("/public/retail_db_json/order_items", "json").show()
+>>> sqlContext.read.json("/public/retail_db_json/order_items").show()
+
+>>> orders = sc.textFile("/public/retail_db/orders")
+>>> type(orders)
+<class 'pyspark.rdd.RDD'>
+>>> orders.first()
+
+>>> type(orders.first())
+<type 'unicode'>
+
+>>> int(s.split(",")[1].split(" ")[0].replace("-",""))
+
+>>> orders.map(lambda o: o.split(",")[3]).first()
+>>> orders.map(lambda o: int(o.split(",")[1].split(" ")[0].replace("-", ""))).first()
+20130725
+>>> orders.map(lambda o: int(o.split(",")[1].split(" ")[0].replace("-", ""))).take(10)
+[20130725, 20130725, 20130725, 20130725, 20130725, 20130725, 20130725, 20130725, 20130725, 20130725]
+>>> orders.map(lambda o: int(o.split(",")[1].split(" ")[0].replace("-", ""))).count()
+68883
+>>> orders.map(lambda o: (o.split(",")[3])).first()
+u'CLOSED'
+>>> orders.map(lambda o: (o.split(",")[3],1)).first()
+(u'CLOSED', 1)
+
+>>> for i in  orderItems.take(10): print(i)
+>>> orderItemsMap = orderItems.map(lambda oi: (int(oi.split(",")[1]), float(oi.split(",")[4]))) 
+
+>>> #flatMap
+>>> linesList = ["How are you", "let us perform", "wordcount using flatMap", "to understand flatMap in detail"]
+>>> lines = sc.parallelize(linesList)
+>>> words = lines.flatMap(lambda l: l.split(" "))
+>>> for i in words.collect(): print(i)
+...
+How
+are
+you
+let
+us
+perform
+wordcount
+using
+flatMap
+to
+understand
+flatMap
+in
+detail
+>>>
+
+>>> #filter
+>>> orders = sc.textFile("/public/retail_db/orders")
+>>> orders.count()
+68883
+>>> ordersComplete = orders.filter(lambda o: o.split(",")[3] == "COMPLETE")
+>>> ordersComplete.count()
+22899
+>>> ordersComplete = orders.filter(lambda o: o.split(",")[3] == "COMPLETE" or  o.split(",")[3] == "CLOSED")
+>>> ordersComplete.count()
+30455
+
+>>> ordersComplete = orders.filter(lambda o: (o.split(",")[3] == "CLOSED" or o.split(",")[3] == "COMPLETE") and o.split(",")[1][:7] == "2014-01")
+>>> ordersComplete.count()
+2544
+>>> ordersComplete = orders.filter(lambda o: o.split(",")[3] in ("CLOSED", "COMPLETE") and o.split(",")[1][:7] == "2014-01")
+>>> ordersComplete.count()
+2544
+>>>
+
+>>>
+>>> orders = sc.textFile("/public/retail_db/orders")
+>>> orderItems = sc.textFile("/public/retail_db/order_items")
+>>> ordersMap = orders.map(lambda o:(int(o.split(",")[0]), o.split(",")[1]))
+>>> orderItemsMap = orderItems.map(lambda oi:(int(oi.split(",")[1]),float(oi.split(",")[4])))
+>>> ordersJoin = ordersMap.join(orderItemsMap)
+>>> for y in ordersJoin.take(10): print(y)
+...
+(65536, (u'2014-05-16 00:00:00.0', 299.98))
+(65536, (u'2014-05-16 00:00:00.0', 149.94))
+(65536, (u'2014-05-16 00:00:00.0', 299.98))
+(65536, (u'2014-05-16 00:00:00.0', 149.94))
+(16384, (u'2013-11-05 00:00:00.0', 129.99))
+(16384, (u'2013-11-05 00:00:00.0', 299.95))
+(16384, (u'2013-11-05 00:00:00.0', 99.96))
+(65540, (u'2014-05-16 00:00:00.0', 200.0))
+(65540, (u'2014-05-16 00:00:00.0', 129.99))
+(65540, (u'2014-05-16 00:00:00.0', 199.99))
+>>>
+
+>>>
+>>> ordersMap = orders.map(lambda o:(int(o.split(",")[0]), o.split(",")[3]))
+>>> ordersMap.count()
+68883
+>>>
+>>> orderItemsMap = orderItems.map(lambda oi:(int(oi.split(",")[1]), float(oi.split(",")[4])))
+>>> orderItemsMap.count()
+172198
+>>> ordersLeftOuterJoin = ordersMap.leftOuterJoin(orderItemsMap)
+>>> ordersLeftOuterJoin.count()
+183650
+>>>
+>>> ordersLeftOuterJoinFilter = ordersLeftOuterJoin.filter(lambda o: o[1][1] == None)
+>>> ordersLeftOuterJoinFilter.count()
+11452
+
+>>> ordersRightOuterJoin = orderItemsMap.rightOuterJoin(ordersMap)
+>>> ordersRightOuterJoinFilter = ordersRightOuterJoin.filter(lambda o: o[1][0] == None)
+>>> ordersRightOuterJoinFilter.count()
+11452
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+

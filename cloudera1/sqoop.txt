@@ -1,0 +1,187 @@
+hadoop fs -ls /user/neogia01/sqoop_import/retail_db/user_items
+
+hadoop fs -get /user/neogia01/sqoop_import/retail_db/order_items .
+
+sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table order_items --warehouse-dir /user/neogia01/sqoop_import/retail_db --delete-target-dir --as-avrodatafile
+
+sqoop import -Dmapreduce.job.user.classpath.first=true --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table order_items --warehouse-dir /user/neogia01/sqoop_import/retail_db --delete-target-dir --as-avrodatafile --compress --compression-codec snappy
+
+sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table order_items --warehouse-dir /user/neogia01/sqoop_import/retail_db --delete-target-dir --as-parquetfile
+
+sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table order_items --warehouse-dir /user/neogia01/sqoop_import/retail_db --delete-target-dir --as-sequencefile
+
+avro-tools getschema part-m-00000.avro
+
+avro-tools tojson part-m-00000.avro
+
+avro-tools tojson part-m-00000.avro >> part-m-00000.json
+
+cat part-m-00000.json
+
+wc -l part-m-00000.json
+
+sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table order_items --warehouse-dir /user/neogia01/sqoop_import/retail_db --delete-target-dir --compress
+
+cd /etc/hadoop/conf
+
+org.apache.hadoop.io.compress.SnappyCodec
+
+##### Chapter 6 #####
+
+sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table customers --columns customer_id,customer_fname,customer_lname,customer_street,customer_city,customer_state,customer_zipcode --warehouse-dir /user/neogia01/sqoop_import/retail_db --delete-target-dir
+
+sqoop import  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --table order_items  --warehouse-dir /user/neogia01/sqoop_import/retail_db  --boundary-query "SELECT 1, 172198"  --delete-target-dir
+
+sqoop eval  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --query "SELECT * FROM orders LIMIT 10"
+
+sqoop eval  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --query "SELECT * FROM orders WHERE order_status IN ('COMPLETE','CLOSED') AND order_date LIKE '2013-08%'"
+
+sqoop import  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --table orders  --warehouse-dir /user/neogia01/sqoop_import/retail_db  --delete-target-dir  --where "order_status IN ('COMPLETE','CLOSED') AND order_date LIKE '2013-08%'"
+
+sqoop import  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --table order_items  --warehouse-dir /user/neogia01/sqoop_import/retail_db  --delete-target-dir  --split-by order_item_order_id
+
+sqoop import  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --query "SELECT order_date, count(1) order_count from orders where \$CONDITIONS group by order_date"  --target-dir /user/neogia01/sqoop_import/retail_db/order_count_by_date  --split-by order_date  --delete-target-dir
+
+sqoop import  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --query "SELECT order_date, count(1) order_count from orders where \$CONDITIONS group by order_date"  --target-dir /user/neogia01/sqoop_import/retail_db/order_count_by_date  --num-mappers 1  --delete-target-dir
+
+sqoop eval  --connect jdbc:mysql://ms.itversity.com:3306/nyse  --username nyse_user  --password itversity  --query "SHOW tables"
+
+sqoop eval  --connect jdbc:mysql://ms.itversity.com:3306/nyse  --username nyse_user  --password itversity  --query "DESCRIBE stock_eod"
+
+sqoop import \
+"-Dorg.apache.sqoop.splitter.allow_text_splitter=true"  --connect jdbc:mysql://ms.itversity.com:3306/nyse  --username nyse_user  --password itversity  --table stock_eod  --warehouse-dir /user/neogia01/sqoop_import/nyse  --delete-target-dir
+
+hadoop fs -tail /user/neogia01/sqoop_import/nyse/stock_eod/part-m-00003
+
+sqoop list-tables  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity
+
+sqoop eval  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --query "DESCRIBE order_items_nopk"
+
+sqoop import  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --table order_items_nopk  --warehouse-dir /user/neogia01/sqoop_import/retail_db  --delete-target-dir
+
+sqoop import  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --table order_items_nopk  --warehouse-dir /user/neogia01/sqoop_import/retail_db  --split-by order_item_id  --delete-target-dir
+
+sqoop import  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --table order_items_nopk  --warehouse-dir /user/neogia01/sqoop_import/retail_db  --num-mappers 1  --delete-target-dir
+
+sqoop import  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --table order_items  --warehouse-dir /user/neogia01/sqoop_import/retail_db  --delete-target-dir  --autoreset-to-one-mapper
+
+sqoop import  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --table order_items_nopk  --warehouse-dir /user/neogia01/sqoop_import/retail_db  --delete-target-dir  --autoreset-to-one-mapper
+
+sqoop import  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --table order  --warehouse-dir /user/neogia01/sqoop_import/retail_db  --delete-target-dir  --fields-terminated-by '|'  --lines-terminated-by ':'
+
+hadoop fs -get /user/neogia01/sqoop_import/retail_db/orders .
+
+sqoop import  --connect jdbc:mysql://ms.itversity.com:3306/hr_db  --username hr_user  --password itversity  --table employees  --warehouse-dir /user/neogia01/sqoop_import/hr_db  --delete-target-dir  --null-non-string "-1"
+
+sqoop import-all-tables  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --warehouse-dir /user/neogia01/sqoop_import/retail_db  --autoreset-to-one-mapper  --num-mappers 2
+
+
+##### Chapter 7 #####
+
+
+create database if not exists neogia01_sqoop_retail;
+use  neogia01_sqoop_retail;
+
+sqoop create-hive-table  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --table orders  --hive-database neogia01_sqoop_retail
+
+sqoop import  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --table orders  --hive-import  --hive-database neogia01_sqoop_retail
+
+sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table orders --hive-import --hive-database neogia01_sqoop_retail --hive-overwrite
+
+sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table orders --hive-import --hive-database neogia01_sqoop_retail --create-hive-table
+
+hadoop fs -rm -r /user/neogia01/orders
+
+sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table orders --hive-import --hive-database neogia01_sqoop_retail --hive-overwrite
+
+sqoop import --connect jdbc:mysql://ms.itversity.com:3306/retail_db --username retail_user --password itversity --table orders --hive-import --hive-database neogia01_sqoop_retail --hive-overwrite --verbose 1>sqoopimport.log 2>sqoopimport.err
+
+create table order_items (
+order_item_id INT,
+order_item_order_id INT,
+order_item_product_id INT,
+order_item_quantity INT,
+order_item_subtotal FLOAT,
+order_item_product_price FLOAT
+) stored as parquetfile;
+
+sqoop import  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --table order_items  --hive-import  --hive-database neogia01_sqoop_retail  --as-parquetfile
+
+SET hive.compute.query.using.stats=false;
+
+select count(1) from order_items;
+
+sqoop import  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --table order_items  --hive-import  --hive-database neogia01_sqoop_retail  --as-avrodatafile
+==> Hive import is not compatible with importing into AVRO format.
+
+sqoop import  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --table order_items  --hive-import  --hive-database neogia01_sqoop_retail  --as-sequencefile
+==> Hive import is not compatible with importing into SequenceFile format.
+
+sqoop import-all-tables  --connect jdbc:mysql://ms.itversity.com:3306/retail_db  --username retail_user  --password itversity  --hive-import  --hive-database neogia01_sqoop_retail  --hive-overwrite
+--autoreset-to-one-mapper
+
+
+##### Chapter 8 #####
+
+-- hive 
+create table daily_revenue (
+order_date string,
+revenue float
+) row format delimited fields terminated by ',';
+
+insert into daily_revenue
+select order_date, round(sum(order_item_subtotal),2) as revenue
+from orders join order_items
+on order_id = order_item_order_id
+where order_status in ('COMPLETE', 'CLOSED')
+group by order_date;
+
+-- mysql
+create table neogia01_daily_revenue (
+order_date varchar(25) primary key,
+revenue float
+);
+
+sqoop export --connect jdbc:mysql://ms.itversity.com:3306/retail_export --username retail_user --password itversity --export-dir /apps/hive/warehouse/neogia01_sqoop_retail.db/daily_revenue --table neogia01_daily_revenue
+
+sqoop eval --connect jdbc:mysql://ms.itversity.com:3306/retail_export --username retail_user --password itversity --query "select * from neogia01_daily_revenue limit 10;"
+
+sqoop eval --connect jdbc:mysql://ms.itversity.com:3306/retail_export --username retail_user --password itversity --query "select count(1) from neogia01_daily_revenue;"
+
+sqoop export --connect jdbc:mysql://ms.itversity.com:3306/retail_export --username retail_user --password itversity --export-dir /apps/hive/warehouse/neogia01_sqoop_retail.db/daily_revenue --table neogia01_daily_revenue --num-mappers 1
+
+sqoop export --connect jdbc:mysql://ms.itversity.com:3306/retail_export --username retail_user --password itversity --export-dir hdfs://nn01.itversity.com:8020/apps/hive/warehouse/neogia01_sqoop_retail.db/daily_revenue --table neogia01_daily_revenue --update-key order_date
+
+sqoop export --connect jdbc:mysql://ms.itversity.com:3306/retail_export --username retail_user --password itversity --export-dir hdfs://nn01.itversity.com:8020/apps/hive/warehouse/neogia01_sqoop_retail.db/daily_revenue --update-key order_date --update-mode allowinsert;
+
+sqoop export --connect jdbc:mysql://ms.itversity.com:3306/retail_export --username retail_user --password itversity --table neogia01_daily_revenue --export-dir /apps/hive/warehouse/neogia01_sqoop_retail.db/daily_revenue --update-key order_date --update-mode allowinsert
+
+sqoop eval --connect jdbc:mysql://ms.itversity.com:3306/retail_export --username retail_user --password itversity --query "describe neogia01_daily_revenue"
+
+truncate table neogia01_daily_revenue;
+
+alter table neogia01_daily_revenue add description varchar(200);
+
+sqoop export --connect jdbc:mysql://ms.itversity:3306/retail_export --username retail_user --password itversity --export-dir /apps/hive/warehouse/neogia01_sqoop_retail.db/daily_revenue --table neogia01_daily_revenue
+==> IOException: No columns to generate for ClassWriter
+
+sqoop export --connect jdbc:mysql://ms.itversity:3306/retail_export --username retail_user --password itversity --export-dir /apps/hive/warehouse/neogia01_sqoop_retail.db/daily_revenue --table neogia01_daily_revenue --columns order_date,revenue
+
+alter table neogia01_daily_revenue add description varchar(200);
+
+sqoop export --connect jdbc:mysql://ms.itversity.com:3306/retail_export --username retail_user --password itversity --export-dir /apps/hive/warehouse/neogia01_sqoop_retail.db/daily_revenue --table neogia01_daily_revenue --columns order_date,revenue
+
+hadoop fs -get /apps/hive/warehouse/neogia01_sqoop_retail.db/daily_revenue01 .
+
+sqoop eval --connect jdbc:mysql://ms.itversity.com:3306/retail_export --username retail_user --password itversity --query "truncate table neogia01_daily_revenue"
+
+alter table daily_revenue add columns (description string);
+
+sqoop export --connect jdbc:mysql://ms.itversity.com:3306/retail_export --username retail_user --password itversity --export-dir /apps/hive/warehouse/neogia01_sqoop_retail.db/daily_revenue01 --table neogia01_daily_revenue --input-fields-terminated-by '\001'
+
+
+
+
+
+
+##### Chapter 10 #####
