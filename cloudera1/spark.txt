@@ -149,26 +149,27 @@ detail
 >>> ordersRightOuterJoinFilter.count()
 11452
 
+>>> orderItemsFiltered = orderItems.filter(lambda oi: int(oi.split(",")[1]) == 2)
+>>> orderItemsFiltered.count()
+3
+>>> orderItemsSubtotals = orderItemsFiltered.map(lambda of : float(of.split(",")[4]))
+>>> from operator import add
+>>> orderItemsSubtotals.reduce(add)
+579.98
+>>> orderItemsSubtotals.reduce(lambda x,y: x+y)
+579.98
+>>>
 
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
+>>> 
+>>> orderItemsFiltered = orderItems.filter(lambda oi: int(oi.split(",")[1]) == 2)
+>>> for i in orderItemsFiltered.take(10): print(i)
+...
+2,2,1073,1,199.99,199.99
+3,2,502,5,250.0,50.0
+4,2,403,1,129.99,129.99
+>>> orderItemsFiltered.reduce(lambda x,y: x if(float(x.split(",")[4]) < float(y.split(",")[4])) else y)
+u'4,2,403,1,129.99,129.99'
+>>>
 
 
 
