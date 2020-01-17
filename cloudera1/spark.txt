@@ -207,4 +207,48 @@ defaultdict(<type 'int'>, {u'COMPLETE': 22899, u'PAYMENT_REVIEW': 729, u'PROCESS
 ... lambda x,y: (x[0] + y[0], x[1] + y[1]))
 >>>
 
+#Get top N products by price - Global Ranking - top or takeOrdered
+>>>
+>>> products = sc.textFile("/public/retail_db/products")
+>>> productsFiltered = products.filter(lambda p: p.split(",")[4] != "")
+>>> topNProducts = productsFiltered.top(5, key=lambda k: -float(k.split(",")[4]))
+>>> topNProducts = productsFiltered.takeOrdered(5, key=lambda k: -float(k.split(",")[4]))
+>>>
+
+#Get top N products by price within each category - By Key Ranking - groupByKey and flatMap
+>>>
+>>> products = sc.textFile("/public/retail_db/products")
+>>> productsFiltered = products.filter(lambda p: p.split(",")[4] != "")
+>>> topNProducts = productsFiltered.top(5, key=lambda k: -float(k.split(",")[4]))
+>>> topNProducts = productsFiltered.takeOrdered(5, key=lambda k: -float(k.split(",")[4]))
+>>>
+>>> products = sc.textFile("/public/retail_db/products")
+>>> productsMap = productsFiltered.map(lambda p: (int(p.split(",")[1]), p))
+>>> productsGroupByCategoryId = productsMap.groupByKey()
+>>>
+>>> topNProductsByCategory = productsGroupByCategoryId.flatMap(lambda p: sorted(p[1], key=lambda k: float(k.split(",")[4]), reverse=True)[:3])
+>>> 
+
+#Get top N priced products within each category - By takewhile
+>>> 
+>>> products = sc.textFile("/public/retail_db/products")
+>>> productsFiltered = products.filter(lambda pf: pf.split(",")[4] != "")
+>>> productsMap = productsFiltered.map(lambda pf: (int(pf.split(",")[1]), pf))
+>>> productsGroupByCategoryId = productsMap.groupByKey()
+>>> tple = productsGroupByCategoryId.filter(lambda p: p[0] == 59).first()
+>>>
+>>> def getTopNPricedProductPerCategoryId(productsPerCategoryId, topN):
+...     productsSorted = sorted(productsPerCategoryId[1], key=lambda k: float(k.split(",")[4]), reverse=True)
+...     productPrices = map(lambda p: float(p.split(",")[4]), productsSorted)
+...     topNPrices = sorted(set(productPrices), reverse=True)[:topN]
+...     import itertools as it
+...     return it.takewhile(lambda p: float(p.split(",")[4]) in topNPrices, productsSorted)
+...
+>>> getTopNPricedProductPerCategoryId(tple,3)
+>>> topNPricedProducts =  productsGroupByCategoryId.flatMap(lambda p: getTopNPricedProductPerCategoryId(p,3))
+>>> for i in topNPricedProducts.collect(): print(i)
+>>>
+
+
+
 
