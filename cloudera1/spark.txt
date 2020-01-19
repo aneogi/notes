@@ -177,35 +177,31 @@ revenuePerOrderId = orderItemsGroupByOrderId.map(lambda oi: (oi[0], round(sum(oi
 >>>
 
 #Get order item details in descending order by revenue - groupByKey
->>>
 orderItems = sc.textFile("/public/retail_db/order_items")
 orderItemsMap = orderItems.map(lambda oi: (int(oi.split(",")[1]), oi))
 orderItemsGroupByOrderId = orderItemsMap.groupByKey()
 orderItemsSortedBySubtotalPerOrder = orderItemsGroupByOrderId.flatMap(lambda oi: sorted(oi[1], key = lambda k: float(k.split(",")[4]), reverse=True))
->>>
 
 #Get revenue for each order_id - reduceByKey
->>>
 orderItems = sc.textFile("/public/retail_db/order_items")
 orderItemsMap = orderItems.map(lambda oi: (int(oi.split(",")[1]), float(oi.split(",")[4])))
 from operator import add
 revenuePerOrderId = orderItemsMap.reduceByKey(add)
 revenuePerOrderId = orderItemsMap.reduceByKey(lambda x,y:x+y)
 minSubTotalPerOrderId = orderItemsMap.reduceByKey(lambda x,y: x if(x<y) else y)
->>>
+
 orderItems = sc.textFile("/public/retail_db/order_items")
 orderItemsMap = orderItems.map(lambda oi: (int(oi.split(",")[1]), oi))
 minSubTotalPerOrderId = orderItemsMap.reduceByKey(lambda x,y: x if(float(x.split(",")[4]) < float(y.split(",")[4])) else y)
->>>
+
 
 #Get revenue and count of items for each order_id - aggregateByKey
->>>
 orderItems = sc.textFile("/public/retail_db/order_items")
 orderItemsMap = orderItems.map(lambda oi: (int(oi.split(",")[1]), float(oi.split(",")[4])))
 revenuePerOrder = orderItemsMap.aggregateByKey((0.0, 0),
 lambda x,y: (x[0] + y, x[1] + 1),
 lambda x,y: (x[0] + y[0], x[1] + y[1]))
->>>
+
 
 #Sort data by product price - sortByKey
 products = sc.textFile("/public/retail_db/products")
@@ -214,7 +210,7 @@ productsMap = productsByFilter.map(lambda p:(float(p.split(",")[4]), p))
 productsSortedByPrice = productsMap.sortByKey()
 productsSortedMap = productsSortedByPrice.map(lambda ps: ps[1])
 for i in productsSortedMap.take(10): print(i)
->>>
+
 
 #Sort data by product category and then product price descending - sortByKey
 products = sc.textFile("/public/retail_db/products")
@@ -232,49 +228,45 @@ for i in productsSortedByPriceMap.take(100): print(i)
 
 
 #Get top N products by price - Global Ranking - top or takeOrdered
->>>
 products = sc.textFile("/public/retail_db/products")
 productsFiltered = products.filter(lambda p: p.split(",")[4] != "")
 topNProducts = productsFiltered.top(5, key=lambda k: -float(k.split(",")[4]))
 topNProducts = productsFiltered.takeOrdered(5, key=lambda k: -float(k.split(",")[4]))
->>>
+
 
 #Get top N products by price within each category - By Key Ranking - groupByKey and flatMap
->>>
 products = sc.textFile("/public/retail_db/products")
 productsFiltered = products.filter(lambda p: p.split(",")[4] != "")
 topNProducts = productsFiltered.top(5, key=lambda k: -float(k.split(",")[4]))
 topNProducts = productsFiltered.takeOrdered(5, key=lambda k: -float(k.split(",")[4]))
->>>
+
 products = sc.textFile("/public/retail_db/products")
 productsMap = productsFiltered.map(lambda p: (int(p.split(",")[1]), p))
 productsGroupByCategoryId = productsMap.groupByKey()
->>>
+
 topNProductsByCategory = productsGroupByCategoryId.flatMap(lambda p: sorted(p[1], key=lambda k: float(k.split(",")[4]), reverse=True)[:3])
 
 
 #Get top N priced products within each category - By takewhile
->>>
 products = sc.textFile("/public/retail_db/products")
 productsFiltered = products.filter(lambda pf: pf.split(",")[4] != "")
 productsMap = productsFiltered.map(lambda pf: (int(pf.split(",")[1]), pf))
 productsGroupByCategoryId = productsMap.groupByKey()
 tple = productsGroupByCategoryId.filter(lambda p: p[0] == 59).first()
->>>
+
 def getTopNPricedProductPerCategoryId(productsPerCategoryId, topN):
     productsSorted = sorted(productsPerCategoryId[1], key=lambda k: float(k.split(",")[4]), reverse=True)
     productPrices = map(lambda p: float(p.split(",")[4]), productsSorted)
     topNPrices = sorted(set(productPrices), reverse=True)[:topN]
     import itertools as it
     return it.takewhile(lambda p: float(p.split(",")[4]) in topNPrices, productsSorted)
-...
+
 getTopNPricedProductPerCategoryId(tple,3)
 topNPricedProducts =  productsGroupByCategoryId.flatMap(lambda p: getTopNPricedProductPerCategoryId(p,3))
 for i in topNPricedProducts.collect(): print(i)
->>>
+
 
 #Set operations - Prepare data - subsets of products for 2013-12 and 2014-01
->>>
 orders = sc.textFile("/public/retail_db/orders")
 orderItems = sc.textFile("/public/retail_db/order_items")
 orders201312 = orders.filter(lambda o: o.split(",")[1][:7] == "2013-12").map(lambda o: (int(o.split(",")[0]), o))
@@ -285,4 +277,28 @@ orders201401Join = orders201401.join(orderItemsMap)
 orderItems201312 = orders201312.join(orderItemsMap).map(lambda oi: oi[1][1])
 orderItems201401 = orders201401.join(orderItemsMap).map(lambda oi: oi[1][1])
 
+
+#Set operations - Union - Get products ids sold in 2013-12 and 2014-01
+products201312 = orderItems201312.map(lambda p: int(p.split(",")[2]))
+products201401 = orderItems201401.map(lambda p: int(p.split(",")[2]))
+allproducts = products201312.union(products201401).distinct()
+for i in allproducts.collect(): print(i)
+
+
+#Set operations - Intersction - Get products ids sold in both 2013-12 and 2014-01
+products201312 = orderItems201312.map(lambda p: int(p.split(",")[2]))
+products201401 = orderItems201401.map(lambda p: int(p.split(",")[2]))
+commonproducts = products201312.intersection(products201401)
+for i in commonproducts.collect(): print(i)
+
+
+#Set operations - minus - Get products ids sold in 2013-12/2014-01
+products201312only = products201312.subtract(products201401).distinct()
+for i in products201312only.collect(): print(i)
+
+products201401only = products201401.subtract(products201312).distinct()
+for i in products201401only.collect(): print(i)
+
+productsSoldInOneMonth = products201312only.union(products201401only)
+for i in productsSoldInOneMonth.collect(): print(i)
 
