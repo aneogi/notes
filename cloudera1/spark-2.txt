@@ -13,6 +13,21 @@ pyspark --master yarn \
 > --num-executors 2 \
 > --executor-memory 512M
 
+orders = sc.textFile("/public/retail_db/orders")
+orders.count()
+for i in orders.take(10): print(i)
 
+orderItems = sc.textFile("/public/retail_db/order_items")
+orderItems.count()
+for i in orderItems.take(10): print(i)
 
+for i in orders.map(lambda oi: oi.split(",")[3]).distinct().collect(): print(i)
 
+ordersFiltered = orders.filter(lambda o: o.split(",")[3] in ["COMPLETE", "CLOSED"])
+for i in ordersFiltered.take(10): print(i)
+
+ordersMap = ordersFiltered.map(lambda o: (int(o.split(",")[0]), o.split(",")[1]))
+orderItemsMap = orderItems.map(lambda oi: (int(oi.split(",")[1]), (int(oi.split(",")[2]), float(oi.split(",")[4]))))
+
+ordersJoin = ordersMap.join(orderItemsMap)
+for i in ordersJoin.take(10): print(i)
