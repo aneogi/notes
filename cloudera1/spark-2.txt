@@ -1,0 +1,18 @@
+
+##### Chapter 11 #####
+
+#Resource Manager Address
+vi /etc/hadoop/conf/yarn-site.xml: 
+	<property>
+	  <name>yarn.resourcemanager.webapp.https.address</name>
+	  <value>rm01.itversity.com:8090</value>
+	</property>
+
+pyspark --master yarn \
+>  --conf spark.ui.port=12888 \
+> --num-executors 2 \
+> --executor-memory 512M
+
+
+
+
