@@ -82,9 +82,3 @@ $ cd daily_revenue_python
 $ hadoop fs -get /user/neogia01/daily_revenue_txt_python  /home/neogia01/daily_revenue_python/daily_revenue_txt_python
 $ hadoop fs -get /user/neogia01/daily_revenue_avro_python  /home/neogia01/daily_revenue_python/.
 
-
-
-
-
-
-
