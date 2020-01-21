@@ -2,32 +2,89 @@
 ##### Chapter 11 #####
 
 #Resource Manager Address
-vi /etc/hadoop/conf/yarn-site.xml: 
+$ vi /etc/hadoop/conf/yarn-site.xml: 
 	<property>
 	  <name>yarn.resourcemanager.webapp.https.address</name>
 	  <value>rm01.itversity.com:8090</value>
 	</property>
 
-pyspark --master yarn \
->  --conf spark.ui.port=12888 \
-> --num-executors 2 \
-> --executor-memory 512M
+#Launch Spark Shell
+$ pyspark --master yarn --conf spark.ui.port=12888 --num-executors 2  --executor-memory 512M
 
+#Read orders
 orders = sc.textFile("/public/retail_db/orders")
 orders.count()
-for i in orders.take(10): print(i)
 
+#Read order_items
 orderItems = sc.textFile("/public/retail_db/order_items")
 orderItems.count()
-for i in orderItems.take(10): print(i)
 
-for i in orders.map(lambda oi: oi.split(",")[3]).distinct().collect(): print(i)
-
+#Filter data for complete and closed orders
 ordersFiltered = orders.filter(lambda o: o.split(",")[3] in ["COMPLETE", "CLOSED"])
-for i in ordersFiltered.take(10): print(i)
 
+#Convert to key value pairs
 ordersMap = ordersFiltered.map(lambda o: (int(o.split(",")[0]), o.split(",")[1]))
 orderItemsMap = orderItems.map(lambda oi: (int(oi.split(",")[1]), (int(oi.split(",")[2]), float(oi.split(",")[4]))))
 
+#Join two data sets
 ordersJoin = ordersMap.join(orderItemsMap)
-for i in ordersJoin.take(10): print(i)
+
+#Get daily revenue per product
+ordersJoinMap = ordersJoin.map(lambda oj: ((oj[1][0], oj[1][1][0]),oj[1][1][1]))
+dailyRevenuePerProductId = ordersJoinMap.reduceByKey(lambda x,y: x+y)
+
+#Load products from local file
+productsRaw = open("/data/retail_db/products/part-00000").read().splitlines()
+products = sc.parallelize(productsRaw)
+productsMap = products.map(lambda p:(int(p.split(",")[0]), p.split(",")[2]))
+dailyRevenuePerProductIdMap = dailyRevenuePerProductId.map(lambda r: (r[0][1], (r[0][0], r[1])))
+
+#Join daily revenue per product with products
+dailyRevenuePerProductJoin = dailyRevenuePerProductIdMap.join(productsMap)
+dailyRevenuePerProduct = dailyRevenuePerProductJoin.map(lambda t: ((t[1][0][0], -t[1][0][1]), t[1][0][0] + "," + str(t[1][0][1]) + "," + t[1][1]))
+
+#Sort data by date (asc) and daily revenue (desc)
+dailyRevenuePerProductSorted = dailyRevenuePerProduct.sortByKey()
+dailyRevenuePerProductName = dailyRevenuePerProductSorted.map(lambda r:r[1])
+
+#Save output into HDFS in textFile format
+#dailyRevenuePerProductName.saveAsTextFile("/user/neogia01/daily_revenue_txt_python")
+dailyRevenuePerProductName.coalesce(2).saveAsTextFile("/user/neogia01/daily_revenue_txt_python")
+
+$ hadoop fs -ls /user/neogia01/daily_revenue_txt_python
+
+#Save output into HDFS in avro format
+$ pyspark --master yarn --conf spark.ui.port=12890 --num-executors 2  --executor-memory 512M --packages com.databricks:spark-avro_2.10:2.0.1
+
+orders = sc.textFile("/public/retail_db/orders")
+orderItems = sc.textFile("/public/retail_db/order_items")
+ordersFiltered = orders.filter(lambda o: o.split(",")[3] in ["COMPLETE", "CLOSED"])
+ordersMap = ordersFiltered.map(lambda o: (int(o.split(",")[0]), o.split(",")[1]))
+orderItemsMap = orderItems.map(lambda oi: (int(oi.split(",")[1]), (int(oi.split(",")[2]), float(oi.split(",")[4]))))
+ordersJoin = ordersMap.join(orderItemsMap)
+ordersJoinMap = ordersJoin.map(lambda oj: ((oj[1][0], oj[1][1][0]),oj[1][1][1]))
+dailyRevenuePerProductId = ordersJoinMap.reduceByKey(lambda x,y: x+y)
+productsRaw = open("/data/retail_db/products/part-00000").read().splitlines()
+products = sc.parallelize(productsRaw)
+productsMap = products.map(lambda p:(int(p.split(",")[0]), p.split(",")[2]))
+dailyRevenuePerProductIdMap = dailyRevenuePerProductId.map(lambda r: (r[0][1], (r[0][0], r[1])))
+dailyRevenuePerProductJoin = dailyRevenuePerProductIdMap.join(productsMap)
+dailyRevenuePerProduct = dailyRevenuePerProductJoin.map(lambda t: ((t[1][0][0], -t[1][0][1]), (t[1][0][0], round(t[1][0][1], 2), t[1][1])))
+dailyRevenuePerProductSorted = dailyRevenuePerProduct.sortByKey()
+dailyRevenuePerProductName = dailyRevenuePerProductSorted.map(lambda r:r[1])
+dailyRevenuePerProductNameDF = dailyRevenuePerProductName.toDF(schema=["order_date","revenue_per_product","product_name"])
+dailyRevenuePerProductNameDF.save("/user/neogia01/daily_revenue_avro_python", "com.databricks.spark.avro")
+sqlContext.load("/user/neogia01/daily_revenue_avro_python", "com.databricks.spark.avro").show()
+
+#Copy both from HDFS to local file system
+$ mkdir -p /home/neogia01/daily_revenue_python
+$ cd daily_revenue_python
+$ hadoop fs -get /user/neogia01/daily_revenue_txt_python  /home/neogia01/daily_revenue_python/daily_revenue_txt_python
+$ hadoop fs -get /user/neogia01/daily_revenue_avro_python  /home/neogia01/daily_revenue_python/.
+
+
+
+
+
+
+
