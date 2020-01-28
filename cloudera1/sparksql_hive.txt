@@ -165,5 +165,74 @@ select distinct cast(date_format(order_date, 'YYYYMM') as int) from orders limit
 
 select * from orders o, customers c where o.order_customer_id = c.customer_id;
 
+select count(1) from orders o inner join customers c on o.order_customer_id = c.customer_id;
+
+# sorting
+select o.order_id, o.order_date, o.order_status, round(sum(oi.order_item_subtotal), 2) order_revenue
+from orders o join order_items oi
+on o.order_id = oi.order_item_order_id
+where o.order_status in ('COMPLETE', 'CLOSED')
+group by o.order_id, o.order_date, o.order_status
+having sum(oi.order_item_subtotal) >= 1000
+distribute by order_date sort by o.order_date, order_revenue desc;
+
+# aggregation
+select * from (
+select o.order_id, o.order_date, o.order_status, oi.order_item_subtotal,
+round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) order_revenue,
+oi.order_item_subtotal/round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) pct_revenue,
+round(avg(oi.order_item_subtotal) over (partition by o.order_id), 2) avg_revenue
+from orders o join order_items oi
+on o.order_id = oi.order_item_order_id
+where o.order_status in ('COMPLETE', 'CLOSED')) q
+where order_revenue >= 1000
+order by order_date, order_revenue desc;
+
+# ranking
+select * from (
+select o.order_id, o.order_date, o.order_status, oi.order_item_subtotal,
+round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) order_revenue,
+oi.order_item_subtotal/round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) pct_revenue,
+round(avg(oi.order_item_subtotal) over (partition by o.order_id), 2) avg_revenue,
+rank() over (partition by o.order_id order by oi.order_item_subtotal desc) rnk_revenue,
+dense_rank() over (partition by o.order_id order by oi.order_item_subtotal desc) dense_rnk_revenue,
+percent_rank() over (partition by o.order_id order by oi.order_item_subtotal desc) pct_rnk_revenue,
+row_number() over (partition by o.order_id order by oi.order_item_subtotal desc) rn_orderby_revenue,
+row_number() over (partition by o.order_id) rn_revenue
+from orders o join order_items oi
+on o.order_id = oi.order_item_order_id
+where o.order_status in ('COMPLETE', 'CLOSED')) q
+where order_revenue >= 1000
+order by order_date, order_revenue desc, rnk_revenue;
+
+# windowing
+select * from (
+select o.order_id, o.order_date, o.order_status, oi.order_item_subtotal,
+round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) order_revenue,
+oi.order_item_subtotal/round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) pct_revenue,
+round(avg(oi.order_item_subtotal) over (partition by o.order_id), 2) avg_revenue,
+rank() over (partition by o.order_id order by oi.order_item_subtotal desc) rnk_revenue,
+dense_rank() over (partition by o.order_id order by oi.order_item_subtotal desc) dense_rnk_revenue,
+percent_rank() over (partition by o.order_id order by oi.order_item_subtotal desc) pct_rnk_revenue,
+row_number() over (partition by o.order_id order by oi.order_item_subtotal desc) rn_orderby_revenue,
+row_number() over (partition by o.order_id) rn_revenue,
+lead(oi.order_item_subtotal) over (partition by o.order_id) lead_order_item_subtotal,
+lag(oi.order_item_subtotal) over (partition by o.order_id) lag_order_item_subtotal,
+first_value(oi.order_item_subtotal) over (partition by o.order_id) first_order_item_subtotal,
+last_value(oi.order_item_subtotal) over (partition by o.order_id) last_order_item_subtotal
+from orders o join order_items oi
+on o.order_id = oi.order_item_order_id
+where o.order_status in ('COMPLETE', 'CLOSED')) q
+where order_revenue >= 1000
+order by order_date, order_revenue desc, rnk_revenue;
+
+
+
+#create data frames and register as temp table
+
+$ pyspark --master yarn --conf spark.ui.port=12562 --executor-memory 2G --num-executors 1
+
+sqlContext.sql("select * from neogia01_retail_db_orc.orders").show()
+sqlContext.sql("select * from neogia01_retail_db_orc.orders").printSchema()
 
 
