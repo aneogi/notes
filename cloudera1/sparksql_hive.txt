@@ -227,12 +227,86 @@ where order_revenue >= 1000
 order by order_date, order_revenue desc, rnk_revenue;
 
 
-
 #create data frames and register as temp table
 
 $ pyspark --master yarn --conf spark.ui.port=12562 --executor-memory 2G --num-executors 1
 
 sqlContext.sql("select * from neogia01_retail_db_orc.orders").show()
 sqlContext.sql("select * from neogia01_retail_db_orc.orders").printSchema()
+from pyspark.sql import Row
+ordersRDD = sc.textFile("/public/retail_db/orders")
+ordersDF = ordersRDD.map(lambda o: Row(order_id=int(o.split(",")[0]), order_date=o.split(",")[1], order_customer_id=int(o.split(",")[2]), order_status=o.split(",")[3])).toDF()
+ordersDF.registerTempTable("ordersDF_table")
+sqlContext.sql("select * from ordersDF_table").show()
+sqlContext.sql("select order_status, count(1) from ordersDF_table group by order_status").show()
+
+from pyspark.sql import Row
+productsRaw = open("/data/retail_db/products/part-00000").read().splitlines()
+productsRDD = sc.parallelize(productsRaw)
+productsDF = productsRDD.map(lambda p: Row(product_id=int(p.split(",")[0]), product_name=p.split(",")[2])).toDF()
+productsDF.registerTempTable("products")
+sqlContext.sql("select * from products").show()
+
+
+# Processing data using Spark SQL
+
+$ pyspark --master yarn --conf spark.ui.port=12562 --executor-memory 2G --num-executors 1
+
+sqlContext.sql("use neogia01_retail_db_txt")
+sqlContext.sql("show tables").show()
+
+from pyspark.sql import Row
+productsRaw = open("/data/retail_db/products/part-00000").read().splitlines()
+productsRDD = sc.parallelize(productsRaw)
+productsDF = productsRDD.map(lambda p: Row(product_id=int(p.split(",")[0]), product_name=p.split(",")[2])).toDF()
+productsDF.registerTempTable("products")
+
+sqlContext.sql("select * from products").show()
+sqlContext.sql("select * from orders").show()
+sqlContext.sql("select * from order_items").show()
+
+sqlContext.setConf("spark.sql.shuffle.partitions", "2")
+sqlContext.sql("select o.order_date, p.product_name, sum(oi.order_item_subtotal) daily_revenue_per_product from \
+orders o join order_items oi \
+on o.order_id = oi.order_item_order_id \
+join products p \
+on p.product_id = oi.order_item_product_id \
+where o.order_status in ('COMPLETE', 'CLOSED') \
+group by o.order_date, p.product_name \
+order by o.order_date, daily_revenue_per_product desc").show()
+
+
+# Saving DataFrame to Hive tables
+
+sqlContext.sql("create database neogia01_daily_revenue")
+sqlContext.sql("create table neogia01_daily_revenue.daily_revenue (order_date string, product_name string, daily_revenue_per_product float) stored as orc")
+daily_revenue_per_product_df = sqlContext.sql("select o.order_date, p.product_name, sum(oi.order_item_subtotal) daily_revenue_per_product \
+from orders o join order_items oi \
+on o.order_id = oi.order_item_order_id \
+join products p \
+on p.product_id = oi.order_item_product_id \
+where o.order_status in ('COMPLETE', 'CLOSED') \
+group by o.order_date, p.product_name \
+order by o.order_date, daily_revenue_per_product desc")
+
+sqlContext.sql("select * from neogia01_daily_revenue.daily_revenue").show()
+
+daily_revenue_per_product_df.insertInto("neogia01_daily_revenue.daily_revenue")
+
+
+# DataFrame operations
+
+daily_revenue_per_product_df.schema
+daily_revenue_per_product_df.show(10)
+daily_revenue_per_product_df.save("/user/neogia01/daily_revenue_save", "json")
+daily_revenue_per_product_df.write.json("/user/neogia01/daily_revenue_write")
+daily_revenue_per_product_df.select("order_date", "daily_revenue_per_product")
+daily_revenue_per_product_df.filter(daily_revenue_per_product_df["order_date"] == "2013-07-25 00:00:00.0").show()
+
+$ hadoop fs -ls /user/neogia01/daily_revenue_save
+$ hadoop fs -ls /user/neogia01/daily_revenue_write
+
+daily_revenue_per_product_df.select("order_date", "daily_revenue_per_product").show()
+daily_revenue_per_product_df.filter(daily_revenue_per_product_df["order_date"] == "2013-07-25 00:00:00.0").show()
 
 
