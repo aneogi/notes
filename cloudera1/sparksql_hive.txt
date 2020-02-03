@@ -2,311 +2,311 @@
 ##### Chapter 12 #####
 
 # text file  format
-$ view /etc/hive/conf/hive-site.xml
+	$ view /etc/hive/conf/hive-site.xml
 
-    <property>
-      <name>hive.metastore.warehouse.dir</name>
-      <value>/apps/hive/warehouse</value>
-    </property>
+		<property>
+		  <name>hive.metastore.warehouse.dir</name>
+		  <value>/apps/hive/warehouse</value>
+		</property>
 
-$ hive
-create database neogia01_retail_db_txt;
-use neogia01_retail_db_txt;
+	$ hive
+	create database neogia01_retail_db_txt;
+	use neogia01_retail_db_txt;
 
-show databases;
+	show databases;
 
-create table orders (
-order_id int,
-order_date string,
-order_customer_id int,
-order_status string
-)row format delimited fields terminated by ','
-stored as textfile;
+	create table orders (
+	order_id int,
+	order_date string,
+	order_customer_id int,
+	order_status string
+	)row format delimited fields terminated by ','
+	stored as textfile;
 
-show tables;
+	show tables;
 
-load data local inpath '/data/retail_db/orders' into table orders;
-dfs -ls /apps/hive/warehouse/neogia01_retail_db_txt.db/orders;
-select * from orders limit 10;
+	load data local inpath '/data/retail_db/orders' into table orders;
+	dfs -ls /apps/hive/warehouse/neogia01_retail_db_txt.db/orders;
+	select * from orders limit 10;
 
-create table order_items (
-order_item_id int,
-order_item_order_id int,
-order_item_product_id int,
-order_item_quantity int,
-order_item_subtotal float,
-order_item_product_price float
-)row format delimited fields terminated by ','
-stored as textfile;
+	create table order_items (
+	order_item_id int,
+	order_item_order_id int,
+	order_item_product_id int,
+	order_item_quantity int,
+	order_item_subtotal float,
+	order_item_product_price float
+	)row format delimited fields terminated by ','
+	stored as textfile;
 
-load data local inpath '/data/retail_db/order_items' into table order_items;
-dfs -ls /apps/hive/warehouse/neogia01_retail_db_txt.db/order_items;
-select * from order_items limit 10;
+	load data local inpath '/data/retail_db/order_items' into table order_items;
+	dfs -ls /apps/hive/warehouse/neogia01_retail_db_txt.db/order_items;
+	select * from order_items limit 10;
 
 # orc file format
 
-$ hive
-create database neogia01_retail_db_orc;
-use neogia01_retail_db_orc;
+	$ hive
+	create database neogia01_retail_db_orc;
+	use neogia01_retail_db_orc;
 
-show databases;
+	show databases;
 
-create table orders (
-order_id int,
-order_date string,
-order_customer_id int,
-order_status string
-)stored as orc;
+	create table orders (
+	order_id int,
+	order_date string,
+	order_customer_id int,
+	order_status string
+	)stored as orc;
 
-create table order_items (
-order_item_id int,
-order_item_order_id int,
-order_item_product_id int,
-order_item_quantity int,
-order_item_subtotal float,
-order_item_product_price float
-)stored as orc;
+	create table order_items (
+	order_item_id int,
+	order_item_order_id int,
+	order_item_product_id int,
+	order_item_quantity int,
+	order_item_subtotal float,
+	order_item_product_price float
+	)stored as orc;
 
-describe orders;
-describe formatted orders;
+	describe orders;
+	describe formatted orders;
 
-dfs -ls hdfs://nn01.itversity.com:8020/apps/hive/warehouse/neogia01_retail_db_orc.db/orders;
+	dfs -ls hdfs://nn01.itversity.com:8020/apps/hive/warehouse/neogia01_retail_db_orc.db/orders;
 
-insert into table orders select * from neogia01_retail_db_txt.orders;
+	insert into table orders select * from neogia01_retail_db_txt.orders;
 
-insert into table order_items select * from neogia01_retail_db_txt.order_items;
+	insert into table order_items select * from neogia01_retail_db_txt.order_items;
 
 
 # Executing hive from spark
 
-$ pyspark --master yarn --conf spark.ui.port=12562 --executor-memory 2G --num-executors 1
+	$ pyspark --master yarn --conf spark.ui.port=12562 --executor-memory 2G --num-executors 1
 
-sqlContext.sql("use neogia01_retail_db_txt")
-sqlContext.sql("describe formatted orders").show()
-for i in sqlContext.sql("describe formatted orders").collect():print(i)
-sqlContext.sql("select * from orders limit 10").show()
+	sqlContext.sql("use neogia01_retail_db_txt")
+	sqlContext.sql("describe formatted orders").show()
+	for i in sqlContext.sql("describe formatted orders").collect():print(i)
+	sqlContext.sql("select * from orders limit 10").show()
 
 
 # Functions
 
-describe function length;
-select length('Hello WOrld');
-select length(order_status) from orders limit 100;
-select order_status, length(order_status) from orders limit 100;
+	describe function length;
+	select length('Hello WOrld');
+	select length(order_status) from orders limit 100;
+	select order_status, length(order_status) from orders limit 100;
 
-create table customers(
-customer_id int,
-customer_fname varchar(45),
-customer_lname varchar(45),
-customer_email varchar(45),
-customer_password varchar(45),
-customer_street varchar(225),
-customer_city varchar(45),
-customer_state varchar(45),
-customer_zipcode varchar(45)
-)row format delimited fields terminated by ','
-stored as textfile;
+	create table customers(
+	customer_id int,
+	customer_fname varchar(45),
+	customer_lname varchar(45),
+	customer_email varchar(45),
+	customer_password varchar(45),
+	customer_street varchar(225),
+	customer_city varchar(45),
+	customer_state varchar(45),
+	customer_zipcode varchar(45)
+	)row format delimited fields terminated by ','
+	stored as textfile;
 
-load data local inpath '/data/retail_db/customers' into table customers;
+	load data local inpath '/data/retail_db/customers' into table customers;
 
-select substr('Hello World, How are you', 14);
-select substr('Hello World, How are you', -7, 3);
-select instr('Hello World, How are you', ' ');
-select 'Hello World, How are you' like 'Hello%';
-select 'Hello World, How are you' like '%World%';
-select 'Hello World, How are you' rlike 'World';
-select lcase('Hello'), ucase('Hello'), initcap('hello');
-select length(' Hello World '), length(trim(' Hello World '));
-select lpad(12,5,'$'), rpad(12,5,'#');
-select cast(" 12 " as int);
-select cast(substr(order_date, 6, 2) as int) from orders;
-select cast("Hello" as int);
-	==> NULL
-select split("Hello World, How are you", " ");
-select index(split("Hello World, How are you", " "), 4);
+	select substr('Hello World, How are you', 14);
+	select substr('Hello World, How are you', -7, 3);
+	select instr('Hello World, How are you', ' ');
+	select 'Hello World, How are you' like 'Hello%';
+	select 'Hello World, How are you' like '%World%';
+	select 'Hello World, How are you' rlike 'World';
+	select lcase('Hello'), ucase('Hello'), initcap('hello');
+	select length(' Hello World '), length(trim(' Hello World '));
+	select lpad(12,5,'$'), rpad(12,5,'#');
+	select cast(" 12 " as int);
+	select cast(substr(order_date, 6, 2) as int) from orders;
+	select cast("Hello" as int);
+		==> NULL
+	select split("Hello World, How are you", " ");
+	select index(split("Hello World, How are you", " "), 4);
 
-select current_date;
-select current_timestamp;
-select date_format(current_date, 'y'), date_format(current_date, 'm'), date_format(current_date, 'd');
-select dayofmonth(current_date);
-select to_unix_timestamp(current_date);
+	select current_date;
+	select current_timestamp;
+	select date_format(current_date, 'y'), date_format(current_date, 'm'), date_format(current_date, 'd');
+	select dayofmonth(current_date);
+	select to_unix_timestamp(current_date);
 
-select sum(order_item_subtotal) from order_items;
-select order_status, count(1) from orders group by order_status;
+	select sum(order_item_subtotal) from order_items;
+	select order_status, count(1) from orders group by order_status;
 
-select distinct order_status from orders;
+	select distinct order_status from orders;
 
-select order_status,
-case order_status
-when 'CLOSED' then 'No Action'
-when 'COMPLETE' then 'No Action'
-when 'ON_HOLD' then 'Pending Action'
-when 'PAYMENT_REVIEW' then 'Pending Action'
-when 'PENDING' then 'Pending Action'
-when 'PROCESSING' then 'Pending Action'
-when 'PENDING_PAYMENT' then 'Pending Action'
-else 'Risky'
-end
-from orders limit 100;
+	select order_status,
+	case order_status
+	when 'CLOSED' then 'No Action'
+	when 'COMPLETE' then 'No Action'
+	when 'ON_HOLD' then 'Pending Action'
+	when 'PAYMENT_REVIEW' then 'Pending Action'
+	when 'PENDING' then 'Pending Action'
+	when 'PROCESSING' then 'Pending Action'
+	when 'PENDING_PAYMENT' then 'Pending Action'
+	else 'Risky'
+	end
+	from orders limit 100;
 
-select order_status,
-case 
-when order_status in ('CLOSED','COMPLETE') then 'No Action'
-when order_status in ('ON_HOLD', 'PAYMENT_REVIEW', 'PENDING', 'PROCESSING', 'PENDING_PAYMENT') then 'Pending Action'
-else 'Risky'
-end
-from orders limit 100;
+	select order_status,
+	case 
+	when order_status in ('CLOSED','COMPLETE') then 'No Action'
+	when order_status in ('ON_HOLD', 'PAYMENT_REVIEW', 'PENDING', 'PROCESSING', 'PENDING_PAYMENT') then 'Pending Action'
+	else 'Risky'
+	end
+	from orders limit 100;
 
-select nvl(order_status, 'Status Missing') where order_status is null from orders limit 100;
-select concat(substr(order_date, 1, 4), substr(order_date, 6, 2)) from orders limit 10;
-select order_date, cast(concat(substr(order_date, 1, 4), substr(order_date, 6, 2)) as int) from orders limit 10;
-select cast(date_format('2013-07-25 00:00:00.0', 'YYYYMM') as int);
-select distinct cast(date_format(order_date, 'YYYYMM') as int) from orders limit 100;
+	select nvl(order_status, 'Status Missing') where order_status is null from orders limit 100;
+	select concat(substr(order_date, 1, 4), substr(order_date, 6, 2)) from orders limit 10;
+	select order_date, cast(concat(substr(order_date, 1, 4), substr(order_date, 6, 2)) as int) from orders limit 10;
+	select cast(date_format('2013-07-25 00:00:00.0', 'YYYYMM') as int);
+	select distinct cast(date_format(order_date, 'YYYYMM') as int) from orders limit 100;
 
-select * from orders o, customers c where o.order_customer_id = c.customer_id;
+	select * from orders o, customers c where o.order_customer_id = c.customer_id;
 
-select count(1) from orders o inner join customers c on o.order_customer_id = c.customer_id;
+	select count(1) from orders o inner join customers c on o.order_customer_id = c.customer_id;
 
 # sorting
-select o.order_id, o.order_date, o.order_status, round(sum(oi.order_item_subtotal), 2) order_revenue
-from orders o join order_items oi
-on o.order_id = oi.order_item_order_id
-where o.order_status in ('COMPLETE', 'CLOSED')
-group by o.order_id, o.order_date, o.order_status
-having sum(oi.order_item_subtotal) >= 1000
-distribute by order_date sort by o.order_date, order_revenue desc;
+	select o.order_id, o.order_date, o.order_status, round(sum(oi.order_item_subtotal), 2) order_revenue
+	from orders o join order_items oi
+	on o.order_id = oi.order_item_order_id
+	where o.order_status in ('COMPLETE', 'CLOSED')
+	group by o.order_id, o.order_date, o.order_status
+	having sum(oi.order_item_subtotal) >= 1000
+	distribute by order_date sort by o.order_date, order_revenue desc;
 
 # aggregation
-select * from (
-select o.order_id, o.order_date, o.order_status, oi.order_item_subtotal,
-round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) order_revenue,
-oi.order_item_subtotal/round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) pct_revenue,
-round(avg(oi.order_item_subtotal) over (partition by o.order_id), 2) avg_revenue
-from orders o join order_items oi
-on o.order_id = oi.order_item_order_id
-where o.order_status in ('COMPLETE', 'CLOSED')) q
-where order_revenue >= 1000
-order by order_date, order_revenue desc;
+	select * from (
+	select o.order_id, o.order_date, o.order_status, oi.order_item_subtotal,
+	round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) order_revenue,
+	oi.order_item_subtotal/round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) pct_revenue,
+	round(avg(oi.order_item_subtotal) over (partition by o.order_id), 2) avg_revenue
+	from orders o join order_items oi
+	on o.order_id = oi.order_item_order_id
+	where o.order_status in ('COMPLETE', 'CLOSED')) q
+	where order_revenue >= 1000
+	order by order_date, order_revenue desc;
 
 # ranking
-select * from (
-select o.order_id, o.order_date, o.order_status, oi.order_item_subtotal,
-round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) order_revenue,
-oi.order_item_subtotal/round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) pct_revenue,
-round(avg(oi.order_item_subtotal) over (partition by o.order_id), 2) avg_revenue,
-rank() over (partition by o.order_id order by oi.order_item_subtotal desc) rnk_revenue,
-dense_rank() over (partition by o.order_id order by oi.order_item_subtotal desc) dense_rnk_revenue,
-percent_rank() over (partition by o.order_id order by oi.order_item_subtotal desc) pct_rnk_revenue,
-row_number() over (partition by o.order_id order by oi.order_item_subtotal desc) rn_orderby_revenue,
-row_number() over (partition by o.order_id) rn_revenue
-from orders o join order_items oi
-on o.order_id = oi.order_item_order_id
-where o.order_status in ('COMPLETE', 'CLOSED')) q
-where order_revenue >= 1000
-order by order_date, order_revenue desc, rnk_revenue;
+	select * from (
+	select o.order_id, o.order_date, o.order_status, oi.order_item_subtotal,
+	round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) order_revenue,
+	oi.order_item_subtotal/round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) pct_revenue,
+	round(avg(oi.order_item_subtotal) over (partition by o.order_id), 2) avg_revenue,
+	rank() over (partition by o.order_id order by oi.order_item_subtotal desc) rnk_revenue,
+	dense_rank() over (partition by o.order_id order by oi.order_item_subtotal desc) dense_rnk_revenue,
+	percent_rank() over (partition by o.order_id order by oi.order_item_subtotal desc) pct_rnk_revenue,
+	row_number() over (partition by o.order_id order by oi.order_item_subtotal desc) rn_orderby_revenue,
+	row_number() over (partition by o.order_id) rn_revenue
+	from orders o join order_items oi
+	on o.order_id = oi.order_item_order_id
+	where o.order_status in ('COMPLETE', 'CLOSED')) q
+	where order_revenue >= 1000
+	order by order_date, order_revenue desc, rnk_revenue;
 
 # windowing
-select * from (
-select o.order_id, o.order_date, o.order_status, oi.order_item_subtotal,
-round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) order_revenue,
-oi.order_item_subtotal/round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) pct_revenue,
-round(avg(oi.order_item_subtotal) over (partition by o.order_id), 2) avg_revenue,
-rank() over (partition by o.order_id order by oi.order_item_subtotal desc) rnk_revenue,
-dense_rank() over (partition by o.order_id order by oi.order_item_subtotal desc) dense_rnk_revenue,
-percent_rank() over (partition by o.order_id order by oi.order_item_subtotal desc) pct_rnk_revenue,
-row_number() over (partition by o.order_id order by oi.order_item_subtotal desc) rn_orderby_revenue,
-row_number() over (partition by o.order_id) rn_revenue,
-lead(oi.order_item_subtotal) over (partition by o.order_id) lead_order_item_subtotal,
-lag(oi.order_item_subtotal) over (partition by o.order_id) lag_order_item_subtotal,
-first_value(oi.order_item_subtotal) over (partition by o.order_id) first_order_item_subtotal,
-last_value(oi.order_item_subtotal) over (partition by o.order_id) last_order_item_subtotal
-from orders o join order_items oi
-on o.order_id = oi.order_item_order_id
-where o.order_status in ('COMPLETE', 'CLOSED')) q
-where order_revenue >= 1000
-order by order_date, order_revenue desc, rnk_revenue;
+	select * from (
+	select o.order_id, o.order_date, o.order_status, oi.order_item_subtotal,
+	round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) order_revenue,
+	oi.order_item_subtotal/round(sum(oi.order_item_subtotal) over (partition by o.order_id), 2) pct_revenue,
+	round(avg(oi.order_item_subtotal) over (partition by o.order_id), 2) avg_revenue,
+	rank() over (partition by o.order_id order by oi.order_item_subtotal desc) rnk_revenue,
+	dense_rank() over (partition by o.order_id order by oi.order_item_subtotal desc) dense_rnk_revenue,
+	percent_rank() over (partition by o.order_id order by oi.order_item_subtotal desc) pct_rnk_revenue,
+	row_number() over (partition by o.order_id order by oi.order_item_subtotal desc) rn_orderby_revenue,
+	row_number() over (partition by o.order_id) rn_revenue,
+	lead(oi.order_item_subtotal) over (partition by o.order_id) lead_order_item_subtotal,
+	lag(oi.order_item_subtotal) over (partition by o.order_id) lag_order_item_subtotal,
+	first_value(oi.order_item_subtotal) over (partition by o.order_id) first_order_item_subtotal,
+	last_value(oi.order_item_subtotal) over (partition by o.order_id) last_order_item_subtotal
+	from orders o join order_items oi
+	on o.order_id = oi.order_item_order_id
+	where o.order_status in ('COMPLETE', 'CLOSED')) q
+	where order_revenue >= 1000
+	order by order_date, order_revenue desc, rnk_revenue;
 
 
-#create data frames and register as temp table
+# create data frames and register as temp table
 
-$ pyspark --master yarn --conf spark.ui.port=12562 --executor-memory 2G --num-executors 1
+	$ pyspark --master yarn --conf spark.ui.port=12562 --executor-memory 2G --num-executors 1
 
-sqlContext.sql("select * from neogia01_retail_db_orc.orders").show()
-sqlContext.sql("select * from neogia01_retail_db_orc.orders").printSchema()
-from pyspark.sql import Row
-ordersRDD = sc.textFile("/public/retail_db/orders")
-ordersDF = ordersRDD.map(lambda o: Row(order_id=int(o.split(",")[0]), order_date=o.split(",")[1], order_customer_id=int(o.split(",")[2]), order_status=o.split(",")[3])).toDF()
-ordersDF.registerTempTable("ordersDF_table")
-sqlContext.sql("select * from ordersDF_table").show()
-sqlContext.sql("select order_status, count(1) from ordersDF_table group by order_status").show()
+	sqlContext.sql("select * from neogia01_retail_db_orc.orders").show()
+	sqlContext.sql("select * from neogia01_retail_db_orc.orders").printSchema()
+	from pyspark.sql import Row
+	ordersRDD = sc.textFile("/public/retail_db/orders")
+	ordersDF = ordersRDD.map(lambda o: Row(order_id=int(o.split(",")[0]), order_date=o.split(",")[1], order_customer_id=int(o.split(",")[2]), order_status=o.split(",")[3])).toDF()
+	ordersDF.registerTempTable("ordersDF_table")
+	sqlContext.sql("select * from ordersDF_table").show()
+	sqlContext.sql("select order_status, count(1) from ordersDF_table group by order_status").show()
 
-from pyspark.sql import Row
-productsRaw = open("/data/retail_db/products/part-00000").read().splitlines()
-productsRDD = sc.parallelize(productsRaw)
-productsDF = productsRDD.map(lambda p: Row(product_id=int(p.split(",")[0]), product_name=p.split(",")[2])).toDF()
-productsDF.registerTempTable("products")
-sqlContext.sql("select * from products").show()
+	from pyspark.sql import Row
+	productsRaw = open("/data/retail_db/products/part-00000").read().splitlines()
+	productsRDD = sc.parallelize(productsRaw)
+	productsDF = productsRDD.map(lambda p: Row(product_id=int(p.split(",")[0]), product_name=p.split(",")[2])).toDF()
+	productsDF.registerTempTable("products")
+	sqlContext.sql("select * from products").show()
 
 
 # Processing data using Spark SQL
 
-$ pyspark --master yarn --conf spark.ui.port=12562 --executor-memory 2G --num-executors 1
+	$ pyspark --master yarn --conf spark.ui.port=12562 --executor-memory 2G --num-executors 1
 
-sqlContext.sql("use neogia01_retail_db_txt")
-sqlContext.sql("show tables").show()
+	sqlContext.sql("use neogia01_retail_db_txt")
+	sqlContext.sql("show tables").show()
 
-from pyspark.sql import Row
-productsRaw = open("/data/retail_db/products/part-00000").read().splitlines()
-productsRDD = sc.parallelize(productsRaw)
-productsDF = productsRDD.map(lambda p: Row(product_id=int(p.split(",")[0]), product_name=p.split(",")[2])).toDF()
-productsDF.registerTempTable("products")
+	from pyspark.sql import Row
+	productsRaw = open("/data/retail_db/products/part-00000").read().splitlines()
+	productsRDD = sc.parallelize(productsRaw)
+	productsDF = productsRDD.map(lambda p: Row(product_id=int(p.split(",")[0]), product_name=p.split(",")[2])).toDF()
+	productsDF.registerTempTable("products")
 
-sqlContext.sql("select * from products").show()
-sqlContext.sql("select * from orders").show()
-sqlContext.sql("select * from order_items").show()
+	sqlContext.sql("select * from products").show()
+	sqlContext.sql("select * from orders").show()
+	sqlContext.sql("select * from order_items").show()
 
-sqlContext.setConf("spark.sql.shuffle.partitions", "2")
-sqlContext.sql("select o.order_date, p.product_name, sum(oi.order_item_subtotal) daily_revenue_per_product from \
-orders o join order_items oi \
-on o.order_id = oi.order_item_order_id \
-join products p \
-on p.product_id = oi.order_item_product_id \
-where o.order_status in ('COMPLETE', 'CLOSED') \
-group by o.order_date, p.product_name \
-order by o.order_date, daily_revenue_per_product desc").show()
+	sqlContext.setConf("spark.sql.shuffle.partitions", "2")
+	sqlContext.sql("select o.order_date, p.product_name, sum(oi.order_item_subtotal) daily_revenue_per_product from \
+	orders o join order_items oi \
+	on o.order_id = oi.order_item_order_id \
+	join products p \
+	on p.product_id = oi.order_item_product_id \
+	where o.order_status in ('COMPLETE', 'CLOSED') \
+	group by o.order_date, p.product_name \
+	order by o.order_date, daily_revenue_per_product desc").show()
 
-
+	
 # Saving DataFrame to Hive tables
 
-sqlContext.sql("create database neogia01_daily_revenue")
-sqlContext.sql("create table neogia01_daily_revenue.daily_revenue (order_date string, product_name string, daily_revenue_per_product float) stored as orc")
-daily_revenue_per_product_df = sqlContext.sql("select o.order_date, p.product_name, sum(oi.order_item_subtotal) daily_revenue_per_product \
-from orders o join order_items oi \
-on o.order_id = oi.order_item_order_id \
-join products p \
-on p.product_id = oi.order_item_product_id \
-where o.order_status in ('COMPLETE', 'CLOSED') \
-group by o.order_date, p.product_name \
-order by o.order_date, daily_revenue_per_product desc")
+	sqlContext.sql("create database neogia01_daily_revenue")
+	sqlContext.sql("create table neogia01_daily_revenue.daily_revenue (order_date string, product_name string, daily_revenue_per_product float) stored as orc")
+	daily_revenue_per_product_df = sqlContext.sql("select o.order_date, p.product_name, sum(oi.order_item_subtotal) daily_revenue_per_product \
+	from orders o join order_items oi \
+	on o.order_id = oi.order_item_order_id \
+	join products p \
+	on p.product_id = oi.order_item_product_id \
+	where o.order_status in ('COMPLETE', 'CLOSED') \
+	group by o.order_date, p.product_name \
+	order by o.order_date, daily_revenue_per_product desc")
 
-sqlContext.sql("select * from neogia01_daily_revenue.daily_revenue").show()
+	sqlContext.sql("select * from neogia01_daily_revenue.daily_revenue").show()
 
-daily_revenue_per_product_df.insertInto("neogia01_daily_revenue.daily_revenue")
+	daily_revenue_per_product_df.insertInto("neogia01_daily_revenue.daily_revenue")
 
 
 # DataFrame operations
 
-daily_revenue_per_product_df.schema
-daily_revenue_per_product_df.show(10)
-daily_revenue_per_product_df.save("/user/neogia01/daily_revenue_save", "json")
-daily_revenue_per_product_df.write.json("/user/neogia01/daily_revenue_write")
-daily_revenue_per_product_df.select("order_date", "daily_revenue_per_product")
-daily_revenue_per_product_df.filter(daily_revenue_per_product_df["order_date"] == "2013-07-25 00:00:00.0").show()
+	daily_revenue_per_product_df.schema
+	daily_revenue_per_product_df.show(10)
+	daily_revenue_per_product_df.save("/user/neogia01/daily_revenue_save", "json")
+	daily_revenue_per_product_df.write.json("/user/neogia01/daily_revenue_write")
+	daily_revenue_per_product_df.select("order_date", "daily_revenue_per_product")
+	daily_revenue_per_product_df.filter(daily_revenue_per_product_df["order_date"] == "2013-07-25 00:00:00.0").show()
 
-$ hadoop fs -ls /user/neogia01/daily_revenue_save
-$ hadoop fs -ls /user/neogia01/daily_revenue_write
+	$ hadoop fs -ls /user/neogia01/daily_revenue_save
+	$ hadoop fs -ls /user/neogia01/daily_revenue_write
 
-daily_revenue_per_product_df.select("order_date", "daily_revenue_per_product").show()
-daily_revenue_per_product_df.filter(daily_revenue_per_product_df["order_date"] == "2013-07-25 00:00:00.0").show()
+	daily_revenue_per_product_df.select("order_date", "daily_revenue_per_product").show()
+	daily_revenue_per_product_df.filter(daily_revenue_per_product_df["order_date"] == "2013-07-25 00:00:00.0").show()
 
 

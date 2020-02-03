@@ -1,0 +1,42 @@
+
+##### Chapter 17 #####
+
+# Kafka - Getting Started - Produce and Consume messages using commands
+
+	$ cd /usr/hdp/current/kafka-broker/bin
+	
+	$ vi ~/.bash_profile
+	
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		if [ -f ~/.bashrc ]; then
+				. ~/.bashrc
+		fi
+
+		# User specific environment and startup programs
+
+		PATH=$PATH:$HOME/.local/bin:$HOME/bin
+
+		export KAFKA_HOME=/usr/hdp/current/kafka-broker
+		PATH=$PATH:$KAFKA_HOME/bin
+
+		export PATH
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	$ . ~/.bash_profile
+	
+	$ kafka-topics.sh --create --zookeeper nn01.itversity.com:2181,nn02.itversity.com:2181,rm01.itversity.com:2181 --replication-factor 1 --partitions 1 --topic kafkademoan
+	
+	$ kafka-topics.sh --list --zookeeper nn01.itversity.com:2181,nn02.itversity.com:2181,rm01.itversity.com:2181 --topic kafkademoan
+	
+	$ kafka-console-producer.sh --broker-list wn01.itversity.com:6667,wn02.itversity.com:6667,wn03.itversity.com:6667,wn04.itversity.com:6667 --topic kafkademoan
+	
+	$ kafka-console-consumer.sh --bootstrap-server wn01.itversity.com:6667,wn02.itversity.com:6667,wn03.itversity.com:6667,wn04.itversity.com:6667 --topic kafkademoan --from-beginning
+	
+	
+# Kafka - Anatomy of topic	
+	
+	
+	
+
+	
+	
