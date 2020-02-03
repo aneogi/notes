@@ -1,0 +1,37 @@
+
+##### Chapter 17 #####
+
+# Spark Streaming - Setting up netcat
+
+	$ nc -lk 9999
+	$ nc localhost 9999
+	
+# Spark Streaming - Develop word count program
+
+	$ cd /home/neogia01/pythondemo/retail
+	$ vi src/main/python/StreamingWordCount.py
+		
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		from pyspark import SparkContext, SparkConf
+		from pyspark.streaming import StreamingContext
+
+		conf = SparkConf().setAppName("Streaming word count").setMaster("yarn-client")
+		sc = SparkContext(conf=conf)
+		ssc = StreamingContext(sc, 15)
+
+		lines = ssc.socketTetxStream("gw03.itversity.com", 19999)
+		words = lines.flatMap(lambda line: line.split(" "))
+		wordTuples = words.map(lambda word: (word, 1))
+		wordCount = wordTuples.reduceByKey(lambda x, y: x + y)
+		wordCount.pprint()
+
+		ssc.start()
+		ssc.awaitTermination()
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		
+	$ spark-submit --master yarn --conf spark.ui.port=12890 /home/neogia01/pythondemo/retail/src/main/python/StreamingWordCount.py
+
+
+
+	
+	
