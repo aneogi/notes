@@ -1,10 +1,12 @@
 
 ##### Chapter 17 #####
 
+
 # Spark Streaming - Setting up netcat
 
 	$ nc -lk 9999
 	$ nc localhost 9999
+	
 	
 # Spark Streaming - Develop word count program
 
@@ -29,9 +31,47 @@
 		ssc.awaitTermination()
 		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		
+		
 	$ spark-submit --master yarn --conf spark.ui.port=12890 /home/neogia01/pythondemo/retail/src/main/python/StreamingWordCount.py
 
-
-
 	
-	
+# Spark Streaming - Develop word count program
+
+	$ cd /home/neogia01/pythondemo/retail
+	$ vi src/main/python/StreamingDepartmentCount.py
+		
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		from pyspark import SparkConf, SparkContext
+		from pyspark.streaming import StreamingContext
+
+		import sys
+
+		hostname = sys.argv[1]
+		port = int(sys.argv[2])
+
+		conf = SparkConf(). \
+		setAppName("Streaming Department Count"). \
+		setMaster("yarn-client")
+
+		sc = SparkContext(conf=conf)
+		ssc = StreamingContext(sc, 30)
+
+		messages = ssc.socketTextStream(hostname, port)
+		departmentMessages = messages. \
+		filter(lambda msg: msg.split(" ")[6].split("/")[1] == "department")
+
+		departmentNames = departmentMessages. \
+		map(lambda msg: (msg.split(" ")[6].split("/")[2], 1))
+
+		departmentCount = departmentNames. \
+		reduceByKey(lambda x,y: x+y)
+
+		outputPrefix = sys.argv[3]
+		departmentCount.saveAsTextFiles(outputPrefix)
+
+		ssc.start()
+		ssc.awaitTermination()
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		
+	$ spark-submit --master yarn --conf spark.ui.port=12890 /home/neogia01/pythondemo/retail/src/main/python/StreamingDepartmentCount.py  gw03.itversity.com 19999 /user/neogia01/streamingdeptcountpython/cnt
+
