@@ -1,0 +1,217 @@
+# Flume and Spark Streaming - Department wise traffic - Setup data
+
+	$ mkdir strdeptcount
+	$ vi wslogstohdfs/wshdfs.conf
+	$ cp wslogstohdfs/wshdfs.conf strdeptcount/sdc.conf
+	$ cd strdeptcount
+	$ vi sdc.conf
+		
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		# example.conf: A single-node Flume configuration
+
+		# Name the components on this agent
+		sdc.sources = ws
+		sdc.sinks = hd spark
+		sdc.channels = hdmem sparkmem
+
+		# Describe/configure the source
+		sdc.sources.ws.type = exec
+		sdc.sources.ws.command = tail -F /opt/gen_logs/logs/access.log
+
+		# Describe the sink
+		sdc.sinks.hd.type = hdfs
+		sdc.sinks.hd.hdfs.path = hdfs://nn01.itversity.com:8020/user/neogia01/flume_demo
+
+		sdc.sinks.hd.hdfs.filePrefix = FlumeDemo
+		sdc.sinks.hd.hdfs.fileSuffix = .txt
+		sdc.sinks.hd.hdfs.rollInterval = 120
+		sdc.sinks.hd.hdfs.rollSize = 1048576
+		sdc.sinks.hd.hdfs.rollCount = 100
+		sdc.sinks.hd.hdfs.fileType = DataStream
+		
+		sdc.sinks.spark.type = org.apache.spark.streaming.flume.sink.SparkSink
+		sdc.sinks.spark.hostname = gw03.itversity.com
+		sdc.sinks.spark.port = 8123
+
+		# Use a channel sdcich buffers events in memory
+		sdc.channels.hdmem.type = memory
+		sdc.channels.hdmem.capacity = 1000
+		sdc.channels.hdmem.transactionCapacity = 100
+
+		sdc.channels.sparkmem.type = memory
+		sdc.channels.sparkmem.capacity = 1000
+		sdc.channels.sparkmem.transactionCapacity = 100
+
+		# Bind the source and sink to the channel
+		sdc.sources.ws.channels = hdmem sparkmem
+		sdc.sinks.hd.channel = hdmem
+		sdc.sinks.spark.channel = sparkmem
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	
+# Flume and Spark Streaming - Department wise traffic - Develop application
+	
+	$ cp src/main/python/StreamingDepartmentCount.py src/main/python/StreamingFlumeDepartmentCount.py
+	$ vi src/main/python/StreamingFlumeDepartmentCount.py
+	
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		from pyspark import SparkConf, SparkContext
+		from pyspark.streaming import StreamingContext
+		from pyspark.streaming.flume import FlumeUtils
+
+		import sys
+
+		hostname = sys.argv[1]
+		port = int(sys.argv[2])
+
+		conf = SparkConf(). \
+		setAppName("Streaming Department Count"). \
+		setMaster("yarn-client")
+
+		sc = SparkContext(conf=conf)
+		ssc = StreamingContext(sc, 30)
+
+		#addresses = [("gw03.itversity.com", 8123)]
+		addresses = [(hostname, port)]
+		pollingStream = FlumeUtils.createPollingStream(ssc, addresses)
+		messages = pollingStream.map(lambda msg: msg[1])
+		#messages = ssc.socketTextStream(hostname, port)
+		departmentMessages = messages. \
+		filter(lambda msg: msg.split(" ")[6].split("/")[1] == "department")
+
+		departmentNames = departmentMessages. \
+		map(lambda msg: (msg.split(" ")[6].split("/")[2], 1))
+
+		departmentCount = departmentNames. \
+		reduceByKey(lambda x,y: x+y)
+
+		outputPrefix = sys.argv[3]
+		departmentCount.saveAsTextFiles(outputPrefix)
+
+		ssc.start()
+		ssc.awaitTermination()
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	
+# Flume and Spark Streaming - Department wise traffic - Run on cluster
+		
+	$ spark-submit --master yarn --conf spark.ui.port=12890 --jars "/usr/hdp/2.5.0.0-1245/spark/lib/spark-streaming-flume_2.10-1.6.2.jar,/usr/hdp/2.5.0.0-1245/flume/lib/spark-streaming-flume-sink_2.10-1.6.2.jar,/usr/hdp/current/flume-server/lib/flume-ng-sdk-1.5.2.2.6.5.0-292.jar" src/main/python/StreamingFlumeDepartmentCount.py gw03.itversity.com 8123 /user/neogia01/streamingflumedepartmentcount/cnt-
+	
+	
+# Flume and Kafka integration - Develop configuration file
+
+	$ cd flume_demo/
+	$ cp -rf wslogstohdfs wslogstokafka
+	$ cd wslogstokafka
+	$ vi wshdfs.conf
+	
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		# example.conf: A single-node Flume configuration
+		# to read data from webservice logs and publish
+		# to kafka topic
+
+		# Name the components on this agent
+		wk.sources = ws
+		wk.sinks = kafka
+		wk.channels = mem
+
+		# Describe/configure the source
+		wk.sources.ws.type = exec
+		wk.sources.ws.command = tail -F /opt/gen_logs/logs/access.log
+
+		# Describe the sink
+		wk.sinks.kafka.type = org.apache.flume.sink.kafka.KafkaSink
+		wk.sinks.kafka.brokerList = wn01.itversity.com:6667,wn02.itversity.com:6667,wn03.itversity.com:6667,wn04.itversity.com:6667
+		wk.sinks.kafka.topic = fkdemoan
+
+		# Use a channel which buffers events in memory
+		wk.channels.mem.type = memory
+		wk.channels.mem.capacity = 1000
+		wk.channels.mem.transactionCapacity = 100
+
+		# Bind the source and sink to the channel
+		wk.sources.ws.channels = mem
+		wk.sinks.kafka.channel = mem
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	
+# Flume and Kafka integration - Run and validate 
+	
+	$ flume-ng agent --name wk --conf-file /home/neogia01/flume_demo/wslogstokafka/wskafka.conf
+	$ kafka-console-consumer.sh --bootstrap-server wn01.itversity.com:6667,wn02.itversity.com:6667,wn03.itversity.com:6667,wn04.itversity.com:6667 --topic fkdemoan --from-beginning
+	
+	
+# Kafka and Spark Streaming - Develop and build application
+	
+	$ cd /usr/hdp/2.5.0.0-1245/kafka/libs/
+	$ cd pythondemo/retail/
+	$ cp src/main/python/StreamingDepartmentCount.py src/main/python/StreamingKafkaDepartmentCount.py
+	$ vi src/main/python/StreamingKafkaDepartmentCount.py
+	
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		from pyspark import SparkConf, SparkContext
+		from pyspark.streaming import StreamingContext
+		from pyspark.streaming.kafka import KafkaUtils
+
+		import sys
+
+		conf = SparkConf(). \
+		setAppName("Streaming Department Count"). \
+		setMaster("yarn-client")
+
+		sc = SparkContext(conf=conf)
+		ssc = StreamingContext(sc, 30)
+
+		topics = ["fkdemoan"]
+		brokerList = {"metadata.broker.list" : "wn01.itversity.com:6667,wn02.itversity.com:6667,wn03.itversity.com:6667,wn04.itversity.com:6667"}
+
+		directKafkaStream = KafkaUtils.createDirectStream(ssc, topics, brokerList)
+
+		messages = directKafkaStream.map(lambda msg: msg[1])
+		departmentMessages = messages.filter(lambda msg: msg.split(" ")[6].split("/")[1] == "department")
+
+		departmentNames = departmentMessages.map(lambda msg: (msg.split(" ")[6].split("/")[2], 1))
+
+		departmentCount = departmentNames.reduceByKey(lambda x,y: x+y)
+
+		outputPrefix = sys.argv[1]
+		departmentCount.saveAsTextFiles(outputPrefix)
+
+		ssc.start()
+		ssc.awaitTermination()
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	
+# Kafka and Spark Streaming - Run and validate on cluster
+	
+	$ flume-ng agent --name wk --conf-file /home/neogia01/flume_demo/wslogstokafka/wskafka.conf
+	
+	$ spark-submit --master yarn --conf spark.ui.port=12890 --jars "/usr/hdp/2.5.0.0-1245/kafka/libs/spark-streaming-kafka_2.10-1.6.2.jar,/usr/hdp/2.5.0.0-1245/kafka/libs/kafka_2.10-0.8.2.1.jar,/usr/hdp/current/kafka-broker/libs/metrics-core-2.2.0.jar" /home/neogia01/pythondemo/retail/src/main/python/StreamingKafkaDepartmentCount.py /user/neogia01/streamingkafkadepartmentcount/cnt-
+	
+	$ hadoop fs -cat /user/neogia01/streamingkafkadepartmentcount/cnt--1581243090000/part-00001
+	
+	
+	
+		
+	
+	
+
+	
+	
+	
+
+
+	
+
+
+
+
+		
+		
+		
+		
+
+		
+
+
+
