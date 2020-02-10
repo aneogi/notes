@@ -1,0 +1,45 @@
+
+##### Chapter 13 - Spark 2 - Data processing - Getting Started #####
+
+# Quick review of Spark APIs
+	
+	$ pyspark --master yarn --conf spark.ui.port=12901
+	orders = sc.textFile('/public/retail_db/orders')
+	ordersMap = orders.map(lambda order: (int(order.split(',')[0]), order.split(',')[1]))
+	orders.count()
+	ordersMap.count()
+
+
+# Spark Data Structures - RDDs and Data Frames
+	
+	$ # No. of blocks for a file in HDFS
+	$ hdfs fsck /public/randomtextwriter/part-m-00000 # 9 blocks
+	$ pyspark --master yarn --conf spark.ui.port=12901
+		
+	# No. of executors = No. of blocks of the file in HDFS = 9 	
+	data = sc.textFile('/public/randomtextwriter/part-m-00000')
+	data.count() 
+
+	# No. of executors = minPartitions = 18 (minPartitions > No. of blocks of the file in HDFS)	
+	data = sc.textFile('/public/randomtextwriter/part-m-00000', minPartitions=18)
+	data.count() 
+
+	# No. of executors = minPartitions = 6 (minPartitions < No. of blocks of the file in HDFS)	
+	data = sc.textFile('/public/randomtextwriter/part-m-00000', minPartitions=6)
+	data.count()
+	
+	$ export SPARK_MAJOR_VERSION=2
+	$ pyspark --master yarn --conf spark.ui.port=12901
+	
+	# No. of executors = No. of blocks of the file in HDFS = 9 
+	help(spark.read)
+	data = spark.read.text('/public/randomtextwriter/part-m-00000')
+	data.printSchema()
+	data.count() 
+	
+
+
+
+
+	
+	
