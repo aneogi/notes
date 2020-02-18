@@ -1,6 +1,7 @@
 
 ##### Chapter 13 - Spark 2 - Data processing - Getting Started #####
 
+
 # Quick review of Spark APIs
 	
 	$ pyspark --master yarn --conf spark.ui.port=12901
@@ -8,8 +9,8 @@
 	ordersMap = orders.map(lambda order: (int(order.split(',')[0]), order.split(',')[1]))
 	orders.count()
 	ordersMap.count()
-
-
+	
+	
 # Spark Data Structures - RDDs and Data Frames
 	
 	$ # No. of blocks for a file in HDFS
@@ -36,6 +37,63 @@
 	data = spark.read.text('/public/randomtextwriter/part-m-00000')
 	data.printSchema()
 	data.count() 
+	
+	
+# Develop Simple Application
+	
+	$ export SPARK_MAJOR_VERSION=2
+	$ pyspark --master yarn --conf spark.dynamicAllocation.enabled=false --conf spark.ui.port=12809
+	$ hadoop fs -cat /public/randomtextwriter/part-m-00000
+	
+	# Word count using RDDs
+	data = sc.textFile('/public/randomtextwriter/part-m-00000')
+	wc = data.flatMap(lambda line: line.split(' ')).map(lambda word: (word,1)).reduceByKey(lambda x,y: x+y)
+	for i in wc.take(10): print(i)
+	wc.map(lambda rec: rec[0] + ',' + str(rec[1])).saveAsTextFile('/user/neogia01/core/wordcount')
+	
+	# Word count using Dataframes
+	data = spark.read.text('/public/randomtextwriter/part-m-00000')
+	from pyspark.sql.functions import split, explode
+	wc = data.select(explode(split(data.value, ' ')).alias('words')).groupBy('words').count()
+	wc.write.csv('/user/neogia01/df/wordcount')
+	
+	
+# Apache Spark - Framework
+	
+	$ export SPARK_MAJOR_VERSION=2
+	$ pyspark --master yarn --conf spark.dynamicAllocation.enabled=false --conf spark.ui.port=12709
+	data = sc.textFile('/public/randomtextwriter/part-m-0000*')
+	wc = data.flatMap(lambda line: line.split(' ')).map(lambda word: (word, 1)).reduceByKey(lambda x,y: x+y)
+	for i in wc.toDebugString().split('\n'): print(i)
+	wc.map(lambda rec: rec[0] + "," + str(rec[1])).saveAsTextFile('/user/neogia01/core/wordcount10')
+	
+	
+
+##### Chapter 14 - Spark 2 - Data Frames and Pre-Defined Functions #####
+
+# Data Frames - Overview
+	orders = sc.textFile('/public/retail_db/orders')
+	orders.first()
+	ordersDF = spark.read.csv('/public/retail_db/orders')
+	ordersDF.select('_c0', '_c1').show()
+	ordersDF.show(200)
+	ordersDF.show(200, False)
+	ordersDF.describe()
+	ordersDF.describe().show()
+	ordersDF.printSchema()
+	ordersDF = spark.read.json('/public/retail_db_json/orders')
+	ordersDF.select('order_id', 'order_date').show()
+	ordersDF.createTempView('orders')
+	spark.sql('select * from orders').show()
+
+
+	
+	
+
+	
+
+	
+	
 	
 
 
