@@ -85,7 +85,32 @@
 	ordersDF.select('order_id', 'order_date').show()
 	ordersDF.createTempView('orders')
 	spark.sql('select * from orders').show()
-
+	
+	
+# Create Data Frames from text files
+	
+	$ export = SPARK_MAJOR_VERSION=2
+	$ pyspark --master yarn --conf spark.dynamicAllocation.enabled=false --conf spark.ui.port=12710
+	orders = spark.read.csv('/public/retail_db/orders')
+	
+	orders = spark.read.csv('/public/retail_db/orders', sep=',', schema='order_id int, order_date string, order_customer_id int, order_status string')
+	orders = spark.read.csv('/public/retail_db/orders', sep=',').toDF('order_id', 'order_date', 'order_customer_id', 'order_status')
+	orders = spark.read.format('csv').option('sep', ',').\
+	schema('order_id int, order_date string, order_customer_id int, order_status string').\
+	load('/public/retail_db/orders')
+	
+	from pyspark.sql.types import IntegerType
+	orders.select(orders.order_id.cast("int"), orders.order_date, orders.order_customer_id.cast(IntegerType()), orders.order_status)
+	
+	orders.withColumn('order_id', orders.order_id.cast("int")).\
+	withColumn('order_customer_id', orders.order_customer_id.cast(IntegerType()))
+	
+	orders.show(truncate=False)
+	
+	
+	
+	
+	
 
 	
 	
