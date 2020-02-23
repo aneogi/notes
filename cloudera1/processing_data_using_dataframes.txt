@@ -1,0 +1,143 @@
+	
+##### Chapter 15 - Spark 2 - Processing Data using Data Frames - Basic Transformations #####
+	
+# Selection or Projection of data in Data Frames
+	
+	$ export SPARK_MAJOR_VERSION=2
+	$ pyspark --master yarn --conf spark.ui.port=12809
+	orders = spark.read.\
+	format('csv').\
+	schema('order_id int, order_date string, order_customer_id int, order_status string').\
+	load('/public/retail_db/orders')
+	
+	orders.select(orders.order_id, orders.order_date).show(truncate=False)
+	
+	from pyspark.sql.functions import substring
+	orders.select(substring('order_date',1,7).alias('order_month')).show()
+	orders.withColumn('order_month',substring('order_date',1,7)).show()
+	==> 5 columns
+	orders.withColumn('order_date',substring('order_date',1,7)).show()
+	==> 4 columns
+	orders.drop('order_id').show()
+	orders.selectExpr('substring(order_date,1,7) as order_month').show()
+	
+# Filtering Data from Data Frames	
+	
+	orders.filter(orders.order_status == 'COMPLETE').show()
+	orders.filter("order_status = 'COMPLETE'").show()
+	
+	orders.filter((orders.order_status == 'COMPLETE') | \
+	(orders.order_status == 'CLOSED')).show()
+	orders.filter("order_status = 'COMPLETE'" or "order_status = 'CLOSED'").show()
+	
+	orders.filter(orders.order_status.isin('COMPLETE','CLOSED')).show()
+	orders.filter("order_status in ('COMPLETE','CLOSED')").show()
+	orders.filter("order_status in ('COMPLETE','CLOSED')").count()
+	
+	orders.filter(orders.order_status.isin('COMPLETE','CLOSED') &\
+	(orders.order_date.like('2013-08%'))).show()
+	orders.filter(orders.order_status.isin('COMPLETE','CLOSED').__and__\
+	(orders.order_date.like('2013-08%'))).show()
+	orders.filter("order_status in('COMPLETE','CLOSED') and \
+	order_date like '2013-08%'").show()
+	orders.filter("order_status in('COMPLETE','CLOSED') and \
+	order_date like '2013-08%'").count()
+	
+	orderItems = spark.read.\
+	format('csv').\
+	schema('order_item_id int,order_item_order_id int,order_item_product_id int,order_item_quantity int,\
+	order_item_subtotal float,order_item_product_price float').\
+	load('/public/retail_db/order_items')
+	
+	orderItems.select('order_item_subtotal','order_item_quantity','order_item_product_price').show()
+
+	from pyspark.sql.functions import round
+	orderItems.select('order_item_subtotal','order_item_quantity','order_item_product_price').\
+	where(orderItems.order_item_subtotal != round(orderItems.order_item_quantity*orderItems.order_item_product_price,2)).show()
+	
+	from pyspark.sql.functions import min
+	orders.select(min(orders.order_date)).show()
+	
+	from pyspark.sql.functions import max
+	orders.select(max(orders.order_date)).show()
+	
+	from pyspark.sql.functions import date_format
+	orders.select(date_format(orders.order_date,'yyyy')).show()
+	
+	orders.filter(date_format(orders.order_date,'dd')).show()
+	orders.filter(date_format(orders.order_date,'dd') == '01').select('order_date').distinct().count()
+	orders.filter("date_format(order_date,'dd') = '01'").show()
+	
+# Performing Aggregations using Data Frames	
+	
+	from pyspark.sql.functions import countDistinct
+	orders.select(countDistinct('order_status').alias('status_count')).show()
+	
+	from pyspark.sql.functions import sum,round
+	orderItems.\
+	filter(orderItems.order_item_order_id == 2).\
+	select(round(sum(orderItems.order_item_subtotal),2)).\
+	show()
+	
+	orderItems.\
+	filter(orderItems.order_item_order_id == 2).\
+	select(round(sum(orderItems.order_item_subtotal),2)).\
+	show()
+
+	orderItems.\
+	groupBy('order_item_order_id').\
+	sum('order_item_subtotal').\
+	show()
+
+	orderItems.\
+	groupBy('order_item_order_id').\
+	agg(round(sum('order_item_subtotal'),2).alias('order_revenue')).show()
+
+	orders.select('order_status').distinct().show()
+	orders.groupBy('order_status').count().show()
+	orders.groupBy('order_status').agg(count('order_status').alias('count_status')).show()
+
+	ordersJoin = orders.join(orderItems, orders.order_id == orderItems.order_item_order_id)
+	orders.printSchema()
+	orderItems.printSchema()
+	ordersJoin.printSchema()
+
+	ordersJoin.\
+	groupBy('order_date','order_item_product_id').\
+	agg(round(sum('order_item_subtotal'),2).alias('product_revenue')).\
+	show()
+	
+# Sorting Data in Data Frames	
+		
+	orders.\
+	sort(['order_date','order_customer_id'], ascending=[1,0]).\
+	show()
+	
+	orders.\
+	sort('order_date',orders.order_customer_id.desc()).\
+	show()
+	
+	orders.\
+	sortWithinPartitions('order_date','order_customer_id').\
+	show()
+	
+	orders.sort('order_status').show()
+	orders.sort('order_date','order_status').show()
+	orders.sort(orders.order_date.desc(),'order_status').show()
+	
+	from pyspark.sql.functions import sum,round
+	dailyRevenue = orders.where('order_status in ("COMPLETE","CLOSED")').\
+	join(orderItems, orders.order_id == orderItems.order_item_order_id).\
+	groupBy('order_date','order_item_product_id').\
+	agg(round(sum('order_item_subtotal'),2).alias('revenue'))
+
+	dailyRevenue.sort('order_date',dailyRevenue.revenue.desc()).show()
+	spark.conf.set('spark.sql.shuffle.partitions','2')
+	
+# Developmnt Life Cycle using Data Frames
+		
+	
+			
+	
+	
+	

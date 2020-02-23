@@ -1,0 +1,280 @@
+	
+##### Chapter 16 - Spark 2 - Processing Data using Data Frames - Windows functions #####
+	
+# Data Frame operations - Windows Functions - Overview
+	
+$ export SPARK_MAJOR_VERSION=2
+$ pyspark --master yarn --conf spark.ui.port=12809
+employeePath = '/public/hr_db/employees/part-m-00000'
+employees = spark.\
+read.\
+format('csv').\
+option('sep','\t').\
+schema('''employee_id INT,
+	first_name STRING,
+	last_name STRING,
+	email STRING,
+	phone_number STRING,
+	hire_date STRING,
+	job_id STRING,
+	salary FLOAT,
+	commission_pct STRING,
+	manager_id STRING,
+	department_id STRING
+	''').\
+load(employeePath)
+		
+	employees.select('employee_id','department_id','salary').\
+	groupBy('department_id').\
+	sum('salary').\
+	show()
+		
+	from pyspark.sql.functions import sum,round,count
+
+	employees.select('employee_id','department_id','salary').\
+	groupBy('department_id').\
+	agg(sum(employees.salary).alias('salary_expense')).\
+	show()
+	
+# Data Frame operations - Windows Functions APIs - Overview
+	
+	orderItems = spark.read.\
+	format('csv').\
+	schema('order_item_id int,order_item_order_id int,order_item_product_id int,order_item_quantity int,\
+	order_item_subtotal float,order_item_product_price float').\
+	load('/public/retail_db/order_items')
+
+	from pyspark.sql.window import *
+	from pyspark.sql.functions import round
+
+	spec = Window.partitionBy(orderItems.order_item_order_id)
+
+	orderItems.\
+	withColumn('order_revenue', round(sum('order_item_subtotal').over(spec),2)).\
+	select('order_item_id','order_item_order_id','order_item_subtotal','order_revenue').\
+	show()
+	
+# Define problem statement - Get Top N Daily Products
+	
+inputBaseDir = '/public/retail_db'
+orders = spark.read.\
+format('csv').\
+schema('order_id int, order_date string, order_customer_id int, order_status string').\
+load(inputBaseDir + '/orders')
+	
+orderItems = spark.read.\
+format('csv').\
+schema('order_item_id int,order_item_order_id int,order_item_product_id int,order_item_quantity int,\
+order_item_subtotal float,order_item_product_price float').\
+load(inputBaseDir + '/order_items')
+
+	from pyspark.sql.functions import sum,round,count
+
+	dailyProductRevenue = orders.\
+	where('order_status in ("COMPLETE","CLOSED")').\
+	join(orderItems, orders.order_id == orderItems.order_item_order_id).\
+	groupBy('order_date','order_item_product_id').\
+	agg(round(sum(orderItems.order_item_subtotal),2).alias('revenue'))
+		
+	dailyProductRevenueSorted = dailyProductRevenue.\
+	orderBy(dailyProductRevenue.order_date, dailyProductRevenue.revenue.desc())
+	
+# Data Frame Operations - Creating WIndows Spec
+	
+	from pyspark.sql.window import *
+	spec = Window.partitionBy('order_date')
+	
+from pyspark.sql.functions import *
+orders.select('order_id', 'order_date', 
+'order_customer_id', 'order_status',
+count('order_date').over(spec).alias('daily_count')
+).show()
+	
+# Data Frame Operations - Performing Aggregations using sum,svg etc.
+	
+$ export SPARK_MAJOR_VERSION=2
+$ pyspark --master yarn --conf spark.ui.port=12809
+employeePath = '/public/hr_db/employees/part-m-00000'
+employees = spark.\
+read.\
+format('csv').\
+option('sep','\t').\
+schema('''employee_id INT,
+	first_name STRING,
+	last_name STRING,
+	email STRING,
+	phone_number STRING,
+	hire_date STRING,
+	job_id STRING,
+	salary FLOAT,
+	commission_pct STRING,
+	manager_id STRING,
+	department_id STRING
+	''').\
+load(employeePath)
+
+employees.select('employee_id', 'department_id', 'salary')
+
+from pyspark.sql.window import *
+spec = Window.partitionBy('department_id')
+
+from pyspark.sql.functions import sum,round,count
+employees.select('employee_id', 'department_id', 'salary').\
+withColumn('salary_expense', sum('salary').over(spec)).\
+sort('department_id').\
+show()
+
+from pyspark.sql.functions import min, max, avg
+employees.select('employee_id', 'department_id', 'salary').\
+withColumn('salary_expense', sum('salary').over(spec)).\
+withColumn('least_salary', min('salary').over(spec)).\
+withColumn('highest_salary', max('salary').over(spec)).\
+withColumn('average_salary', avg('salary').over(spec)).\
+sort('department_id').\
+show()
+
+from pyspark.sql.functions import col, round
+employees.select('employee_id', 'department_id', 'salary').\
+withColumn('salary_expense', sum('salary').over(spec)).\
+withColumn('salary_pct', round((employees.salary/col('salary_expense'))*100,2)).\
+sort('department_id').\
+show()
+	
+# Data Frame Operations - Time Series Functions such as lead, lag etc.
+
+$ export SPARK_MAJOR_VERSION=2
+$ pyspark --master yarn --conf spark.ui.port=12809
+employeePath = '/public/hr_db/employees/part-m-00000'
+employees = spark.\
+read.\
+format('csv').\
+option('sep','\t').\
+schema('''employee_id INT,
+	first_name STRING,
+	last_name STRING,
+	email STRING,
+	phone_number STRING,
+	hire_date STRING,
+	job_id STRING,
+	salary FLOAT,
+	commission_pct STRING,
+	manager_id STRING,
+	department_id STRING
+	''').\
+load(employeePath)
+
+from pyspark.sql.window import *
+from pyspark.sql.functions import lead
+
+spec = Window.\
+partitionBy('department_id').\
+orderBy(employees.salary.desc())
+
+employees.select('employee_id', 'department_id', 'salary').\
+withColumn('next_employee_id', lead('employee_id').over(spec)).\
+sort('department_id', employees.salary.desc()).\
+show()
+	
+employees.select('employee_id', 'department_id', 'salary').\
+withColumn('next_employee_id', lead('employee_id').over(spec)).\
+withColumn('next_salary', lead('salary').over(spec)).\
+sort('department_id', employees.salary.desc()).\
+show()
+
+employees.select('employee_id', 'department_id', 'salary').\
+withColumn('next_employee_id', lead('employee_id').over(spec)).\
+withColumn('next_salary_diff', employees.salary - lead('salary').over(spec)).\
+sort('department_id', employees.salary.desc()).\
+show()		
+	
+employees.select('employee_id', 'department_id', 'salary').\
+withColumn('next_employee_id', lead('employee_id', 2).over(spec)).\
+withColumn('next_salary', lead('salary', 2).over(spec)).\
+sort('department_id', employees.salary.desc()).\
+show()
+
+from pyspark.sql.functions import lag
+
+employees.select('employee_id', 'department_id', 'salary').\
+withColumn('next_employee_id', lag('employee_id', 2).over(spec)).\
+withColumn('next_salary', lag('salary', 2).over(spec)).\
+sort('department_id', employees.salary.desc()).\
+show()
+
+from pyspark.sql.functions import first
+
+employees.select('employee_id', 'department_id', 'salary').\
+withColumn('next_employee_id', first('employee_id').over(spec)).\
+withColumn('next_salary', first('salary').over(spec)).\
+sort('department_id', employees.salary.desc()).\
+show()
+
+from pyspark.sql.functions import last
+
+spec = Window.\
+partitionBy('department_id').\
+orderBy(employees.salary.desc()).\
+rangeBetween(Window.unboundedPreceding, Window.unboundedFollowing)
+
+employees.select('employee_id', 'department_id', 'salary').\
+withColumn('next_employee_id', last('employee_id').over(spec)).\
+withColumn('next_salary', last('salary').over(spec)).\
+sort('department_id', employees.salary.desc()).\
+show()
+
+# Data Frame Operations - Ranking functions - rank, dense_rank, row_number etc.
+
+$ export SPARK_MAJOR_VERSION=2
+$ pyspark --master yarn --conf spark.ui.port=12809
+employeePath = '/public/hr_db/employees/part-m-00000'
+employees = spark.\
+read.\
+format('csv').\
+option('sep','\t').\
+schema('''employee_id INT,
+	first_name STRING,
+	last_name STRING,
+	email STRING,
+	phone_number STRING,
+	hire_date STRING,
+	job_id STRING,
+	salary FLOAT,
+	commission_pct STRING,
+	manager_id STRING,
+	department_id STRING
+	''').\
+load(employeePath)
+
+employees.\
+select('employee_id','department_id','salary').\
+orderBy('department_id',employees.salary.desc()).\
+show()
+
+from pyspark.sql.window import *
+spec = Window.\
+partitionBy('department_id').\
+orderBy(employees.salary.desc())
+
+from pyspark.sql.functions import rank
+employees.\
+select('employee_id','department_id','salary').\
+withColumn('rank',rank().over(spec)).\
+orderBy('department_id',employees.salary.desc()).\
+show(200)
+
+from pyspark.sql.functions import rank, dense_rank, row_number
+employees.\
+select('employee_id','department_id','salary').\
+withColumn('rank',rank().over(spec)).\
+withColumn('dense_rank',dense_rank().over(spec)).\
+withColumn('row_number',row_number().over(spec)).\
+orderBy('department_id',employees.salary.desc()).\
+show(200)
+
+
+
+
+
+
+
+
