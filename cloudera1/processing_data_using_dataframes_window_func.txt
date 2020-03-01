@@ -271,10 +271,3 @@ withColumn('row_number',row_number().over(spec)).\
 orderBy('department_id',employees.salary.desc()).\
 show(200)
 
-
-
-
-
-
-
-

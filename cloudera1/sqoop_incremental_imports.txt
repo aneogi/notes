@@ -1,0 +1,132 @@
+	
+##### Chapter 9 - Apache sqoop - Incremental Imports and Jobs #####
+	
+# Adding password file
+	
+	$echo -n "itversity" > password_file
+	$sqoop eval \
+	--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+	--username retail_user \
+	--password-file file:///home/neogia01/password_file \
+	--query "SELECT COUNT(*) FROM orders"
+	
+# Creating sqoop job
+
+	$ sqoop job \
+	--create import_orders \
+	-- import \
+	--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+	--username retail_user \
+	--password-file file:///home/neogia01/password_file \
+	--table orders \
+	--warehouse-dir /user/neogia01/sqoop_import/retail_db \
+	--delete-target-dir
+		
+# Running sqoop job
+	
+	$ sqoop job --list
+	$ sqoop job --show import_orders
+	$ sqoop job --exec import_orders
+	$ hadoop fs -ls /user/neogia01/sqoop_import/retail_db
+	$ sqoop job --delete import_orders
+		
+# Incremental Import - Using where
+	
+	$ sqoop eval \
+	--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+	--username retail_user \
+	--password-file file:///home/neogia01/password_file \
+	--query "select max(order_date) from orders"
+	
+	$ sqoop import \
+	--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+	--username retail_user \
+	--password-file file:///home/neogia01/password_file \
+	--table orders \
+	--warehouse-dir /user/neogia01/sqoop_import/retail_db \
+	--append \
+	--where "order_id > 68883"
+		
+# Incremental Import - Using where
+	
+	$ sqoop import \
+	--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+	--username retail_user \
+	--password-file file:///home/neogia01/password_file \
+	--table orders \
+	--warehouse-dir /user/neogia01/sqoop_import/retail_db \
+	--check-column order_id \
+	--incremental append \
+	--last-value 68883
+		
+# Incremental Import - Create training_orders_incr in retail_export
+	
+	$ mysql -u retail_user -h ms.itversity.com -p
+	
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		use retail_export;
+		create table neogia01_orders_incr
+		as
+		select * from retail_db.orders where 1=2;
+
+		select * from neogia01_orders_incr; 
+		describe neogia01_orders_incr;
+		
+		alter table neogia01_orders_incr add primary key (order_id);
+		describe neogia01_orders_incr;
+		
+		insert into neogia01_orders_incr
+		select * from retail_db.orders where order_id <=30000;
+		select * from neogia01_orders_incr limit 10;
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		
+# Incremental Import - Create Job
+	
+	$ sqoop job \
+	--create import_orders_incr \
+	-- import \
+	--connect jdbc:mysql://ms.itversity.com:3306/retail_export \
+	--username retail_user \
+	--password-file file:///home/neogia01/password_file \
+	--table neogia01_orders_incr \
+	--warehouse-dir /user/neogia01/sqoop_import/retail_db \
+	--check-column order_id \
+	--incremental append \
+	--last-value 0
+		
+# Incremental Import - Execute Job
+	
+	$ sqoop job --list
+	$ sqoop job --exec import_orders_incr
+	$ sqoop job --show import_orders_incr | grep incremental
+		
+# Incremental Import - Additional data
+	
+	$ mysql -u retail_user -h ms.itversity.com -p
+	
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		use retail_export;
+		select count(*) from neogia01_orders_incr;
+		insert into neogia01_orders_incr select * from retail_db.orders where order_id > 30000;
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+		
+# Incremental Import - Re-run job and validate results
+			
+	$ sqoop job --show import_orders_incr | grep incremental
+	$ sqoop job --show import_orders_incr | grep warehouse
+	$ hadoop fs -ls /user/neogia01/sqoop_import/retail_db/neogia01_orders_incr
+		
+# Incremental Import - Re-run job and validate results
+		
+	$ hadoop fs -ls /user/neogia01/sqoop_import/retail_db/orders
+	$ hadoop fs -rm -R /user/neogia01/sqoop_import/retail_db/orders
+	$ sqoop import \
+	--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+	--username retail_user \
+	--password itversity \
+	--table orders \
+	--warehouse-dir /user/neogia01/sqoop_import/retail_db \
+	--check-column order_date \
+	--incremental lastmodified \
+	--last-value "2013-07-24 00:00:00.0"
+	
