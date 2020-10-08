@@ -1,0 +1,10 @@
+	
+##### Chapter 9 - Apache Sqoop - Incremental Imports and Jobs #####
+	
+# Overview
+	
+	vi password_file
+		itversity
+		
+	
+	
